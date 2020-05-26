@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{app.all.loan}">All Loans</title>
+</head>
+<body>
+
+<h1 th:text="#{app.all.loan}">All Loans</h1>
+
+<table border='1'>
+
+    <tbody>
+    <th>id</th>
+    <th th:text="#{app.description}">description</th>
+    <th th:text="#{app.type}">type</th>
+    <th th:text="#{app.value}"> value</th>
+
+    <tr th:each="loan:${loans}">
+        <td th:text="${loan.getId()}"></td>
+        <td th:text="${loan.getDescription()}"></td>
+        <td th:text="#{app.loan.type.+${loan.getLoanType()}}"></td>
+        <td th:text="${loan.getValue()}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

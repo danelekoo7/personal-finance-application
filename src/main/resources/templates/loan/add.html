@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{app.add.loan}">add loan</title>
+</head>
+<body>
+
+<form th:action="@{/loan/add}" th:object="${loan}" method="post">
+    <label for="description" th:text="#{app.description}">description</label>
+    <input type="text" th:field="*{description}" id="description">
+    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+
+    <label for="value" th:text="#{app.value}">value</label>
+    <input type="text" th:field="*{value}" id="value">
+    <span th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></span>
+
+    <label for="loanType" th:text="#{app.type}">loan type</label>
+    <select th:field="*{loanType}">
+        <option th:each="type:${loanTypes}" th:value="${type}" th:text="#{app.loan.type.+${type}}"
+                id="loanType"></option>
+    </select>
+    <span th:if="${#fields.hasErrors('loanType')}" th:errors="*{loanType}"></span>
+
+        <input type="submit" th:value="#{app.add.loan}">  
+
+
+</form>
+
+</body>
+
+</html>

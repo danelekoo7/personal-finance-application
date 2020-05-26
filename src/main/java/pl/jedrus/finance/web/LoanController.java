@@ -9,7 +9,6 @@ import pl.jedrus.finance.domain.LoanType;
 import pl.jedrus.finance.repository.LoanRepository;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
