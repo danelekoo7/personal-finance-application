@@ -12,14 +12,6 @@ import pl.jedrus.finance.service.SpringDataUserDetailsService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("1").password("{noop}1").roles("USER")
-                .and()
-                .withUser("2").password("{noop}2").roles("ADMIN");
-    }
-
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -28,8 +20,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public SpringDataUserDetailsService customUserDetailsService() {
+
         return new SpringDataUserDetailsService();
     }
-
 }
 

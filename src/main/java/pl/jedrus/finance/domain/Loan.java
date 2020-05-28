@@ -1,7 +1,5 @@
 package pl.jedrus.finance.domain;
 
-import org.springframework.web.bind.annotation.GetMapping;
-
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
