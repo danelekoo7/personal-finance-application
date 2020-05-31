@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{app.personal.finance}">Dashboard</title>
+    <th:block th:include="general :: headerfiles"></th:block>
+</head>
+<body class="sb-nav-fixed">
+<header th:insert="general :: header"></header>
+<div id="layoutSidenav">
+    <div th:replace="general :: menu"></div>
+    <div id="layoutSidenav_content">
+        <main>
+            <p></p>
+            <div class="row justify-content-center col-auto">
+                <div class="table-responsive col-6">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead th:class="thead-dark">
+                        <tr>
+                            <th rowspan="1" colspan="3" class="text-center" th:text="#{app.assets}"> Assets</th>
+                        </tr>
+                        <tr>
+                            <th>id</th>
+                            <th th:text="#{app.my.assets}">My assets</th>
+                            <th th:text="#{app.value}"> value</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="asset:${assets}">
+                            <td th:text="${asset.getId()}"></td>
+                            <td th:text="${asset.getDescription()}"></td>
+                            <td th:text="${asset.getValue()} + ' ' +#{app.currency}"></td>
+                        </tr>
+                        <tr class="thead-dark">
+                            <th rowspan="1" colspan="2" th:text="#{app.total}"> Total</th>
+                            <th th:text="${assetsSum} + ' ' +#{app.currency}">currency</th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-responsive col-6">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead th:class="thead-dark">
+                        <tr>
+                            <th rowspan="1" colspan="3" class="text-center" th:text="#{app.loans}"> Loans</th>
+                        </tr>
+                        <tr>
+                            <th>id</th>
+                            <th th:text="#{app.my.loans}">My loans</th>
+                            <th th:text="#{app.value}"> value</th>
+
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="loan:${loans}">
+                            <td th:text="${loan.getId()}"></td>
+                            <td th:text="${loan.getDescription()}"></td>
+                            <td th:text="${loan.getValue()} + ' ' +#{app.currency}"></td>
+                        </tr>
+                        <tr th:class="thead-dark">
+                            <th rowspan="1" colspan="2" th:text="#{app.total} "> Total</th>
+                            <th th:text="${loansSum} + ' ' +#{app.currency}">currency</th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<div th:replace="general :: scripts"></div>
+</body>
+</html>
