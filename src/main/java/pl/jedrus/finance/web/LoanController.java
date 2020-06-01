@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.jedrus.finance.domain.Loan;
-import pl.jedrus.finance.domain.LoanType;
+
 import pl.jedrus.finance.repository.LoanRepository;
 
 import javax.validation.Valid;
@@ -48,10 +48,5 @@ public class LoanController {
         return "redirect:all";
     }
 
-
-    @ModelAttribute("loanTypes")
-    public LoanType[] loanTypeList() {
-        return LoanType.values();
-    }
 
 }

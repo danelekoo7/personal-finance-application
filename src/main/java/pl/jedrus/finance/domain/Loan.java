@@ -18,10 +18,6 @@ public class Loan {
     @DecimalMin("0.0")
     private BigDecimal value;
 
-    @Enumerated(EnumType.STRING)
-    private LoanType loanType;
-
-
     public Long getId() {
         return id;
     }
@@ -46,22 +42,12 @@ public class Loan {
         this.value = value;
     }
 
-    public LoanType getLoanType() {
-        return loanType;
-    }
-
-    public void setLoanType(LoanType loanType) {
-        this.loanType = loanType;
-    }
-
-
     @Override
     public String toString() {
         return "Loan{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", value=" + value +
-                ", loanType=" + loanType +
                 '}';
     }
 }

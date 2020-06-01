@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{app.personal.finance}">Dashboard</title>
+    <!--/*/ <th:block th:include="general :: headerfiles"></th:block> /*/-->
+</head>
+<body class="sb-nav-fixed">
+<header th:insert="general :: header"></header>
+<div id="layoutSidenav">
+    <div th:replace="general :: menu"></div>
+    <div id="layoutSidenav_content">
+        <main>
+            <p></p>
+            <h3 class="text-center" th:text="#{app.edit.asset}"> edit asset </h3>
+            <br>
+            <div class="row justify-content-center col-auto">
+                <form th:action="@{/step1/edit-asset/{id}(id=${asset.getId()})}" th:object="${asset}" method="post">
+
+                    <label for="description" th:text="#{app.asset}">asset</label>
+                    <input class="form-control" type="text" th:field="*{description}" id="description">
+                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                    <br>
+                    <label for="value" th:text="#{app.value}">asset</label>
+                    <input class="form-control" type="text" th:field="*{value}" id="value">
+                    <span th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></span>
+                    <br>
+                    <br>
+                    <input class="form-control" type="submit">  
+                </form>
+            </div>
+        </main>
+    </div>
+</div>
+<div th:replace="general :: scripts"></div>
+
+
+</body>
+</html>

@@ -8,7 +8,7 @@ import pl.jedrus.finance.repository.AssetRepository;
 import pl.jedrus.finance.repository.LoanRepository;
 
 import java.math.BigDecimal;
-import java.util.List;
+
 
 @ControllerAdvice()
 public class AnnotationAdvice {
@@ -23,24 +23,19 @@ public class AnnotationAdvice {
 
     @ModelAttribute("totalValue")
     public BigDecimal getTotalValue() {
-        List<Loan> allLoans = loanRepository.findAll();
-        List<Asset> allAssets = assetRepository.findAll();
-
-        BigDecimal loansSum = BigDecimal.ZERO;
-        for (Loan loan : allLoans) {
-            loansSum = loansSum.add(loan.getValue());
-        }
-
-        BigDecimal assetsSum = BigDecimal.ZERO;
-        for (Asset asset : allAssets) {
-            assetsSum = assetsSum.add(asset.getValue());
-        }
+        BigDecimal sumAllLoans = loanRepository.sumAllLoans();
+        BigDecimal sumAllAssets = assetRepository.sumAllAssets();
+        return sumAllAssets.subtract(sumAllLoans);
+    }
 
 
-        BigDecimal total = BigDecimal.ZERO;
-        total = total.add(assetsSum);
-        total = total.subtract(loansSum);
+    @ModelAttribute("loan")
+    public Loan loan() {
+        return new Loan();
+    }
 
-        return total;
+    @ModelAttribute("asset")
+    public Asset asset() {
+        return new Asset();
     }
 }
