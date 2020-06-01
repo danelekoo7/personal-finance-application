@@ -3,10 +3,7 @@ package pl.jedrus.finance.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.jedrus.finance.domain.Asset;
 import pl.jedrus.finance.domain.Loan;
 import pl.jedrus.finance.repository.AssetRepository;
@@ -101,6 +98,13 @@ public class Step1Controller {
 
         assetRepository.save(assetInDB);
 
+        return "redirect:/step1";
+    }
+
+
+    @GetMapping("/delete-asset/{id}")
+    public String deleteAsset(@PathVariable Long id) {
+        assetRepository.deleteById(id);
         return "redirect:/step1";
     }
 
