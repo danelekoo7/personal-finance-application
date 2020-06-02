@@ -1,6 +1,8 @@
 package pl.jedrus.finance.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -12,11 +14,26 @@ public class User {
     @Column(nullable = false, unique = true, length = 60)
     private String username;
     private String password;
+
+    @Email
+    private String email;
+
+
+
     private int enabled;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    @OneToMany
+    @JoinColumn(name = "id_user")
+    private Set<Loan> loans;
+
+    @OneToMany
+    @JoinColumn(name = "id_user")
+    private Set<Asset> assets;
+
 
     public Long getId() {
         return id;
@@ -42,6 +59,14 @@ public class User {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public int getEnabled() {
         return enabled;
     }
@@ -58,14 +83,33 @@ public class User {
         this.roles = roles;
     }
 
+    public Set<Loan> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(Set<Loan> loans) {
+        this.loans = loans;
+    }
+
+    public Set<Asset> getAssets() {
+        return assets;
+    }
+
+    public void setAssets(Set<Asset> assets) {
+        this.assets = assets;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
                 ", enabled=" + enabled +
                 ", roles=" + roles +
+                ", loans=" + loans +
+                ", assets=" + assets +
                 '}';
     }
 }

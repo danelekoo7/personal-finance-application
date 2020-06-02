@@ -12,11 +12,11 @@ import pl.jedrus.finance.service.SpringDataUserDetailsService;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    //temp disabled security
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests().antMatchers("/").permitAll();
-    }
+//    temp disabled security
+//    @Override
+//    protected void configure(HttpSecurity httpSecurity) throws Exception {
+//        httpSecurity.authorizeRequests().antMatchers("/").permitAll();
+//    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -25,8 +25,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public SpringDataUserDetailsService customUserDetailsService() {
-
         return new SpringDataUserDetailsService();
     }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .antMatchers("/step1").hasAnyRole("USER", "ADMIN")
+                .and().formLogin()
+                .loginPage("/login").permitAll();
+    }
+
+
 }
 
