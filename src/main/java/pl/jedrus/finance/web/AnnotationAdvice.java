@@ -23,9 +23,20 @@ public class AnnotationAdvice {
 
     @ModelAttribute("totalValue")
     public BigDecimal getTotalValue() {
-        BigDecimal sumAllLoans = loanRepository.sumAllLoans();
-        BigDecimal sumAllAssets = assetRepository.sumAllAssets();
-        return sumAllAssets.subtract(sumAllLoans);
+        BigDecimal total = BigDecimal.ZERO;
+        BigDecimal sumAllLoans = BigDecimal.ZERO;
+        if (loanRepository.sumAllLoans() != null) {
+            sumAllLoans = sumAllLoans.add(loanRepository.sumAllLoans());
+        }
+
+        BigDecimal sumAllAssets = BigDecimal.ZERO;
+
+        if (assetRepository.sumAllAssets() != null) {
+            sumAllAssets = sumAllAssets.add(assetRepository.sumAllAssets());
+        }
+
+
+        return total.add(sumAllAssets).subtract(sumAllLoans);
     }
 
 

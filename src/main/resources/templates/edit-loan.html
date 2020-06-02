@@ -21,7 +21,7 @@
                     <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
                     <br>
                     <label for="value" th:text="#{app.value}">value</label>
-                    <input class="form-control" type="text" th:field="*{value}" id="value">
+                    <input class="form-control"  type="number" step="0.01" th:field="*{value}" id="value">
                     <span th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></span>
                     <br>
                     <br>

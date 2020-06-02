@@ -3,6 +3,7 @@ package pl.jedrus.finance.domain;
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity
@@ -15,6 +16,7 @@ public class Loan {
     @NotBlank
     private String description;
 
+    @NotNull
     @DecimalMin("0.0")
     private BigDecimal value;
 

@@ -27,17 +27,20 @@ public class Step1Controller {
     }
 
 
-    /**
-     * @param model
-     * @return Display pages
-     */
     @GetMapping
     public String get(Model model) {
         List<Loan> allLoans = loanRepository.findAll();
         List<Asset> allAssets = assetRepository.findAll();
 
-        BigDecimal loansSum = loanRepository.sumAllLoans();
-        BigDecimal assetsSum = assetRepository.sumAllAssets();
+        BigDecimal loansSum = BigDecimal.ZERO;
+        if (loanRepository.sumAllLoans() != null) {
+            loansSum = loansSum.add(loanRepository.sumAllLoans());
+        }
+
+        BigDecimal assetsSum = BigDecimal.ZERO;
+        if (assetRepository.sumAllAssets() != null) {
+            assetsSum = assetsSum.add(assetRepository.sumAllAssets());
+        }
 
         int nextLoanId = allLoans.size() + 1;
         int nextAssetId = allAssets.size() + 1;

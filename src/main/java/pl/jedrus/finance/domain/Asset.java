@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity
@@ -19,6 +20,7 @@ public class Asset {
     @NotBlank
     private String description;
 
+    @NotNull
     @DecimalMin("0.0")
     private BigDecimal value;
 

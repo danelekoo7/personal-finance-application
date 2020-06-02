@@ -14,7 +14,7 @@
             <p></p>
             <div class="row justify-content-center col-auto">
                 <div class="table-responsive col-6">
-                    <form th:action="@{/step1/add-asset}" th:object="${asset}" method="post">
+                    <form th:action="@{/step1/add-asset}" th:object="${asset}" method="post" accept-charset="UTF-8">
 
 
                         <table class="table table-bordered" width="100%" cellspacing="0">
@@ -52,7 +52,7 @@
                                 </td>
 
                                 <td>
-                                    <input class="form-control" type="text" th:field="*{value}">
+                                    <input class="form-control" type="number" step="0.01" th:field="*{value}">
                                     <span th:if="${#fields.hasErrors('value')}" th:errors="*{value}" ></span>
                                 </td>
                                 <td>
@@ -90,6 +90,7 @@
                             </tr>
                             </thead>
                             <tbody>
+
                             <tr th:each="loan,iter:${loans}">
                                 <td th:text="${iter.count}"></td>
                                 <td th:text="${loan.getDescription()}"></td>
@@ -109,7 +110,7 @@
                                 </td>
 
                                 <td>
-                                    <input class="form-control" type="text" th:field="*{value}" id="value">
+                                    <input class="form-control" type="number" step="0.01" th:field="*{value}" id="value">
                                     <span th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></span>
                                 </td>
                                 <td>
