@@ -32,14 +32,15 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="asset:${assets}">
-                                <td th:text="${asset.getId()}"></td>
+                            <tr th:each="asset,iter:${assets}">
+                                <td th:text="${iter.count}"></td>
                                 <td th:text="${asset.getDescription()}"></td>
                                 <td th:text="${asset.getValue()} + ' ' +#{app.currency}"></td>
                                 <td>
-                                    <a th:href="@{/step1/edit-asset/{id}(id=${asset.getId()})}" th:text="#{app.edit}">edit</a>
+                                    <a th:href="@{/step1/edit-asset/{id}(id=${asset.getId()})}" th:text="#{app.edit}"
+                                       class="btn-block btn-dark text-center">edit</a>
                                     <a th:href="@{/step1/delete-asset/{id}(id=${asset.getId()})}"
-                                       class="btn-sm btn-danger" id="deleteButton">Delete</a>
+                                       class="btn-block btn-dark text-center deleteButton" th:text="#{app.delete}">Delete</a>
                                 </td>
                             </tr>
 
@@ -47,15 +48,15 @@
                                 <td th:text="${nextAssetId}"> next asset id</td>
                                 <td>
                                     <input class="form-control" type="text" th:field="*{description}">
-                                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" ></span>
                                 </td>
 
                                 <td>
                                     <input class="form-control" type="text" th:field="*{value}">
-                                    <span th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></span>
+                                    <span th:if="${#fields.hasErrors('value')}" th:errors="*{value}" ></span>
                                 </td>
                                 <td>
-                                        <input class="form-control" type="submit">  
+                                        <input class="form-control btn-block btn-primary" type="submit">  
                                 </td>
                             </tr>
 
@@ -89,10 +90,16 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="loan:${loans}">
-                                <td th:text="${loan.getId()}"></td>
+                            <tr th:each="loan,iter:${loans}">
+                                <td th:text="${iter.count}"></td>
                                 <td th:text="${loan.getDescription()}"></td>
                                 <td th:text="${loan.getValue()} + ' ' +#{app.currency}"></td>
+                                <td>
+                                    <a th:href="@{/step1/edit-loan/{id}(id=${loan.getId()})}" th:text="#{app.edit}"
+                                       class="btn-block btn-dark text-center">edit</a>
+                                    <a th:href="@{/step1/delete-loan/{id}(id=${loan.getId()})}"
+                                       class="btn-block btn-dark text-center deleteButton" th:text="#{app.delete}">Delete</a>
+                                </td>
                             </tr>
                             <tr>
                                 <td th:text="${nextLoanId}"> next Loan Id</td>
@@ -106,7 +113,7 @@
                                     <span th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></span>
                                 </td>
                                 <td>
-                                        <input class="form-control" type="submit">  
+                                        <input class="form-control  btn-block btn-primary" type="submit">  
                                 </td>
                             </tr>
 

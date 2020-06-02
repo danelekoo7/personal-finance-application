@@ -26,6 +26,11 @@ public class Step1Controller {
         this.assetRepository = assetRepository;
     }
 
+
+    /**
+     * @param model
+     * @return Display pages
+     */
     @GetMapping
     public String get(Model model) {
         List<Loan> allLoans = loanRepository.findAll();
@@ -48,15 +53,7 @@ public class Step1Controller {
     }
 
 
-    @PostMapping("/add-loan")
-    public String saveLoan(@Valid Loan loan, BindingResult result) {
-        if (result.hasErrors()) {
-            return "step1";
-        }
-        loanRepository.save(loan);
-        return "redirect:";
-    }
-
+    //    Assets
     @PostMapping("/add-asset")
     public String saveAsset(@Valid Asset asset, BindingResult result) {
         if (result.hasErrors()) {
@@ -91,7 +88,6 @@ public class Step1Controller {
         Optional<Asset> byId = assetRepository.findById(id);
         Asset assetInDB = byId.orElseThrow(Exception::new);
 
-        Asset newAsset = new Asset();
         assetInDB.setId(asset.getId());
         assetInDB.setDescription(asset.getDescription());
         assetInDB.setValue(asset.getValue());
@@ -105,6 +101,52 @@ public class Step1Controller {
     @GetMapping("/delete-asset/{id}")
     public String deleteAsset(@PathVariable Long id) {
         assetRepository.deleteById(id);
+        return "redirect:/step1";
+    }
+
+
+    //    Loans
+    @PostMapping("/add-loan")
+    public String saveLoan(@Valid Loan loan, BindingResult result) {
+        if (result.hasErrors()) {
+            return "step1";
+        }
+        loanRepository.save(loan);
+        return "redirect:";
+    }
+
+    @GetMapping("/edit-loan/{id}")
+    public String editLoan(@PathVariable Long id, Model model) throws Exception {
+
+        Optional<Loan> byId = loanRepository.findById(id);
+        Loan loan = byId.orElseThrow(Exception::new);
+
+        model.addAttribute("loan", loan);
+        return "edit-loan";
+    }
+
+    @PostMapping("/edit-loan/{id}")
+    public String updateLoan(@Valid Loan loan, BindingResult result, @PathVariable Long id) throws Exception {
+        if (result.hasErrors()) {
+            return "edit-loan";
+        }
+
+        Optional<Loan> byId = loanRepository.findById(id);
+        Loan loanInDb = byId.orElseThrow(Exception::new);
+
+        loanInDb.setDescription(loan.getDescription());
+        loanInDb.setValue(loan.getValue());
+        loanInDb.setId(loan.getId());
+
+        loanRepository.save(loanInDb);
+
+        return "redirect:/step1";
+    }
+
+
+    @GetMapping("/delete-loan/{id}")
+    public String deleteLoan(@PathVariable Long id) {
+        loanRepository.deleteById(id);
         return "redirect:/step1";
     }
 
