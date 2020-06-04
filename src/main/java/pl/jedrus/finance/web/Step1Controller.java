@@ -1,5 +1,7 @@
 package pl.jedrus.finance.web;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,7 +30,7 @@ public class Step1Controller {
 
 
     @GetMapping
-    public String get(Model model) {
+    public String get(Model model, @AuthenticationPrincipal UserDetails user) {
         List<Loan> allLoans = loanRepository.findAll();
         List<Asset> allAssets = assetRepository.findAll();
 

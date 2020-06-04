@@ -1,9 +1,13 @@
 package pl.jedrus.finance.web;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
 import pl.jedrus.finance.domain.Asset;
 import pl.jedrus.finance.domain.Loan;
+
 import pl.jedrus.finance.repository.AssetRepository;
 import pl.jedrus.finance.repository.LoanRepository;
 
@@ -48,5 +52,10 @@ public class AnnotationAdvice {
     @ModelAttribute("asset")
     public Asset asset() {
         return new Asset();
+    }
+
+    @ModelAttribute("user")
+    public String user(@AuthenticationPrincipal UserDetails userDetails) {
+        return userDetails.getUsername();
     }
 }
