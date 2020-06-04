@@ -29,19 +29,20 @@ public class Step1Controller {
     }
 
 
+
     @GetMapping
     public String get(Model model, @AuthenticationPrincipal UserDetails user) {
-        List<Loan> allLoans = loanRepository.findAll();
-        List<Asset> allAssets = assetRepository.findAll();
+        List<Loan> allLoans = loanRepository.findAllByUserName(user.getUsername());
+        List<Asset> allAssets = assetRepository.findAllByUserName(user.getUsername());
 
         BigDecimal loansSum = BigDecimal.ZERO;
-        if (loanRepository.sumAllLoans() != null) {
-            loansSum = loansSum.add(loanRepository.sumAllLoans());
+        if (loanRepository.sumAllLoansByUserName(user.getUsername()) != null) {
+            loansSum = loansSum.add(loanRepository.sumAllLoansByUserName(user.getUsername()));
         }
 
         BigDecimal assetsSum = BigDecimal.ZERO;
-        if (assetRepository.sumAllAssets() != null) {
-            assetsSum = assetsSum.add(assetRepository.sumAllAssets());
+        if (assetRepository.sumAllAssetsByUserName(user.getUsername()) != null) {
+            assetsSum = assetsSum.add(assetRepository.sumAllAssetsByUserName(user.getUsername()));
         }
 
         int nextLoanId = allLoans.size() + 1;

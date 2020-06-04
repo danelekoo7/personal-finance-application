@@ -9,6 +9,9 @@ import java.util.List;
 
 public interface LoanRepository extends JpaRepository<Loan, Long> {
 
-    @Query("SELECT SUM(value) FROM Loan")
-    BigDecimal sumAllLoans();
+    @Query(value = "SELECT * FROM loan JOIN user u ON loan.id_user = u.id WHERE username= ?1", nativeQuery = true)
+    List<Loan> findAllByUserName (String userName);
+
+    @Query(value = "SELECT SUM(value) FROM loan JOIN user u ON loan.id_user = u.id WHERE username= ?1", nativeQuery = true)
+    BigDecimal sumAllLoansByUserName(String userName);
 }

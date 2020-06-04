@@ -26,17 +26,17 @@ public class AnnotationAdvice {
     }
 
     @ModelAttribute("totalValue")
-    public BigDecimal getTotalValue() {
+    public BigDecimal getTotalValue(@AuthenticationPrincipal UserDetails user) {
         BigDecimal total = BigDecimal.ZERO;
         BigDecimal sumAllLoans = BigDecimal.ZERO;
-        if (loanRepository.sumAllLoans() != null) {
-            sumAllLoans = sumAllLoans.add(loanRepository.sumAllLoans());
+        if (loanRepository.sumAllLoansByUserName(user.getUsername()) != null) {
+            sumAllLoans = sumAllLoans.add(loanRepository.sumAllLoansByUserName(user.getUsername()));
         }
 
         BigDecimal sumAllAssets = BigDecimal.ZERO;
 
-        if (assetRepository.sumAllAssets() != null) {
-            sumAllAssets = sumAllAssets.add(assetRepository.sumAllAssets());
+        if (assetRepository.sumAllAssetsByUserName(user.getUsername()) != null) {
+            sumAllAssets = sumAllAssets.add(assetRepository.sumAllAssetsByUserName(user.getUsername()));
         }
 
 
@@ -56,6 +56,9 @@ public class AnnotationAdvice {
 
     @ModelAttribute("user")
     public String user(@AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails.getUsername().equals(null)) {
+            return "";
+        }
         return userDetails.getUsername();
     }
 }
