@@ -32,17 +32,17 @@ public class Step1Controller {
 
     @GetMapping
     public String get(Model model, @AuthenticationPrincipal UserDetails user) {
-        List<Loan> allLoans = loanRepository.findAllByUserName(user.getUsername());
-        List<Asset> allAssets = assetRepository.findAllByUserName(user.getUsername());
+        List<Loan> allLoans = loanRepository.findAllByUser_Username(user.getUsername());
+        List<Asset> allAssets = assetRepository.findAllByUser_Username(user.getUsername());
 
         BigDecimal loansSum = BigDecimal.ZERO;
-        if (loanRepository.sumAllLoansByUserName(user.getUsername()) != null) {
-            loansSum = loansSum.add(loanRepository.sumAllLoansByUserName(user.getUsername()));
+        if (loanRepository.sumAllLoansByUser(user.getUsername()) != null) {
+            loansSum = loansSum.add(loanRepository.sumAllLoansByUser(user.getUsername()));
         }
 
         BigDecimal assetsSum = BigDecimal.ZERO;
-        if (assetRepository.sumAllAssetsByUserName(user.getUsername()) != null) {
-            assetsSum = assetsSum.add(assetRepository.sumAllAssetsByUserName(user.getUsername()));
+        if (assetRepository.sumAllAssetByUser(user.getUsername()) != null) {
+            assetsSum = assetsSum.add(assetRepository.sumAllAssetByUser(user.getUsername()));
         }
 
         int nextLoanId = allLoans.size() + 1;
@@ -61,7 +61,7 @@ public class Step1Controller {
 
     //    Assets
     @PostMapping("/add-asset")
-    public String saveAsset(@Valid Asset asset, BindingResult result) {
+    public String saveAsset(@Valid Asset asset, BindingResult result, @AuthenticationPrincipal UserDetails user) {
         if (result.hasErrors()) {
             return "step1";
         }

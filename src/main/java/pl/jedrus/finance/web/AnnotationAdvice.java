@@ -29,14 +29,14 @@ public class AnnotationAdvice {
     public BigDecimal getTotalValue(@AuthenticationPrincipal UserDetails user) {
         BigDecimal total = BigDecimal.ZERO;
         BigDecimal sumAllLoans = BigDecimal.ZERO;
-        if (loanRepository.sumAllLoansByUserName(user.getUsername()) != null) {
-            sumAllLoans = sumAllLoans.add(loanRepository.sumAllLoansByUserName(user.getUsername()));
+        if (loanRepository.sumAllLoansByUser(user.getUsername()) != null) {
+            sumAllLoans = sumAllLoans.add(loanRepository.sumAllLoansByUser(user.getUsername()));
         }
 
         BigDecimal sumAllAssets = BigDecimal.ZERO;
 
-        if (assetRepository.sumAllAssetsByUserName(user.getUsername()) != null) {
-            sumAllAssets = sumAllAssets.add(assetRepository.sumAllAssetsByUserName(user.getUsername()));
+        if (assetRepository.sumAllAssetByUser(user.getUsername()) != null) {
+            sumAllAssets = sumAllAssets.add(assetRepository.sumAllAssetByUser(user.getUsername()));
         }
 
 

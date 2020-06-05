@@ -20,6 +20,9 @@ public class Loan {
     @DecimalMin("0.0")
     private BigDecimal value;
 
+    @ManyToOne
+    private User user;
+
     public Long getId() {
         return id;
     }
@@ -44,12 +47,21 @@ public class Loan {
         this.value = value;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Loan{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", value=" + value +
+                ", user=" + user +
                 '}';
     }
 }
