@@ -28,8 +28,8 @@ public class UserController {
     @ResponseBody
     public String createUser() {
         User user = new User();
-        user.setUsername("1");
-        user.setPassword("1");
+        user.setUsername("Krzychu");
+        user.setPassword("w");
         userService.saveUser(user);
         return "admin";
     }

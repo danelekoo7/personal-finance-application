@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @Entity
 public class Asset {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

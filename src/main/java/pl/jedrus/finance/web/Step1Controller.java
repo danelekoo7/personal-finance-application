@@ -10,6 +10,7 @@ import pl.jedrus.finance.domain.Asset;
 import pl.jedrus.finance.domain.Loan;
 import pl.jedrus.finance.repository.AssetRepository;
 import pl.jedrus.finance.repository.LoanRepository;
+import pl.jedrus.finance.repository.UserRepository;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
@@ -22,10 +23,12 @@ public class Step1Controller {
 
     private final LoanRepository loanRepository;
     private final AssetRepository assetRepository;
+    private final UserRepository userRepository;
 
-    public Step1Controller(LoanRepository loanRepository, AssetRepository assetRepository) {
+    public Step1Controller(LoanRepository loanRepository, AssetRepository assetRepository, UserRepository userRepository) {
         this.loanRepository = loanRepository;
         this.assetRepository = assetRepository;
+        this.userRepository = userRepository;
     }
 
 
@@ -61,7 +64,7 @@ public class Step1Controller {
 
     //    Assets
     @PostMapping("/add-asset")
-    public String saveAsset(@Valid Asset asset, BindingResult result, @AuthenticationPrincipal UserDetails user) {
+    public String saveAsset(@Valid Asset asset, BindingResult result, @AuthenticationPrincipal UserDetails userDetails) {
         if (result.hasErrors()) {
             return "step1";
         }
@@ -69,6 +72,7 @@ public class Step1Controller {
         newAsset.setId(asset.getId());
         newAsset.setDescription(asset.getDescription());
         newAsset.setValue(asset.getValue());
+        newAsset.setUser(userRepository.findByUsername(userDetails.getUsername()));
 
         assetRepository.save(newAsset);
         return "redirect:";
@@ -113,11 +117,19 @@ public class Step1Controller {
 
     //    Loans
     @PostMapping("/add-loan")
-    public String saveLoan(@Valid Loan loan, BindingResult result) {
+    public String saveLoan(@Valid Loan loan, BindingResult result,@AuthenticationPrincipal UserDetails userDetails) {
         if (result.hasErrors()) {
             return "step1";
         }
-        loanRepository.save(loan);
+
+        Loan newLoan = new Loan();
+        newLoan.setId(loan.getId());
+        newLoan.setDescription(loan.getDescription());
+        newLoan.setValue(loan.getValue());
+        newLoan.setUser(userRepository.findByUsername(userDetails.getUsername()));
+
+
+        loanRepository.save(newLoan);
         return "redirect:";
     }
 

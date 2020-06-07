@@ -56,9 +56,6 @@ public class AnnotationAdvice {
 
     @ModelAttribute("user")
     public String user(@AuthenticationPrincipal UserDetails userDetails) {
-        if (userDetails.getUsername().equals(null)) {
-            return "";
-        }
         return userDetails.getUsername();
     }
 }
