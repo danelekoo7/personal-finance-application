@@ -34,6 +34,12 @@ public class UserController {
         return "admin";
     }
 
+    @GetMapping("/temp")
+    @ResponseBody
+    public String temp() {
+        return "temp";
+    }
+
     @GetMapping("/admin")
     @ResponseBody
     public String userInfo(@AuthenticationPrincipal UserDetails customUser) {

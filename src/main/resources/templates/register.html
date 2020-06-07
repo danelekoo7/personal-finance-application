@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{app.login}">Login</title>
+    <!--/*/ <th:block th:include="general :: headerfiles"></th:block> /*/-->
+</head>
+<body class="bg-primary">
+<div id="layoutAuthentication">
+    <div id="layoutAuthentication_content">
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-7">
+                        <div class="card shadow-lg border-0 rounded-lg mt-5">
+                            <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3>
+                            </div>
+                            <div class="card-body">
+                                <form th:action="@{/registration}" th:object="${user}" method="post">
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="inputUsername">Username</label>
+                                        <input class="form-control py-4" id="inputUsername" type="text"
+                                               th:field="*{username}" aria-describedby="emailHelp"/></div>
+
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="inputEmailAddress">Email</label>
+                                        <input class="form-control py-4" id="inputEmailAddress" type="email"
+                                               th:field="*{email}" aria-describedby="emailHelp"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="small mb-1" for="inputPassword">Password</label>
+                                        <input class="form-control py-4" id="inputPassword" type="password"
+                                               th:field="*{password}"/></div>
+
+                                    <div class="form-group">
+                                        <div class="form-group mt-4 mb-0">
+                                            <button type="submit" class="btn btn-primary btn-block">Register User
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer text-center">
+                                <div class="small"><a href="register.html">Have an account? Go to login</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+</main>
+</div>
+</div>
+<div th:replace="general :: scripts"></div>
+</body>
+</html>
