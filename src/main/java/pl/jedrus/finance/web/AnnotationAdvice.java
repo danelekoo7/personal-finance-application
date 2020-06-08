@@ -14,7 +14,7 @@ import pl.jedrus.finance.repository.LoanRepository;
 import java.math.BigDecimal;
 
 
-@ControllerAdvice()
+@ControllerAdvice(assignableTypes = {Step1Controller.class, HomeController.class})
 public class AnnotationAdvice {
 
     private final LoanRepository loanRepository;
@@ -38,8 +38,6 @@ public class AnnotationAdvice {
         if (assetRepository.sumAllAssetByUser(user.getUsername()) != null) {
             sumAllAssets = sumAllAssets.add(assetRepository.sumAllAssetByUser(user.getUsername()));
         }
-
-
         return total.add(sumAllAssets).subtract(sumAllLoans);
     }
 
