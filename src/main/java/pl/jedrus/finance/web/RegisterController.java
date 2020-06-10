@@ -19,7 +19,7 @@ public class RegisterController {
         this.userService = userService;
     }
 
-    @GetMapping("registration")
+    @GetMapping("/registration")
     public String registration(Model model) {
 
         model.addAttribute("user", new User());
