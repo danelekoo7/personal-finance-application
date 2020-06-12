@@ -29,13 +29,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new SpringDataUserDetailsService();
     }
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .antMatchers("/webjars/**", "/create-user", "/temp").permitAll()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/step1/**", "/").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/step1/**", "/").hasAnyRole("USER")
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
