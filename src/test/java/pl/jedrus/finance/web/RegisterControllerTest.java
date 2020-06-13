@@ -1,5 +1,6 @@
 package pl.jedrus.finance.web;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,10 +12,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import pl.jedrus.finance.domain.User;
+import pl.jedrus.finance.service.UserService;
 
 import static org.hamcrest.Matchers.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -24,6 +28,9 @@ public class RegisterControllerTest {
 
     @Autowired
     private WebApplicationContext context;
+
+    @Autowired
+    private UserService userServiceMock;
 
     private MockMvc mvc;
 
@@ -35,6 +42,8 @@ public class RegisterControllerTest {
                 .build();
     }
 
+
+//    GET method
 
     @Test
     public void should_ReturnStatusOk_WhenGettingRequest() throws Exception {
@@ -64,4 +73,97 @@ public class RegisterControllerTest {
                 .andExpect(model().attribute("user", hasProperty("loans", nullValue())))
                 .andExpect(model().attribute("user", hasProperty("assets", nullValue())));
     }
+
+//    POST method
+
+//   Validation
+
+    @Test
+    public void should_ReturnErrorEmailValidation_WhenWrongEmailFormat() throws Exception {
+        mvc.perform(post("/registration")
+                .with(csrf())
+                .param("email", "email"))
+                .andExpect(model().attributeHasFieldErrors("user", "email"))
+                .andExpect(view().name("register"));
+    }
+
+    @Test
+    public void should_ReturnErrorEmailValidation_WhenEmailIsNull() throws Exception {
+        String email = null;
+
+        mvc.perform(post("/registration")
+                .with(csrf())
+                .param("email", email))
+                .andExpect(model().attributeHasFieldErrors("user", "email"))
+                .andExpect(view().name("register"));
+    }
+
+    @Test
+    public void should_ReturnErrorEmailValidation_WhenEmailHasOnlyWhiteSigns() throws Exception {
+        String email = " ";
+
+        mvc.perform(post("/registration")
+                .with(csrf())
+                .param("email", email))
+                .andExpect(model().attributeHasFieldErrors("user", "email"))
+                .andExpect(view().name("register"));
+    }
+
+    @Test
+    public void should_ReturnErrorUserNameValidation_WhenUserNameToLong() throws Exception {
+        String toLongName = StringUtils.repeat("a", 61);
+
+        mvc.perform(post("/registration")
+                .with(csrf())
+                .param("username", toLongName))
+                .andExpect(model().attributeHasFieldErrors("user", "username"))
+                .andExpect(view().name("register"));
+    }
+
+    @Test
+    public void should_ReturnErrorUserNameValidation_WhenUserNameIsNull() throws Exception {
+        String username = null;
+
+        mvc.perform(post("/registration")
+                .with(csrf())
+                .param("username", username))
+                .andExpect(model().attributeHasFieldErrors("user", "username"))
+                .andExpect(view().name("register"));
+    }
+
+    @Test
+    public void should_ReturnErrorUserNameValidation_WhenUsernameHasOnlyWhiteSigns() throws Exception {
+        String username = "    ";
+
+        mvc.perform(post("/registration")
+                .with(csrf())
+                .param("username", username))
+                .andExpect(model().attributeHasFieldErrors("user", "username"))
+                .andExpect(view().name("register"));
+    }
+
+    @Test
+    public void should_ReturnErrorPasswordValidation_WhenPasswordHasOnlyWhiteSigns() throws Exception {
+        String pass = "    ";
+
+        mvc.perform(post("/registration")
+                .with(csrf())
+                .param("password", pass))
+                .andExpect(model().attributeHasFieldErrors("user", "username"))
+                .andExpect(view().name("register"));
+    }
+
+
+    @Test
+    public void should_ReturnErrorPasswordValidation_WhenPasswordIsNull() throws Exception {
+        String pass = null;
+
+        mvc.perform(post("/registration")
+                .with(csrf())
+                .param("password", pass))
+                .andExpect(model().attributeHasFieldErrors("user", "username"))
+                .andExpect(view().name("register"));
+
+    }
+
 }

@@ -2,7 +2,8 @@ package pl.jedrus.finance.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.List;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Entity
@@ -11,11 +12,17 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank
+    @Max(60)
     @Column(nullable = false, unique = true, length = 60)
     private String username;
+
+    @NotBlank
     private String password;
 
     @Email
+    @NotBlank
     private String email;
 
 
