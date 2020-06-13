@@ -162,6 +162,7 @@ public class RegisterControllerTest {
     }
 
 
+
     @Test
     public void should_ReturnErrorPasswordValidation_WhenPasswordIsNull() throws Exception {
         String pass = null;
@@ -175,4 +176,15 @@ public class RegisterControllerTest {
 
     }
 
+
+    @Test
+    public void should_PassValidation_WhenDataOk() throws Exception {
+
+        mvc.perform(post("/registration")
+                .with(csrf())
+                .param("username", "danelekoo7")
+                .param("password", "dan123")
+                .param("email", "dan@dan.pl"))
+                .andExpect(model().hasNoErrors());
+    }
 }

@@ -2,8 +2,8 @@ package pl.jedrus.finance.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
@@ -14,7 +14,7 @@ public class User {
     private Long id;
 
     @NotBlank
-    @Max(60)
+    @Size(max = 60)
     @Column(nullable = false, unique = true, length = 60)
     private String username;
 
