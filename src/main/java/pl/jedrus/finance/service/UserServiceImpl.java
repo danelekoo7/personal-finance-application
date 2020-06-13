@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
     public User findByUserName(String username) {
         return userRepository.findByUsername(username);
     }
+
     @Override
     public void saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -34,5 +35,13 @@ public class UserServiceImpl implements UserService {
         Role userRole = roleRepository.findByName("ROLE_USER");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         userRepository.save(user);
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        User byUsername = userRepository.findByUsername(user.getUsername());
+        if (byUsername != null) {
+            userRepository.deleteById(byUsername.getId());
+        }
     }
 }

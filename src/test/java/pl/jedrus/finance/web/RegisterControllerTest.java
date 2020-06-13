@@ -30,7 +30,7 @@ public class RegisterControllerTest {
     private WebApplicationContext context;
 
     @Autowired
-    private UserService userServiceMock;
+    private UserService userService;
 
     private MockMvc mvc;
 
@@ -162,7 +162,6 @@ public class RegisterControllerTest {
     }
 
 
-
     @Test
     public void should_ReturnErrorPasswordValidation_WhenPasswordIsNull() throws Exception {
         String pass = null;
@@ -178,13 +177,19 @@ public class RegisterControllerTest {
 
 
     @Test
-    public void should_PassValidation_WhenDataOk() throws Exception {
+    public void should_PassValidationAndSaveDataToDB_WhenDataOk() throws Exception {
+        String username = "abdmasdojefvmjdjsahDASX138ndaskjhwqdcsubbaASdajsjdasSd";
 
         mvc.perform(post("/registration")
                 .with(csrf())
-                .param("username", "danelekoo7")
+                .param("username", username)
                 .param("password", "dan123")
                 .param("email", "dan@dan.pl"))
                 .andExpect(model().hasNoErrors());
+
+        User userToRemove = userService.findByUserName(username);
+        userService.deleteUser(userToRemove);
     }
+
 }
+
