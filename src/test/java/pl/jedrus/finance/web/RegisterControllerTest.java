@@ -80,10 +80,12 @@ public class RegisterControllerTest {
 
     @Test
     public void should_ReturnErrorEmailValidation_WhenWrongEmailFormat() throws Exception {
+        String email = "email";
         mvc.perform(post("/registration")
                 .with(csrf())
-                .param("email", "email"))
+                .param("email", email))
                 .andExpect(model().attributeHasFieldErrors("user", "email"))
+                .andExpect(model().attribute("user", hasProperty("email", is(email))))
                 .andExpect(view().name("register"));
     }
 
@@ -95,6 +97,7 @@ public class RegisterControllerTest {
                 .with(csrf())
                 .param("email", email))
                 .andExpect(model().attributeHasFieldErrors("user", "email"))
+                .andExpect(model().attribute("user", hasProperty("email", is(email))))
                 .andExpect(view().name("register"));
     }
 
@@ -106,6 +109,7 @@ public class RegisterControllerTest {
                 .with(csrf())
                 .param("email", email))
                 .andExpect(model().attributeHasFieldErrors("user", "email"))
+                .andExpect(model().attribute("user", hasProperty("email", is(email))))
                 .andExpect(view().name("register"));
     }
 
@@ -117,6 +121,7 @@ public class RegisterControllerTest {
                 .with(csrf())
                 .param("username", toLongName))
                 .andExpect(model().attributeHasFieldErrors("user", "username"))
+                .andExpect(model().attribute("user", hasProperty("username", is(toLongName))))
                 .andExpect(view().name("register"));
     }
 
@@ -128,6 +133,7 @@ public class RegisterControllerTest {
                 .with(csrf())
                 .param("username", username))
                 .andExpect(model().attributeHasFieldErrors("user", "username"))
+                .andExpect(model().attribute("user", hasProperty("username", is(username))))
                 .andExpect(view().name("register"));
     }
 
@@ -139,6 +145,7 @@ public class RegisterControllerTest {
                 .with(csrf())
                 .param("username", username))
                 .andExpect(model().attributeHasFieldErrors("user", "username"))
+                .andExpect(model().attribute("user", hasProperty("username", is(username))))
                 .andExpect(view().name("register"));
     }
 
@@ -149,7 +156,8 @@ public class RegisterControllerTest {
         mvc.perform(post("/registration")
                 .with(csrf())
                 .param("password", pass))
-                .andExpect(model().attributeHasFieldErrors("user", "username"))
+                .andExpect(model().attributeHasFieldErrors("user", "password"))
+                .andExpect(model().attribute("user", hasProperty("password", is(pass))))
                 .andExpect(view().name("register"));
     }
 
@@ -161,7 +169,8 @@ public class RegisterControllerTest {
         mvc.perform(post("/registration")
                 .with(csrf())
                 .param("password", pass))
-                .andExpect(model().attributeHasFieldErrors("user", "username"))
+                .andExpect(model().attributeHasFieldErrors("user", "password"))
+                .andExpect(model().attribute("user", hasProperty("password", is(pass))))
                 .andExpect(view().name("register"));
 
     }
