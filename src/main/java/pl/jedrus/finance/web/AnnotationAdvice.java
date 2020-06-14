@@ -14,7 +14,7 @@ import pl.jedrus.finance.repository.LoanRepository;
 import java.math.BigDecimal;
 
 
-@ControllerAdvice(assignableTypes = {Step1Controller.class, HomeController.class})
+@ControllerAdvice(assignableTypes = { HomeController.class, Step1Controller.class, Step2Controller.class})
 public class AnnotationAdvice {
 
     private final LoanRepository loanRepository;
