@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
 import pl.jedrus.finance.domain.Asset;
+import pl.jedrus.finance.domain.Income;
 import pl.jedrus.finance.domain.Loan;
 
 import pl.jedrus.finance.repository.AssetRepository;
@@ -14,7 +15,7 @@ import pl.jedrus.finance.repository.LoanRepository;
 import java.math.BigDecimal;
 
 
-@ControllerAdvice(assignableTypes = { HomeController.class, Step1Controller.class, Step2Controller.class})
+@ControllerAdvice(assignableTypes = {HomeController.class, Step1Controller.class, Step2Controller.class})
 public class AnnotationAdvice {
 
     private final LoanRepository loanRepository;
@@ -51,6 +52,13 @@ public class AnnotationAdvice {
     public Asset asset() {
         return new Asset();
     }
+
+
+    @ModelAttribute("income")
+    public Income income() {
+        return new Income();
+    }
+
 
     @ModelAttribute("user")
     public String user(@AuthenticationPrincipal UserDetails userDetails) {

@@ -12,7 +12,21 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
-                            <div class="card-header"><h3 class="text-center font-weight-light my-4" th:text="#{app.login}">Login</h3></div>
+                            <form th:action="@{/login}" method="post">
+                                <div class="form-group">
+                                    <input name="username" value="DEMO" type="hidden"/>
+                                </div>
+                                <div class="form-group">
+                                    <input name="password" value="poiuytrewq" type="hidden"/>
+                                </div>
+                                <button class="btn btn-primary mr-3 float-right" name="Submit" value="Login" type="Submit" th:text="#{app.demo}">
+                                    Demo
+                                </button>
+                            </form>
+
+                            <div class="card-header"><h3 class="text-center font-weight-light my-4"
+                                                         th:text="#{app.login}">Login</h3></div>
+
                             <div class="card-body">
                                 <form th:action="@{/login}" method="post">
                                     <div class="form-group">
@@ -37,8 +51,11 @@
                                 </form>
                             </div>
                             <div class="card-footer text-center">
-                                <div class="small"><a href="#"  th:href="@{/registration}" th:text="#{app.new.account}">Need an account? Sign
+                                <div class="small"><a href="#" th:href="@{/registration}" th:text="#{app.new.account}">Need
+                                    an account? Sign
                                     up!</a></div>
+
+
                             </div>
                         </div>
                     </div>
