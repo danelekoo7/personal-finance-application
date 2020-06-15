@@ -36,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/webjars/**", "/create-user", "/temp").permitAll()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/step1/**", "/").hasAnyRole("USER")
+                .antMatchers("/step1/**", "/step2/**", "/").hasAnyRole("USER")
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()

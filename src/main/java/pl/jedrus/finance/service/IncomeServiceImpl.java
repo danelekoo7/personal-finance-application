@@ -6,6 +6,7 @@ import pl.jedrus.finance.repository.IncomeRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class IncomeServiceImpl implements IncomeService {
@@ -29,4 +30,26 @@ public class IncomeServiceImpl implements IncomeService {
         }
         return incomesSum;
     }
+
+    @Override
+    public Income findAllById(Long id) {
+        Optional<Income> incomeById = repository.findAllById(id);
+        return incomeById.orElseThrow();
+    }
+
+    @Override
+    public void saveIncome(Income income) {
+        repository.save(income);
+    }
+
+    @Override
+    public void updateIncome(Income income) {
+        repository.save(income);
+    }
+
+    @Override
+    public void deleteIncomeById(Long id) {
+        repository.deleteById(id);
+    }
+
 }

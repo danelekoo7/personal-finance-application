@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{app.personal.finance}">Dashboard</title>
+    <!--/*/ <th:block th:include="general :: headerfiles"></th:block> /*/-->
+</head>
+<body class="sb-nav-fixed">
+<header th:insert="general :: header"></header>
+<div id="layoutSidenav">
+    <div th:replace="general :: menu"></div>
+    <div id="layoutSidenav_content">
+        <main>
+            <p></p>
+            <h3 class="text-center" th:text="#{app.edit.icome}"> edit income </h3>
+            <br>
+            <div class="row justify-content-center col-auto">
+                <form th:action="@{/step2/edit-income/{id}(id=${income.getId()})}" th:object="${income}" method="post">
+
+                    <label for="source" th:text="#{app.income.source}">income source</label>
+                    <input class="form-control" type="text" th:field="*{source}" id="source">
+                    <span th:if="${#fields.hasErrors('source')}" th:errors="*{source}"></span>
+                    <br>
+                    <label for="value" th:text="#{app.income.netto}">value</label>
+                    <input class="form-control" type="number" step="0.01" th:field="*{value}" id="value">
+                    <span th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></span>
+                    <br>
+                    <label for="comment" th:text="#{app.comment}">comment</label>
+                    <input class="form-control" type="text" th:field="*{comment}" id="comment">
+                    <span th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></span>
+                    <br>
+                    <br>
+                    <input class="form-control btn-block btn-primary" type="submit">  
+                </form>
+            </div>
+        </main>
+    </div>
+</div>
+<div th:replace="general :: scripts"></div>
+
+
+</body>
+</html>

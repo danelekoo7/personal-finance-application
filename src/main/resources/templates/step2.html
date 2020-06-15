@@ -11,9 +11,9 @@
     <div id="layoutSidenav_content">
         <main>
             <p></p>
-            <div class="row justify-content-center col-auto ml-1">
+            <div class="justify-content-center col-auto ml-1">
                 <div class="table-responsive">
-                    <form th:action="@{/step1/add-asset}" th:object="${income}" method="post" accept-charset="UTF-8">
+                    <form th:action="@{/step2/add-income}" th:object="${income}" method="post" accept-charset="UTF-8">
 
 
                         <table class="table table-bordered" width="100%" cellspacing="0">
@@ -35,9 +35,9 @@
                                 <td th:text="${income.getComment()}"></td>
 
                                 <td>
-                                    <a th:href="@{/step1/edit-asset/{id}(id=${income.getId()})}" th:text="#{app.edit}"
+                                    <a th:href="@{/step2/edit-income/{id}(id=${income.getId()})}" th:text="#{app.edit}"
                                        class="btn-block btn-dark text-center">edit</a>
-                                    <a th:href="@{/step1/delete-asset/{id}(id=${income.getId()})}"
+                                    <a th:href="@{/step2/delete-income/{id}(id=${income.getId()})}"
                                        class="btn-block btn-dark text-center deleteButton" th:text="#{app.delete}">Delete</a>
                                 </td>
                             </tr>

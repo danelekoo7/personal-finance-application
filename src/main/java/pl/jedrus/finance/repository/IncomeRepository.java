@@ -8,6 +8,7 @@ import pl.jedrus.finance.domain.Income;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface IncomeRepository extends JpaRepository<Income, Long> {
@@ -16,5 +17,9 @@ public interface IncomeRepository extends JpaRepository<Income, Long> {
 
     @Query("SELECT SUM(i.value) FROM Income i WHERE i.user.username= :username")
     BigDecimal sumAllIncomesByUser(@Param("username") String username);
+
+
+    Optional<Income> findAllById(Long id);
+
 
 }
