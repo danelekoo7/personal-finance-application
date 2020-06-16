@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pl.jedrus.finance.domain.Expense;
 import pl.jedrus.finance.domain.Income;
 import pl.jedrus.finance.repository.IncomeRepository;
+import pl.jedrus.finance.service.ExpenseService;
 import pl.jedrus.finance.service.IncomeService;
 import pl.jedrus.finance.service.UserService;
 
@@ -24,10 +26,12 @@ public class Step2Controller {
 
     private final IncomeService incomeService;
     private final UserService userService;
+    private final ExpenseService expenseService;
 
-    public Step2Controller(IncomeRepository incomeRepository, IncomeService incomeService, UserService userService) {
+    public Step2Controller(IncomeRepository incomeRepository, IncomeService incomeService, UserService userService, ExpenseService expenseService) {
         this.incomeService = incomeService;
         this.userService = userService;
+        this.expenseService = expenseService;
     }
 
     @GetMapping
@@ -35,11 +39,36 @@ public class Step2Controller {
         List<Income> allIncomes = incomeService.findAllByUser_Username(user.getUsername());
         BigDecimal incomesSum = incomeService.sumAllIncomesByUser(user.getUsername());
 
-        int nextIncomeId = allIncomes.size() + 1;
+        List<Expense> expenseGroup1 = expenseService.findAllByUser_UsernameAndExpenseGroup(user.getUsername(), 1);
+        List<Expense> expenseGroup2 = expenseService.findAllByUser_UsernameAndExpenseGroup(user.getUsername(), 2);
+        List<Expense> expenseGroup3 = expenseService.findAllByUser_UsernameAndExpenseGroup(user.getUsername(), 3);
+        List<Expense> expenseGroup4 = expenseService.findAllByUser_UsernameAndExpenseGroup(user.getUsername(), 4);
+
+        BigDecimal sumAllPlannedExpensesByUser = expenseService.sumAllPlannedExpensesByUser(user.getUsername());
+        BigDecimal sumAllRealExpensesByUser = expenseService.sumAllRealExpensesByUser(user.getUsername());
+
+        BigDecimal sumAllPlannedExpensesByUserAndGroup1 = expenseService.sumAllPlannedExpensesByUserAndGroup(user.getUsername(), 1);
+        BigDecimal sumAllRealExpensesByUserAndGroup1 = expenseService.sumAllRealExpensesByUserAndGroup(user.getUsername(), 1);
+        BigDecimal sumAllPlannedExpensesByUserAndGroup2 = expenseService.sumAllPlannedExpensesByUserAndGroup(user.getUsername(), 2);
+        BigDecimal sumAllRealExpensesByUserAndGroup2 = expenseService.sumAllRealExpensesByUserAndGroup(user.getUsername(), 2);
+        BigDecimal sumAllPlannedExpensesByUserAndGroup3 = expenseService.sumAllPlannedExpensesByUserAndGroup(user.getUsername(), 3);
+        BigDecimal sumAllRealExpensesByUserAndGroup3 = expenseService.sumAllRealExpensesByUserAndGroup(user.getUsername(), 3);
+        BigDecimal sumAllPlannedExpensesByUserAndGroup4 = expenseService.sumAllPlannedExpensesByUserAndGroup(user.getUsername(), 4);
+        BigDecimal sumAllRealExpensesByUserAndGroup4 = expenseService.sumAllRealExpensesByUserAndGroup(user.getUsername(), 4);
+
 
         model.addAttribute("incomes", allIncomes);
         model.addAttribute("incomesSum", incomesSum);
-        model.addAttribute("nextIncomeId", nextIncomeId);
+        model.addAttribute("nextIncomeId", allIncomes.size() + 1);
+
+        model.addAttribute("expensesGroup1", expenseGroup1);
+        model.addAttribute("plannedExpenseGroup1", sumAllPlannedExpensesByUserAndGroup1);
+        model.addAttribute("realExpenseGroup1", sumAllRealExpensesByUserAndGroup1);
+        model.addAttribute("nextExpenseGroup1", expenseGroup1.size() + 1);
+
+
+
+
         return "step2";
     }
 

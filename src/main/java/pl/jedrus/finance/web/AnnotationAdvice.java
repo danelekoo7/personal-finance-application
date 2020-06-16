@@ -3,12 +3,11 @@ package pl.jedrus.finance.web;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-
 import org.springframework.web.bind.annotation.ModelAttribute;
 import pl.jedrus.finance.domain.Asset;
+import pl.jedrus.finance.domain.Expense;
 import pl.jedrus.finance.domain.Income;
 import pl.jedrus.finance.domain.Loan;
-
 import pl.jedrus.finance.repository.AssetRepository;
 import pl.jedrus.finance.repository.LoanRepository;
 
@@ -57,6 +56,11 @@ public class AnnotationAdvice {
     @ModelAttribute("income")
     public Income income() {
         return new Income();
+    }
+
+    @ModelAttribute("expense")
+    public Expense expense() {
+        return new Expense();
     }
 
 

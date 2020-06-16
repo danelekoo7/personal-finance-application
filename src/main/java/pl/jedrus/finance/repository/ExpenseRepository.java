@@ -16,16 +16,16 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
     List<Expense> findAllByUser_UsernameAndExpenseGroup(String username, int expenseGroup);
 
 
-    @Query("SELECT SUM(e.plannedValue) FROM Expense e WHERE e.user.username=: username")
+    @Query("SELECT SUM(e.plannedValue) FROM Expense e WHERE e.user.username= :username")
     BigDecimal sumAllPlannedExpensesByUser(@Param("username") String username);
 
-    @Query("SELECT SUM(e.plannedValue) FROM Expense e WHERE e.user.username=: username and e.expenseGroup=: expenseGroup")
+    @Query("SELECT SUM(e.plannedValue) FROM Expense e WHERE e.user.username= :username and e.expenseGroup= :expenseGroup")
     BigDecimal sumAllPlannedExpensesByUserAndGroup(@Param("username") String username, @Param("expenseGroup") int expenseGroup);
 
-    @Query("SELECT SUM(e.realValue) FROM Expense e WHERE e.user.username=: username")
+    @Query("SELECT SUM(e.realValue) FROM Expense e WHERE e.user.username= :username")
     BigDecimal sumAllRealExpensesByUser(@Param("username") String username);
 
-    @Query("SELECT SUM(e.realValue) FROM Expense e WHERE e.user.username=: username and e.expenseGroup=: expenseGroup")
+    @Query("SELECT SUM(e.realValue) FROM Expense e WHERE e.user.username= :username and e.expenseGroup= :expenseGroup")
     BigDecimal sumAllRealExpensesByUserAndGroup(@Param("username") String username, @Param("expenseGroup") int expenseGroup);
 
     Optional<Expense> findAllById(Long id);
