@@ -75,6 +75,7 @@
 
                     </form>
                 </div>
+                <p></p>
                 <div class="table-responsive">
                     <form th:action="@{/step2/add-expenseG1}" th:object="${expense}" method="post"
                           accept-charset="UTF-8">
@@ -120,7 +121,8 @@
 
                                 <td>
                                     <input class="form-control" type="number" step="0.01" th:field="*{plannedValue}">
-                                    <span th:if="${#fields.hasErrors('plannedValue')}" th:errors="*{plannedValue}"></span>
+                                    <span th:if="${#fields.hasErrors('plannedValue')}"
+                                          th:errors="*{plannedValue}"></span>
                                 </td>
 
                                 <td>
@@ -141,8 +143,10 @@
 
                             <tr class="thead-dark">
                                 <th rowspan="1" colspan="2" th:text="#{app.total}"> Total</th>
-                                <th  th:text="${plannedExpenseGroup1} + ' ' +#{app.currency}">currency</th>
-                                <th rowspan="1" colspan="3" th:text="${realExpenseGroup1} + ' ' +#{app.currency}">currency</th>
+                                <th th:text="${plannedExpenseGroup1} + ' ' +#{app.currency}">currency</th>
+                                <th rowspan="1" colspan="3" th:text="${realExpenseGroup1} + ' ' +#{app.currency}">
+                                    currency
+                                </th>
                             </tr>
                             </tbody>
 
@@ -160,8 +164,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="expense,iter:${expensesGroup1}">
-                                <td th:text="${iter.count}"></td>
+                            <tr th:each="expense,iter:${expensesGroup2}">
+                                <td th:text="${iter.count + nextExpenseGroup1 - 1}"></td>
                                 <td th:text="${expense.getExpenseType()}"></td>
                                 <td th:text="${expense.getPlannedValue()} + ' ' +#{app.currency}"></td>
                                 <td th:text="${expense.getRealValue()} + ' ' +#{app.currency}"></td>
@@ -185,7 +189,8 @@
 
                                 <td>
                                     <input class="form-control" type="number" step="0.01" th:field="*{plannedValue}">
-                                    <span th:if="${#fields.hasErrors('plannedValue')}" th:errors="*{plannedValue}"></span>
+                                    <span th:if="${#fields.hasErrors('plannedValue')}"
+                                          th:errors="*{plannedValue}"></span>
                                 </td>
 
                                 <td>
@@ -206,14 +211,163 @@
 
                             <tr class="thead-dark">
                                 <th rowspan="1" colspan="2" th:text="#{app.total}"> Total</th>
-                                <th  th:text="${plannedExpenseGroup2} + ' ' +#{app.currency}">currency</th>
-                                <th rowspan="1" colspan="3" th:text="${realExpenseGroup2} + ' ' +#{app.currency}">currency</th>
+                                <th th:text="${plannedExpenseGroup2} + ' ' +#{app.currency}">currency</th>
+                                <th rowspan="1" colspan="3" th:text="${realExpenseGroup2} + ' ' +#{app.currency}">
+                                    currency
+                                </th>
                             </tr>
                             </tbody>
 
                         </table>
 
                     </form>
+                    <form th:action="@{/step2/add-expenseG3}" th:object="${expense}" method="post"
+                          accept-charset="UTF-8">
+
+
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead th:class="thead-dark">
+                            <tr>
+                                <th rowspan="1" colspan="6" th:text="#{app.group3}"> Group 3</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="expense,iter:${expensesGroup3}">
+                                <td th:text="${iter.count + nextExpenseGroup2 - 1}"></td>
+                                <td th:text="${expense.getExpenseType()}"></td>
+                                <td th:text="${expense.getPlannedValue()} + ' ' +#{app.currency}"></td>
+                                <td th:text="${expense.getRealValue()} + ' ' +#{app.currency}"></td>
+                                <td th:text="${expense.getComment()}"></td>
+
+                                <td>
+                                    <a th:href="@{/step2/edit-expense/{id}(id=${expense.getId()})}"
+                                       th:text="#{app.edit}"
+                                       class="btn-block btn-dark text-center">edit</a>
+                                    <a th:href="@{/step2/delete-expense/{id}(id=${expense.getId()})}"
+                                       class="btn-block btn-dark text-center deleteButton" th:text="#{app.delete}">Delete</a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td th:text="${nextExpenseGroup3}"> next expense id</td>
+                                <td>
+                                    <input class="form-control" type="text" th:field="*{expenseType}">
+                                    <span th:if="${#fields.hasErrors('expenseType')}" th:errors="*{expenseType}"></span>
+                                </td>
+
+                                <td>
+                                    <input class="form-control" type="number" step="0.01" th:field="*{plannedValue}">
+                                    <span th:if="${#fields.hasErrors('plannedValue')}"
+                                          th:errors="*{plannedValue}"></span>
+                                </td>
+
+                                <td>
+                                    <input class="form-control" type="number" step="0.01" th:field="*{realValue}">
+                                    <span th:if="${#fields.hasErrors('realValue')}" th:errors="*{realValue}"></span>
+                                </td>
+
+                                <td>
+                                    <input class="form-control" type="text" th:field="*{comment}">
+                                    <span th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></span>
+                                </td>
+
+                                <td>
+                                        <input class="form-control btn-block btn-primary" type="submit">  
+                                </td>
+                            </tr>
+
+
+                            <tr class="thead-dark">
+                                <th rowspan="1" colspan="2" th:text="#{app.total}"> Total</th>
+                                <th th:text="${plannedExpenseGroup3} + ' ' +#{app.currency}">currency</th>
+                                <th rowspan="1" colspan="3" th:text="${realExpenseGroup3} + ' ' +#{app.currency}">
+                                    currency
+                                </th>
+                            </tr>
+                            </tbody>
+
+                        </table>
+
+                    </form>
+                    <form th:action="@{/step2/add-expenseG4}" th:object="${expense}" method="post"
+                          accept-charset="UTF-8">
+
+
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead th:class="thead-dark">
+                            <tr>
+                                <th rowspan="1" colspan="6" th:text="#{app.group4}"> Group 4</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="expense,iter:${expensesGroup4}">
+                                <td th:text="${iter.count + nextExpenseGroup3 - 1}"></td>
+                                <td th:text="${expense.getExpenseType()}"></td>
+                                <td th:text="${expense.getPlannedValue()} + ' ' +#{app.currency}"></td>
+                                <td th:text="${expense.getRealValue()} + ' ' +#{app.currency}"></td>
+                                <td th:text="${expense.getComment()}"></td>
+
+                                <td>
+                                    <a th:href="@{/step2/edit-expense/{id}(id=${expense.getId()})}"
+                                       th:text="#{app.edit}"
+                                       class="btn-block btn-dark text-center">edit</a>
+                                    <a th:href="@{/step2/delete-expense/{id}(id=${expense.getId()})}"
+                                       class="btn-block btn-dark text-center deleteButton" th:text="#{app.delete}">Delete</a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td th:text="${nextExpenseGroup4}"> next expense id</td>
+                                <td>
+                                    <input class="form-control" type="text" th:field="*{expenseType}">
+                                    <span th:if="${#fields.hasErrors('expenseType')}" th:errors="*{expenseType}"></span>
+                                </td>
+
+                                <td>
+                                    <input class="form-control" type="number" step="0.01" th:field="*{plannedValue}">
+                                    <span th:if="${#fields.hasErrors('plannedValue')}"
+                                          th:errors="*{plannedValue}"></span>
+                                </td>
+
+                                <td>
+                                    <input class="form-control" type="number" step="0.01" th:field="*{realValue}">
+                                    <span th:if="${#fields.hasErrors('realValue')}" th:errors="*{realValue}"></span>
+                                </td>
+
+                                <td>
+                                    <input class="form-control" type="text" th:field="*{comment}">
+                                    <span th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></span>
+                                </td>
+
+                                <td>
+                                        <input class="form-control btn-block btn-primary" type="submit">  
+                                </td>
+                            </tr>
+
+
+                            <tr class="thead-dark">
+                                <th rowspan="1" colspan="2" th:text="#{app.total}"> Total</th>
+                                <th th:text="${plannedExpenseGroup4} + ' ' +#{app.currency}">currency</th>
+                                <th rowspan="1" colspan="3" th:text="${realExpenseGroup4} + ' ' +#{app.currency}">
+                                    currency
+                                </th>
+                            </tr>
+                            </tbody>
+
+                        </table>
+
+                    </form>
+
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                        <tr class="thead-dark">
+                            <th rowspan="1" colspan="2" th:text="#{app.expense.planned.all}">Sum all planned expenses
+                            </th>
+                            <th th:text="${allPlannedExpense} + ' ' +#{app.currency}">currency</th>
+                            <th rowspan="1" colspan="3" th:text="${allRealExpense} + ' ' +#{app.currency}">currency</th>
+                        </tr>
+                        </thead>
+                    </table>
                 </div>
 
 

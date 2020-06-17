@@ -69,8 +69,20 @@ public class Step2Controller {
         model.addAttribute("expensesGroup2", expenseGroup2);
         model.addAttribute("plannedExpenseGroup2", sumAllPlannedExpensesByUserAndGroup2);
         model.addAttribute("realExpenseGroup2", sumAllRealExpensesByUserAndGroup2);
-        model.addAttribute("nextExpenseGroup2", expenseGroup2.size() + 1);
+        model.addAttribute("nextExpenseGroup2", expenseGroup1.size() + expenseGroup2.size() + 1);
 
+        model.addAttribute("expensesGroup3", expenseGroup3);
+        model.addAttribute("plannedExpenseGroup3", sumAllPlannedExpensesByUserAndGroup3);
+        model.addAttribute("realExpenseGroup3", sumAllRealExpensesByUserAndGroup3);
+        model.addAttribute("nextExpenseGroup3", expenseGroup1.size() + expenseGroup2.size() + expenseGroup3.size() + 1);
+
+        model.addAttribute("expensesGroup4", expenseGroup4);
+        model.addAttribute("plannedExpenseGroup4", sumAllPlannedExpensesByUserAndGroup4);
+        model.addAttribute("realExpenseGroup4", sumAllRealExpensesByUserAndGroup4);
+        model.addAttribute("nextExpenseGroup4", expenseGroup1.size() + expenseGroup2.size() + expenseGroup3.size() + expenseGroup4.size() + 1);
+
+        model.addAttribute("allPlannedExpense", sumAllPlannedExpensesByUser);
+        model.addAttribute("allRealExpense", sumAllRealExpensesByUser);
 
         return "step2";
     }
