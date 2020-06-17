@@ -144,9 +144,10 @@
                             <tr class="thead-dark">
                                 <th rowspan="1" colspan="2" th:text="#{app.total}"> Total</th>
                                 <th th:text="${plannedExpenseGroup1} + ' ' +#{app.currency}">currency</th>
-                                <th rowspan="1" colspan="3" th:text="${realExpenseGroup1} + ' ' +#{app.currency}">
+                                <th th:text="${realExpenseGroup1} + ' ' +#{app.currency}">
                                     currency
                                 </th>
+                                <th rowspan="1" colspan="2" th:text="${incomeSubExpenseGroup1}"></th>
                             </tr>
                             </tbody>
 
