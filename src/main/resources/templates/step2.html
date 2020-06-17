@@ -77,7 +77,7 @@
                 </div>
                 <p></p>
                 <div class="table-responsive">
-                    <form th:action="@{/step2/add-expenseG1}" th:object="${expense}" method="post"
+                    <form th:action="@{/step2/add-expense/1}" th:object="${expense}" method="post"
                           accept-charset="UTF-8">
 
 
@@ -153,7 +153,7 @@
                         </table>
 
                     </form>
-                    <form th:action="@{/step2/add-expenseG2}" th:object="${expense}" method="post"
+                    <form th:action="@{/step2/add-expense/2}" th:object="${expense}" method="post"
                           accept-charset="UTF-8">
 
 
@@ -221,7 +221,7 @@
                         </table>
 
                     </form>
-                    <form th:action="@{/step2/add-expenseG3}" th:object="${expense}" method="post"
+                    <form th:action="@{/step2/add-expense/3}" th:object="${expense}" method="post"
                           accept-charset="UTF-8">
 
 
@@ -289,7 +289,7 @@
                         </table>
 
                     </form>
-                    <form th:action="@{/step2/add-expenseG4}" th:object="${expense}" method="post"
+                    <form th:action="@{/step2/add-expense/4}" th:object="${expense}" method="post"
                           accept-charset="UTF-8">
 
 
@@ -352,22 +352,23 @@
                                     currency
                                 </th>
                             </tr>
+                            <tr>
+                                <th rowspan="1" colspan="6"></th>
+                            </tr>
+                            <tr class="thead-dark">
+                                <th rowspan="1" colspan="2" th:text="#{app.expense.planned.all}">Sum all planned
+                                    expenses
+                                </th>
+                                <th th:text="${allPlannedExpense} + ' ' +#{app.currency}">currency</th>
+                                <th rowspan="1" colspan="3" th:text="${allRealExpense} + ' ' +#{app.currency}">
+                                    currency
+                                </th>
+                            </tr>
                             </tbody>
 
                         </table>
 
                     </form>
-
-                    <table class="table table-bordered" width="100%" cellspacing="0">
-                        <thead>
-                        <tr class="thead-dark">
-                            <th rowspan="1" colspan="2" th:text="#{app.expense.planned.all}">Sum all planned expenses
-                            </th>
-                            <th th:text="${allPlannedExpense} + ' ' +#{app.currency}">currency</th>
-                            <th rowspan="1" colspan="3" th:text="${allRealExpense} + ' ' +#{app.currency}">currency</th>
-                        </tr>
-                        </thead>
-                    </table>
                 </div>
 
 

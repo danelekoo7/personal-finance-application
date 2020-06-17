@@ -134,4 +134,61 @@ public class Step2Controller {
         incomeService.deleteIncomeById(id);
         return "redirect:/step2";
     }
+
+    //    Expenses
+    @PostMapping("/add-expense/{expenseGroup}")
+    public String saveExpense(@PathVariable int expenseGroup, @Valid Expense expense, BindingResult result, @AuthenticationPrincipal UserDetails userDetails) {
+        if (result.hasErrors()) {
+            return "step2";
+        }
+
+        Expense newExpense = new Expense();
+        newExpense.setId(expense.getId());
+        newExpense.setExpenseGroup(expenseGroup);
+        newExpense.setComment(expense.getComment());
+        newExpense.setExpenseType(expense.getExpenseType());
+        newExpense.setPlannedValue(expense.getPlannedValue());
+        newExpense.setRealValue(expense.getRealValue());
+        newExpense.setUser(userService.findByUserName(userDetails.getUsername()));
+        expenseService.saveExpense(newExpense);
+
+        return "redirect:/step2";
+    }
+
+
+    @GetMapping("/edit-expense/{id}")
+    public String editExpense(@PathVariable Long id, Model model) {
+
+        Expense expense = expenseService.findAllById(id);
+
+
+        model.addAttribute("expense", expense);
+        return "edit-expense";
+    }
+
+    @PostMapping("/edit-expense/{id}")
+    public String updateExpense(@Valid Expense expense, BindingResult result, @PathVariable Long id) {
+        if (result.hasErrors()) {
+            return "edit-expense";
+        }
+
+        Expense expenseInDB = expenseService.findAllById(id);
+        expenseInDB.setExpenseType(expense.getExpenseType());
+        expenseInDB.setPlannedValue(expense.getPlannedValue());
+        expenseInDB.setRealValue(expense.getRealValue());
+        expenseInDB.setComment(expense.getComment());
+        expenseInDB.setExpenseGroup(expense.getExpenseGroup());
+
+        expenseService.updateExpense(expenseInDB);
+        return "redirect:/step2";
+    }
+
+
+    @GetMapping("/delete-expense/{id}")
+    public String deleteExpense(@PathVariable Long id) {
+        expenseService.deleteExpenseById(id);
+        return "redirect:/step2";
+    }
+
+
 }

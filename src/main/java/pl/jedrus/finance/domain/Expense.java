@@ -1,5 +1,7 @@
 package pl.jedrus.finance.domain;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
@@ -18,6 +20,7 @@ public class Expense {
 
     private BigDecimal realValue;
 
+    @Range(min = 1, max = 4)
     private int expenseGroup;
 
     private String comment;

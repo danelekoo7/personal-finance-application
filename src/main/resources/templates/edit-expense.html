@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{app.personal.finance}">Dashboard</title>
+    <!--/*/ <th:block th:include="general :: headerfiles"></th:block> /*/-->
+</head>
+<body class="sb-nav-fixed">
+<header th:insert="general :: header"></header>
+<div id="layoutSidenav">
+    <div th:replace="general :: menu"></div>
+    <div id="layoutSidenav_content">
+        <main>
+            <p></p>
+            <h3 class="text-center" th:text="#{app.edit.expnese}"> edit expense </h3>
+            <br>
+            <div class="row justify-content-center col-auto">
+                <form th:action="@{/step2/edit-expense/{id}(id=${expense.getId()})}" th:object="${expense}" method="post">
+
+                    <label for="expenseType" th:text="#{app.expense.type}">expense type</label>
+                    <input class="form-control" type="text" th:field="*{expenseType}" id="expenseType">
+                    <span th:if="${#fields.hasErrors('expenseType')}" th:errors="*{expenseType}"></span>
+                    <br>
+                    <label for="plannedValue" th:text="#{app.expense.planned}">planned value</label>
+                    <input class="form-control" type="number" step="0.01" th:field="*{plannedValue}" id="plannedValue">
+                    <span th:if="${#fields.hasErrors('plannedValue')}" th:errors="*{plannedValue}"></span>
+                    <br>
+                    <label for="realValue" th:text="#{app.expense.real}">real value</label>
+                    <input class="form-control" type="number" step="0.01" th:field="*{realValue}" id="realValue">
+                    <span th:if="${#fields.hasErrors('realValue')}" th:errors="*{realValue}"></span>
+                    <br>
+                    <label for="expenseGroup" th:text="#{app.expense.group}">expense group</label>
+                    <br>
+                    <select id="expenseGroup" name="expenseGroup" th:field="*{expenseGroup}">
+                        <option value="1" th:text="#{app.group1}">group 1</option>
+                        <option value="2" th:text="#{app.group2}" >group 2</option>
+                        <option value="3" th:text="#{app.group3}">group 3</option>
+                        <option value="4" th:text="#{app.group4}">group 4</option>
+                    </select>
+<!--                    <input class="form-control" type="number" step="0.01" th:field="*{expenseGroup}" id="expenseGroup">-->
+                    <span th:if="${#fields.hasErrors('expenseGroup')}" th:errors="*{expenseGroup}"></span>
+                    <br>
+                    <label for="comment" th:text="#{app.comment}">comment</label>
+                    <input class="form-control" type="text" th:field="*{comment}" id="comment">
+                    <span th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></span>
+                    <br>
+                    <br>
+                    <input class="form-control btn-block btn-primary" type="submit">  
+                </form>
+            </div>
+        </main>
+    </div>
+</div>
+<div th:replace="general :: scripts"></div>
+
+
+</body>
+</html>
