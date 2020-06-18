@@ -12,18 +12,18 @@
         <main>
             <div class="d-flex justify-content-between">
                 <div>
-                    <a th:href="@{/step2/expense-group/1}"
-                       th:text="#{app.expense.group1}"
-                       class=" btn btn-secondary">previous</a>
-                </div>
-                <div>
                     <a th:href="@{/step2/expense-group/2}"
                        th:text="#{app.expense.group2}"
-                       class=" btn btn-secondary">current</a>
+                       class=" btn btn-secondary">previous</a>
                 </div>
                 <div>
                     <a th:href="@{/step2/expense-group/3}"
                        th:text="#{app.expense.group3}"
+                       class=" btn btn-secondary">current</a>
+                </div>
+                <div>
+                    <a th:href="@{/step2/expense-group/4}"
+                       th:text="#{app.expense.group4}"
                        class="btn btn-secondary ">next</a>
                 </div>
             </div>
@@ -41,12 +41,12 @@
                             <th th:text="#{app.option}">option</th>
                         </tr>
                         <tr>
-                            <th rowspan="1" colspan="6" th:text="#{app.group2}"> Group 2</th>
+                            <th rowspan="1" colspan="6" th:text="#{app.group3}"> Group 3</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="expense,iter:${expensesGroup2}">
-                            <td th:text="${iter.count + nextExpenseGroup1 - 1}"></td>
+                        <tr th:each="expense,iter:${expensesGroup3}">
+                            <td th:text="${iter.count + nextExpenseGroup2 - 1}"></td>
                             <td th:text="${expense.getExpenseType()}"></td>
                             <td th:text="${expense.getPlannedValue()} + ' ' +#{app.currency}"></td>
                             <td th:text="${expense.getRealValue()} + ' ' +#{app.currency}"></td>
@@ -65,14 +65,14 @@
                         </tr>
                         <tr class="thead-dark">
                             <th rowspan="1" colspan="2" th:text="#{app.total}"> Total</th>
-                            <th th:text="${plannedExpenseGroup2} + ' ' +#{app.currency}">currency</th>
-                            <th th:text="${realExpenseGroup2} + ' ' +#{app.currency}">
+                            <th th:text="${plannedExpenseGroup3} + ' ' +#{app.currency}">currency</th>
+                            <th th:text="${realExpenseGroup3} + ' ' +#{app.currency}">
                                 currency
                             </th>
                             <th rowspan="1" colspan="2"
-                                th:text="#{app.after.group2} + ${incomeSubExpenseGroup1}+#{app.currency} + ' - ' +
-                                    ${plannedExpenseGroup2}+#{app.currency} + ' = ' +
-                                    ${incomeSubExpenseGroup2}+#{app.currency}"></th>
+                                th:text="#{app.after.group3} + ${incomeSubExpenseGroup2}+#{app.currency} + ' - ' +
+                                    ${plannedExpenseGroup3}+#{app.currency} + ' = ' +
+                                    ${incomeSubExpenseGroup3}+#{app.currency}"></th>
                         </tr>
                         </tbody>
 
@@ -92,12 +92,12 @@
                             <th th:text="#{app.option}">option</th>
                         </tr>
                         </thead>
-                        <form th:action="@{/step2/add-expense/2}" th:object="${expense}" method="post"
+                        <form th:action="@{/step2/add-expense/3}" th:object="${expense}" method="post"
                               accept-charset="UTF-8">
 
                             <tbody>
                             <tr>
-                                <td th:text="${nextExpenseGroup2}"> next expense id</td>
+                                <td th:text="${nextExpenseGroup3}"> next expense id</td>
                                 <td>
                                     <input class="form-control" type="text" th:field="*{expenseType}">
                                     <span th:if="${#fields.hasErrors('expenseType')}" th:errors="*{expenseType}"></span>
