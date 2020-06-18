@@ -13,56 +13,86 @@
             <p></p>
             <div class="justify-content-center col-auto ml-1">
                 <div class="table-responsive">
-                    <form th:action="@{/step2/add-expense/1}" th:object="${expense}" method="post"
-                          accept-charset="UTF-8">
-
-
-                        <table class="table table-bordered" width="100%" cellspacing="0">
-                            <thead th:class="thead-dark">
-                            <tr>
-                                <th>id</th>
-                                <th th:text="#{app.expense.type}">Expense type</th>
-                                <th th:text="#{app.expense.planned}">Expense planned</th>
-                                <th th:text="#{app.expense.real}">Expense real</th>
-                                <th th:text="#{app.comment}">Comment</th>
-                                <th th:text="#{app.option}">option</th>
-                            </tr>
-                            <tr>
-                                <th rowspan="1" colspan="6" th:text="#{app.group1}"> Group 1</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="expense,iter:${expensesGroup1}">
-                                <td th:text="${iter.count}"></td>
-                                <td th:text="${expense.getExpenseType()}"></td>
-                                <td th:text="${expense.getPlannedValue()} + ' ' +#{app.currency}"></td>
-                                <td th:text="${expense.getRealValue()} + ' ' +#{app.currency}"></td>
-                                <td th:text="${expense.getComment()}"></td>
-
-                                <td>
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead th:class="thead-dark">
+                        <tr>
+                            <th>id</th>
+                            <th th:text="#{app.expense.type}">Expense type</th>
+                            <th th:text="#{app.expense.planned}">Expense planned</th>
+                            <th th:text="#{app.expense.real}">Expense real</th>
+                            <th th:text="#{app.comment}">Comment</th>
+                            <th th:text="#{app.option}">option</th>
+                        </tr>
+                        <tr>
+                            <th rowspan="1" colspan="6" th:text="#{app.group1}"> Group 1</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="expense,iter:${expensesGroup1}">
+                            <td th:text="${iter.count}"></td>
+                            <td th:text="${expense.getExpenseType()}"></td>
+                            <td th:text="${expense.getPlannedValue()} + ' ' +#{app.currency}"></td>
+                            <td th:text="${expense.getRealValue()} + ' ' +#{app.currency}"></td>
+                            <td th:text="${expense.getComment()}"></td>
+                            <td>
+                                <div>
                                     <a th:href="@{/step2/edit-expense/{id}(id=${expense.getId()})}"
                                        th:text="#{app.edit}"
-                                       class="btn-block btn-dark text-center">edit</a>
+                                       class="btn btn-dark">edit</a>
                                     <a th:href="@{/step2/delete-expense/{id}(id=${expense.getId()})}"
-                                       class="btn-block btn-dark text-center deleteButton" th:text="#{app.delete}">Delete</a>
-                                </td>
-                            </tr>
+                                       class="btn btn-dark deleteButton"
+                                       th:text="#{app.delete}">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="thead-dark">
+                            <th rowspan="1" colspan="2" th:text="#{app.total}"> Total</th>
+                            <th th:text="${plannedExpenseGroup1} + ' ' +#{app.currency}">currency</th>
+                            <th th:text="${realExpenseGroup1} + ' ' +#{app.currency}">
+                                currency
+                            </th>
+                            <th rowspan="1" colspan="2"
+                                th:text="#{app.after.group1} + ${incomesSum}+#{app.currency} + ' - ' +
+                                    ${plannedExpenseGroup1}+#{app.currency} + ' = ' +
+                                    ${incomeSubExpenseGroup1}+#{app.currency}"></th>
+                        </tr>
+                        </tbody>
+                    </table>
 
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead th:class="thead-dark">
+                        <tr>
+                            <th rowspan="1" colspan="6" class="text-center" th:text="#{app.add.expense}"> Add expense
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>id</th>
+                            <th th:text="#{app.expense.type}">Expense type</th>
+                            <th th:text="#{app.expense.planned}">Expense planned</th>
+                            <th th:text="#{app.expense.real}">Expense real</th>
+                            <th th:text="#{app.comment}">Comment</th>
+                            <th th:text="#{app.option}">option</th>
+                        </tr>
+                        </thead>
+                        <form th:action="@{/step2/add-expense/1}" th:object="${expense}" method="post"
+                              accept-charset="UTF-8">
                             <tr>
                                 <td th:text="${nextExpenseGroup1}"> next expense id</td>
                                 <td>
-                                    <input class="form-control" type="text" th:field="*{expenseType}">
+                                    <input class="form-control" type="text" th:field="*{expenseType}" required>
                                     <span th:if="${#fields.hasErrors('expenseType')}" th:errors="*{expenseType}"></span>
                                 </td>
 
                                 <td>
-                                    <input class="form-control" type="number" step="0.01" th:field="*{plannedValue}">
+                                    <input class="form-control" type="number" step="0.01" min="0" th:default="0"
+                                           th:field="*{plannedValue}">
                                     <span th:if="${#fields.hasErrors('plannedValue')}"
                                           th:errors="*{plannedValue}"></span>
                                 </td>
 
                                 <td>
-                                    <input class="form-control" type="number" step="0.01" th:field="*{realValue}">
+                                    <input class="form-control" type="number" step="0.01" min="0" th:value="0"
+                                           th:field="*{realValue}">
                                     <span th:if="${#fields.hasErrors('realValue')}" th:errors="*{realValue}"></span>
                                 </td>
 
@@ -72,27 +102,13 @@
                                 </td>
 
                                 <td>
-                                        <input class="form-control btn-block btn-primary" type="submit">  
+                                        <input class="form-control btn-block btn-dark" type="submit">  
                                 </td>
                             </tr>
 
+                        </form>
+                    </table>
 
-                            <tr class="thead-dark">
-                                <th rowspan="1" colspan="2" th:text="#{app.total}"> Total</th>
-                                <th th:text="${plannedExpenseGroup1} + ' ' +#{app.currency}">currency</th>
-                                <th th:text="${realExpenseGroup1} + ' ' +#{app.currency}">
-                                    currency
-                                </th>
-                                <th rowspan="1" colspan="2"
-                                    th:text="#{app.after.group1} + ${incomesSum}+#{app.currency} + ' - ' +
-                                    ${plannedExpenseGroup1}+#{app.currency} + ' = ' +
-                                    ${incomeSubExpenseGroup1}+#{app.currency}"></th>
-                            </tr>
-                            </tbody>
-
-                        </table>
-
-                    </form>
                 </div>
 
 

@@ -44,23 +44,32 @@ public class AnnotationAdvice {
 
     @ModelAttribute("loan")
     public Loan loan() {
-        return new Loan();
+        Loan loan = new Loan();
+        loan.setValue(BigDecimal.ZERO);
+        return loan;
     }
 
     @ModelAttribute("asset")
     public Asset asset() {
-        return new Asset();
+        Asset asset = new Asset();
+        asset.setValue(BigDecimal.ZERO);
+        return asset;
     }
 
 
     @ModelAttribute("income")
     public Income income() {
-        return new Income();
+        Income income = new Income();
+        income.setValue(BigDecimal.ZERO);
+        return income;
     }
 
     @ModelAttribute("expense")
     public Expense expense() {
-        return new Expense();
+        Expense expense = new Expense();
+        expense.setRealValue(BigDecimal.ZERO);
+        expense.setPlannedValue(BigDecimal.ZERO);
+        return expense;
     }
 
 

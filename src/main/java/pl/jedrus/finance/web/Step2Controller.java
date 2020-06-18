@@ -152,7 +152,7 @@ public class Step2Controller {
 
     //    Expenses
 
-    @GetMapping("expense-group1")
+    @GetMapping("expense-group/1")
     public String getExpenseGroup1(Model model, @AuthenticationPrincipal UserDetails user) {
         BigDecimal incomesSum = incomeService.sumAllIncomesByUser(user.getUsername());
 
@@ -171,7 +171,7 @@ public class Step2Controller {
     }
 
 
-    @GetMapping("expense-group2")
+    @GetMapping("expense-group/2")
     public String getExpenseGroup2(Model model, @AuthenticationPrincipal UserDetails user) {
         BigDecimal incomesSum = incomeService.sumAllIncomesByUser(user.getUsername());
 
@@ -196,7 +196,8 @@ public class Step2Controller {
     @PostMapping("/add-expense/{expenseGroup}")
     public String saveExpense(@PathVariable int expenseGroup, @Valid Expense expense, BindingResult result, @AuthenticationPrincipal UserDetails userDetails) {
         if (result.hasErrors()) {
-            return "edit-expense";
+            return "step2/expense-group" + expenseGroup;
+
         }
 
         Expense newExpense = new Expense();
@@ -205,11 +206,12 @@ public class Step2Controller {
         newExpense.setComment(expense.getComment());
         newExpense.setExpenseType(expense.getExpenseType());
         newExpense.setPlannedValue(expense.getPlannedValue());
+
         newExpense.setRealValue(expense.getRealValue());
         newExpense.setUser(userService.findByUserName(userDetails.getUsername()));
         expenseService.saveExpense(newExpense);
 
-        return "redirect:/step2";
+        return "redirect:/step2/expense-group/" + expenseGroup;
     }
 
 
@@ -237,14 +239,15 @@ public class Step2Controller {
         expenseInDB.setExpenseGroup(expense.getExpenseGroup());
 
         expenseService.updateExpense(expenseInDB);
-        return "redirect:/step2";
+        return "redirect:/step2/expense-group/" + expenseInDB.getExpenseGroup();
     }
 
 
     @GetMapping("/delete-expense/{id}")
     public String deleteExpense(@PathVariable Long id) {
+        Expense expense = expenseService.findAllById(id);
         expenseService.deleteExpenseById(id);
-        return "redirect:/step2";
+        return "redirect:/step2/expense-group/" + expense.getExpenseGroup();
     }
 
 

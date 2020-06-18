@@ -3,7 +3,9 @@ package pl.jedrus.finance.domain;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity
@@ -16,8 +18,12 @@ public class Expense {
     @NotBlank
     private String expenseType;
 
+    @NotNull
+    @DecimalMin("0.0")
     private BigDecimal plannedValue;
 
+    @NotNull
+    @DecimalMin("0.0")
     private BigDecimal realValue;
 
     @Range(min = 1, max = 4)
