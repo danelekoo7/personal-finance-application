@@ -10,17 +10,69 @@
     <div th:replace="general :: menu"></div>
     <div id="layoutSidenav_content">
         <main>
-            <div class="text-center">
-            <span th:text="#{app.income}">income</span><a class="float-right btn btn-secondary">forward</a>
+            <div class="d-flex justify-content-between">
+                <div>
+                    <a th:href="@{/step2/expense-group/1}"
+                       th:text="#{app.expense.group4}"
+                       class=" btn btn-secondary">previous</a>
+                </div>
+                <div>
+                    <a th:href="@{/step2/income}"
+                       th:text="#{app.income}"
+                       class=" btn btn-secondary">current</a>
+                </div>
+                <div>
+                    <a th:href="@{/step2/expense-group/1}"
+                       th:text="#{app.expense.group1}"
+                       class="btn btn-secondary ">next</a>
+                </div>
             </div>
-
+            <p></p>
             <div class="justify-content-center col-auto ml-1">
                 <div class="table-responsive">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead th:class="thead-dark">
+                        <tr>
+                            <th>id</th>
+                            <th th:text="#{app.income.source}">Income source</th>
+                            <th th:text="#{app.income.netto}">Income netto</th>
+                            <th th:text="#{app.comment}">comment</th>
+                            <th th:text="#{app.option}">option</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="income,iter:${incomes}">
+                            <td th:text="${iter.count}"></td>
+                            <td th:text="${income.getSource()}"></td>
+                            <td th:text="${income.getValue()} + ' ' +#{app.currency}"></td>
+                            <td th:text="${income.getComment()}"></td>
+
+                            <td>
+                                <div class="d-inline-flex">
+                                    <a th:href="@{/step2/edit-income/{id}(id=${income.getId()})}"
+                                       th:text="#{app.edit}"
+                                       class=" mr-1 btn btn-dark">edit</a>
+                                    <a th:href="@{/step2/delete-income/{id}(id=${income.getId()})}"
+                                       class="btn btn-dark deleteButton"
+                                       th:text="#{app.delete}">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="thead-dark">
+                            <th rowspan="1" colspan="2" th:text="#{app.total}"> Total</th>
+                            <th rowspan="1" colspan="3" th:text="${incomesSum} + ' ' +#{app.currency}">currency</th>
+                        </tr>
+                        </tbody>
+                    </table>
+
                     <form th:action="@{/step2/add-income}" th:object="${income}" method="post" accept-charset="UTF-8">
-
-
                         <table class="table table-bordered" width="100%" cellspacing="0">
                             <thead th:class="thead-dark">
+                            <tr>
+                                <th rowspan="1" colspan="6" class="text-center" th:text="#{app.add.expense}"> Add
+                                    expense
+                                </th>
+                            </tr>
                             <tr>
                                 <th>id</th>
                                 <th th:text="#{app.income.source}">Income source</th>
@@ -31,29 +83,16 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="income,iter:${incomes}">
-                                <td th:text="${iter.count}"></td>
-                                <td th:text="${income.getSource()}"></td>
-                                <td th:text="${income.getValue()} + ' ' +#{app.currency}"></td>
-                                <td th:text="${income.getComment()}"></td>
-
-                                <td>
-                                    <a th:href="@{/step2/edit-income/{id}(id=${income.getId()})}" th:text="#{app.edit}"
-                                       class="btn-block btn-dark text-center">edit</a>
-                                    <a th:href="@{/step2/delete-income/{id}(id=${income.getId()})}"
-                                       class="btn-block btn-dark text-center deleteButton" th:text="#{app.delete}">Delete</a>
-                                </td>
-                            </tr>
-
                             <tr>
                                 <td th:text="${nextIncomeId}"> next income id</td>
                                 <td>
-                                    <input class="form-control" type="text" th:field="*{source}">
+                                    <input class="form-control" type="text" th:field="*{source}" required>
                                     <span th:if="${#fields.hasErrors('source')}" th:errors="*{source}"></span>
                                 </td>
 
                                 <td>
-                                    <input class="form-control" type="number" step="0.01" th:field="*{value}">
+                                    <input class="form-control" type="number" step="0.01" min="0" th:field="*{value}"
+                                           required>
                                     <span th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></span>
                                 </td>
 
@@ -63,19 +102,11 @@
                                 </td>
 
                                 <td>
-                                        <input class="form-control btn-block btn-primary" type="submit">  
+                                        <input class="form-control btn-block btn-dark" type="submit">  
                                 </td>
                             </tr>
-
-
-                            <tr class="thead-dark">
-                                <th rowspan="1" colspan="2" th:text="#{app.total}"> Total</th>
-                                <th rowspan="1" colspan="3" th:text="${incomesSum} + ' ' +#{app.currency}">currency</th>
-                            </tr>
                             </tbody>
-
                         </table>
-
                     </form>
                 </div>
                 <div class="modal" tabindex="-1" role="dialog" id="deleteModal">

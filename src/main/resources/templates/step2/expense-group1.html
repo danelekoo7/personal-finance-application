@@ -10,6 +10,23 @@
     <div th:replace="general :: menu"></div>
     <div id="layoutSidenav_content">
         <main>
+            <div class="d-flex justify-content-between">
+                <div>
+                    <a th:href="@{/step2/income}"
+                       th:text="#{app.income}"
+                       class=" btn btn-secondary">previous</a>
+                </div>
+                <div>
+                    <a th:href="@{/step2/expense-group/1}"
+                       th:text="#{app.expense.group1}"
+                       class=" btn btn-secondary">current</a>
+                </div>
+                <div>
+                    <a th:href="@{/step2/expense-group/2}"
+                       th:text="#{app.expense.group2}"
+                       class="btn btn-secondary ">next</a>
+                </div>
+            </div>
             <p></p>
             <div class="justify-content-center col-auto ml-1">
                 <div class="table-responsive">
@@ -35,12 +52,12 @@
                             <td th:text="${expense.getRealValue()} + ' ' +#{app.currency}"></td>
                             <td th:text="${expense.getComment()}"></td>
                             <td>
-                                <div>
+                                <div class="d-inline-flex">
                                     <a th:href="@{/step2/edit-expense/{id}(id=${expense.getId()})}"
                                        th:text="#{app.edit}"
-                                       class="btn btn-dark">edit</a>
+                                       class="mr-1 btn btn-dark">edit</a>
                                     <a th:href="@{/step2/delete-expense/{id}(id=${expense.getId()})}"
-                                       class="btn btn-dark deleteButton"
+                                       class=" btn btn-dark deleteButton"
                                        th:text="#{app.delete}">Delete</a>
                                 </div>
                             </td>
