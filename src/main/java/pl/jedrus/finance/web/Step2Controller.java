@@ -97,7 +97,7 @@ public class Step2Controller {
     //    Expenses
 
     @GetMapping("expense-group/{expenseGroup}")
-    public String get(@PathVariable int expenseGroup, Model model, @AuthenticationPrincipal UserDetails user) {
+    public String getExpense(@PathVariable int expenseGroup, Model model, @AuthenticationPrincipal UserDetails user) {
         List<Income> allIncomes = incomeService.findAllByUser_Username(user.getUsername());
         BigDecimal incomesSum = incomeService.sumAllIncomesByUser(user.getUsername());
 
@@ -216,5 +216,21 @@ public class Step2Controller {
         return "redirect:/step2/expense-group/" + expense.getExpenseGroup();
     }
 
+
+    @GetMapping("expense-register")
+    public String getExpenseRegister(Model model, @AuthenticationPrincipal UserDetails user) {
+        List<Expense> expenseGroup1 = expenseService.findAllByUser_UsernameAndExpenseGroup(user.getUsername(), 1);
+        List<Expense> expenseGroup2 = expenseService.findAllByUser_UsernameAndExpenseGroup(user.getUsername(), 2);
+        List<Expense> expenseGroup3 = expenseService.findAllByUser_UsernameAndExpenseGroup(user.getUsername(), 3);
+        List<Expense> expenseGroup4 = expenseService.findAllByUser_UsernameAndExpenseGroup(user.getUsername(), 4);
+
+        model.addAttribute("expenseGroup1", expenseGroup1);
+        model.addAttribute("expenseGroup2", expenseGroup2);
+        model.addAttribute("expenseGroup3", expenseGroup3);
+        model.addAttribute("expenseGroup4", expenseGroup4);
+
+        return "step2/expense-register";
+
+    }
 
 }
