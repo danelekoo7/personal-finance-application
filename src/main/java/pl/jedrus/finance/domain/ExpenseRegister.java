@@ -1,5 +1,7 @@
 package pl.jedrus.finance.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
@@ -21,12 +23,13 @@ public class ExpenseRegister {
     @DecimalMin("0.0")
     private BigDecimal value;
 
-    @NotBlank
-    private String category;
+    @ManyToOne
+    @JoinColumn(name = "expense_id")
+    private Expense expense;
 
     private String comment;
 
-    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate created;
 
     @ManyToOne
@@ -57,12 +60,12 @@ public class ExpenseRegister {
         this.value = value;
     }
 
-    public String getCategory() {
-        return category;
+    public Expense getExpense() {
+        return expense;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setExpense(Expense expense) {
+        this.expense = expense;
     }
 
     public String getComment() {
@@ -96,7 +99,7 @@ public class ExpenseRegister {
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", value=" + value +
-                ", category='" + category + '\'' +
+                ", expense=" + expense +
                 ", comment='" + comment + '\'' +
                 ", created=" + created +
                 ", user=" + user +

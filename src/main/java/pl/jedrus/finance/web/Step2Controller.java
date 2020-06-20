@@ -5,19 +5,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.jedrus.finance.domain.Expense;
+import pl.jedrus.finance.domain.ExpenseRegister;
 import pl.jedrus.finance.domain.Income;
-import pl.jedrus.finance.repository.IncomeRepository;
+import pl.jedrus.finance.service.ExpenseRegisterService;
 import pl.jedrus.finance.service.ExpenseService;
 import pl.jedrus.finance.service.IncomeService;
 import pl.jedrus.finance.service.UserService;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -27,21 +26,23 @@ public class Step2Controller {
     private final IncomeService incomeService;
     private final UserService userService;
     private final ExpenseService expenseService;
+    private final ExpenseRegisterService expenseRegisterService;
 
-    public Step2Controller(IncomeRepository incomeRepository, IncomeService incomeService, UserService userService, ExpenseService expenseService) {
+    public Step2Controller(IncomeService incomeService, UserService userService, ExpenseService expenseService, ExpenseRegisterService expenseRegisterService) {
         this.incomeService = incomeService;
         this.userService = userService;
         this.expenseService = expenseService;
+        this.expenseRegisterService = expenseRegisterService;
     }
 
     //    Incomes
     @GetMapping("/income")
     public String getIncome(Model model, @AuthenticationPrincipal UserDetails user) {
         List<Income> allIncomes = incomeService.findAllByUser_Username(user.getUsername());
-        BigDecimal incomesSum = incomeService.sumAllIncomesByUser(user.getUsername());
+//        BigDecimal incomesSum = incomeService.sumAllIncomesByUser(user.getUsername());
 
         model.addAttribute("incomes", allIncomes);
-        model.addAttribute("incomesSum", incomesSum);
+//        model.addAttribute("incomesSum", incomesSum);
         model.addAttribute("nextIncomeId", allIncomes.size() + 1);
         return "step2/income";
     }
@@ -219,18 +220,73 @@ public class Step2Controller {
 
     @GetMapping("expense-register")
     public String getExpenseRegister(Model model, @AuthenticationPrincipal UserDetails user) {
-        List<Expense> expenseGroup1 = expenseService.findAllByUser_UsernameAndExpenseGroup(user.getUsername(), 1);
-        List<Expense> expenseGroup2 = expenseService.findAllByUser_UsernameAndExpenseGroup(user.getUsername(), 2);
-        List<Expense> expenseGroup3 = expenseService.findAllByUser_UsernameAndExpenseGroup(user.getUsername(), 3);
-        List<Expense> expenseGroup4 = expenseService.findAllByUser_UsernameAndExpenseGroup(user.getUsername(), 4);
 
-        model.addAttribute("expenseGroup1", expenseGroup1);
-        model.addAttribute("expenseGroup2", expenseGroup2);
-        model.addAttribute("expenseGroup3", expenseGroup3);
-        model.addAttribute("expenseGroup4", expenseGroup4);
+        List<ExpenseRegister> expenseRegisterList = expenseRegisterService.findAllByUser_Username(user.getUsername());
+
+        BigDecimal sumAllExpensesInRegister = expenseRegisterService.sumAllExpensesInRegister(user.getUsername());
+
+
+        model.addAttribute("expenseRegisterList", expenseRegisterList);
+        model.addAttribute("sumAllExpensesInRegister", sumAllExpensesInRegister);
 
         return "step2/expense-register";
-
     }
+
+
+    @PostMapping("/expense-register")
+    public String saveExpenseRegister(@Valid ExpenseRegister expenseRegister, BindingResult result, @AuthenticationPrincipal UserDetails userDetails) {
+        if (result.hasErrors()) {
+            return "step2/expense-register";
+        }
+
+        ExpenseRegister newExpenseRegister = new ExpenseRegister();
+
+        newExpenseRegister.setValue(expenseRegister.getValue());
+        if (expenseRegister.getCreated() == null) {
+            newExpenseRegister.setCreated(LocalDate.now());
+        } else {
+            newExpenseRegister.setCreated(expenseRegister.getCreated());
+        }
+        newExpenseRegister.setExpense(expenseRegister.getExpense());
+
+        Expense expense = expenseService.findAllById(expenseRegister.getExpense().getId());
+        expense.setRealValue(expense.getRealValue().add(expenseRegister.getValue()));
+        expenseService.updateExpense(expense);
+
+        newExpenseRegister.setComment(expenseRegister.getComment());
+        newExpenseRegister.setDescription(expenseRegister.getDescription());
+        newExpenseRegister.setUser(userService.findByUserName(userDetails.getUsername()));
+
+        expenseRegisterService.saveExpenseRegister(newExpenseRegister);
+
+        return "redirect:/step2/expense-register";
+    }
+
+
+    @ModelAttribute("expenseGroup1")
+    public List<Expense> expenseGroup1(@AuthenticationPrincipal UserDetails user) {
+        return expenseService.findAllByUser_UsernameAndExpenseGroup(user.getUsername(), 1);
+    }
+
+    @ModelAttribute("expenseGroup2")
+    public List<Expense> expenseGroup2(@AuthenticationPrincipal UserDetails user) {
+        return expenseService.findAllByUser_UsernameAndExpenseGroup(user.getUsername(), 2);
+    }
+
+    @ModelAttribute("expenseGroup3")
+    public List<Expense> expenseGroup3(@AuthenticationPrincipal UserDetails user) {
+        return expenseService.findAllByUser_UsernameAndExpenseGroup(user.getUsername(), 3);
+    }
+
+    @ModelAttribute("expenseGroup4")
+    public List<Expense> expenseGroup4(@AuthenticationPrincipal UserDetails user) {
+        return expenseService.findAllByUser_UsernameAndExpenseGroup(user.getUsername(), 4);
+    }
+
+    @ModelAttribute("incomesSum")
+    public BigDecimal incomesSum(@AuthenticationPrincipal UserDetails user) {
+       return incomeService.sumAllIncomesByUser(user.getUsername());
+    }
+
 
 }

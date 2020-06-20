@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.jedrus.finance.domain.ExpenseRegister;
 import pl.jedrus.finance.repository.ExpenseRegisterRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -23,6 +24,16 @@ public class ExpenseRegisterServiceImpl implements ExpenseRegisterService {
     @Override
     public ExpenseRegister findAllById(Long id) {
         return repository.findAllById(id).orElseThrow();
+    }
+
+    @Override
+    public BigDecimal sumAllExpensesInRegister(String username) {
+
+        BigDecimal sumAllExpensesInRegister = repository.sumAllExpensesInRegister(username);
+        if (sumAllExpensesInRegister == null) {
+            return BigDecimal.ZERO;
+        }
+        return sumAllExpensesInRegister;
     }
 
     @Override
