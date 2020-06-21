@@ -1,3 +1,40 @@
+# insert demo assets
+
+INSERT INTO asset
+VALUES (null, 'mieszkanie', 250000, 19);
+INSERT INTO asset
+VALUES (null, 'samochód', 40000, 19);
+INSERT INTO asset
+VALUES (null, 'sprzęt RTV', 2000, 19);
+INSERT INTO asset
+VALUES (null, 'biżuteria', 1000, 19);
+INSERT INTO asset
+VALUES (null, 'lokata w banku', 10000, 19);
+INSERT INTO asset
+VALUES (null, 'fundusze inwestycyjne', 6500, 19);
+INSERT INTO asset
+VALUES (null, 'gotówka', 500, 19);
+
+# insert demo loans
+
+INSERT INTO loan
+VALUES (null, 'kredyt hipoteczny', 235000, 19);
+INSERT INTO loan
+VALUES (null, 'kredyt samochodowy', 25000, 19);
+INSERT INTO loan
+VALUES (null, 'karta kredytowa 1', 2000, 19);
+INSERT INTO loan
+VALUES (null, 'karta kredytowa 2', 8000, 19);
+INSERT INTO loan
+VALUES (null, 'pożyczka świąteczna', 3000, 19);
+INSERT INTO loan
+VALUES (null, '„chwilówka”', 2000, 19);
+INSERT INTO loan
+VALUES (null, 'limit w rachunku bankowym', 7000, 19);
+INSERT INTO loan
+VALUES (null, 'pożyczka od brata', 3000, 19);
+
+
 # insert demo income
 INSERT INTO income
 VALUES (null, '3700 zł brutto', 'Wynagrodzenie pani Barbary', 2644, 19);
@@ -95,8 +132,17 @@ VALUES (null, '', 3, 'Inne ważne wydatki', 0, 0, 19);
 
 
 # insert demo expense group 4
-INSERT INTO expense VALUES (null, 'Patrz krok 9: Zaatakuj największy dług.', 4, 'Rezerwa na dodatkową ratę kredytu hipotecznego', 0, 0, 19);
-INSERT INTO expense VALUES (null, 'Patrz krok 10: Przeznacz nadwyżki na trzy ważne cele.', 4, 'Rozrywka i przyjemności', 0, 0, 19);
-INSERT INTO expense VALUES (null, 'Patrz krok 10: Przeznacz nadwyżki na trzy ważne cele.', 4, 'Lokowanie nadwyżek', 0, 0, 19);
-INSERT INTO expense VALUES (null, 'Patrz krok 10: Przeznacz nadwyżki na trzy ważne cele.', 4, 'Pomoc innym', 0, 0, 19);
-INSERT INTO expense VALUES (null, '', 4, 'Dowolne zakupy', 0, 0, 19);
+INSERT INTO expense
+VALUES (null, 'Patrz krok 9: Zaatakuj największy dług.', 4, 'Rezerwa na dodatkową ratę kredytu hipotecznego', 0, 0, 19);
+INSERT INTO expense
+VALUES (null, 'Patrz krok 10: Przeznacz nadwyżki na trzy ważne cele.', 4, 'Rozrywka i przyjemności', 0, 0, 19);
+INSERT INTO expense
+VALUES (null, 'Patrz krok 10: Przeznacz nadwyżki na trzy ważne cele.', 4, 'Lokowanie nadwyżek', 0, 0, 19);
+INSERT INTO expense
+VALUES (null, 'Patrz krok 10: Przeznacz nadwyżki na trzy ważne cele.', 4, 'Pomoc innym', 0, 0, 19);
+INSERT INTO expense
+VALUES (null, '', 4, 'Dowolne zakupy', 0, 0, 19);
+
+
+
+

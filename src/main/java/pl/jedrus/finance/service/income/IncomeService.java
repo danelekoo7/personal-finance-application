@@ -1,4 +1,4 @@
-package pl.jedrus.finance.service;
+package pl.jedrus.finance.service.income;
 
 import pl.jedrus.finance.domain.Income;
 
@@ -11,12 +11,12 @@ public interface IncomeService {
 
     BigDecimal sumAllIncomesByUser(String username);
 
-    Income findAllById(Long id);
+    Income findById(Long id);
 
 
-    void saveIncome(Income income);
+    void saveIncome(Income income, String username);
 
-    void updateIncome(Income income);
+    void updateIncome(Income income, Long id);
 
     void deleteIncomeById(Long id);
 }

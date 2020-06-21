@@ -65,13 +65,13 @@ public class Step1Controller {
 
 
     @GetMapping("/edit-asset/{id}")
-    public String editAsset(@PathVariable Long id, Model model) throws Exception {
+    public String editAsset(@PathVariable Long id, Model model){
         model.addAttribute("asset", assetService.findById(id));
         return "step1/edit-asset";
     }
 
     @PostMapping("/edit-asset/{id}")
-    public String updateAsset(@Valid Asset asset, BindingResult result, @PathVariable Long id) throws Exception {
+    public String updateAsset(@Valid Asset asset, BindingResult result, @PathVariable Long id) {
         if (result.hasErrors()) {
             return "step1/edit-asset";
         }
@@ -98,13 +98,13 @@ public class Step1Controller {
     }
 
     @GetMapping("/edit-loan/{id}")
-    public String editLoan(@PathVariable Long id, Model model) throws Exception {
+    public String editLoan(@PathVariable Long id, Model model) {
         model.addAttribute("loan", loanService.findById(id));
         return "step1/edit-loan";
     }
 
     @PostMapping("/edit-loan/{id}")
-    public String updateLoan(@Valid Loan loan, BindingResult result, @PathVariable Long id) throws Exception {
+    public String updateLoan(@Valid Loan loan, BindingResult result, @PathVariable Long id){
         if (result.hasErrors()) {
             return "step1/edit-loan";
         }

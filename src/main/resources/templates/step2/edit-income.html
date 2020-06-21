@@ -14,7 +14,7 @@
             <h3 class="text-center" th:text="#{app.edit.icome}"> edit income </h3>
             <br>
             <div class="row justify-content-center col-auto">
-                <form th:action="@{/step2/edit-income/{id}(id=${income.getId()})}" th:object="${income}" method="post">
+                <form th:action="@{/step2/income/edit/{id}(id=${income.getId()})}" th:object="${income}" method="post">
 
                     <label for="source" th:text="#{app.income.source}">income source</label>
                     <input class="form-control" type="text" th:field="*{source}" id="source">
