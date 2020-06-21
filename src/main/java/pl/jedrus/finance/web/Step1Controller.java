@@ -5,47 +5,39 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import pl.jedrus.finance.domain.Asset;
 import pl.jedrus.finance.domain.Loan;
-import pl.jedrus.finance.repository.LoanRepository;
-import pl.jedrus.finance.repository.UserRepository;
 import pl.jedrus.finance.service.asset.AssetService;
+import pl.jedrus.finance.service.loan.LoanService;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/step1")
 public class Step1Controller {
 
-    private final LoanRepository loanRepository;
+    private final LoanService loanService;
     private final AssetService assetService;
-    private final UserRepository userRepository;
 
-    public Step1Controller(LoanRepository loanRepository, AssetService assetService, UserRepository userRepository) {
-        this.loanRepository = loanRepository;
+    public Step1Controller(LoanService loanService, AssetService assetService) {
+        this.loanService = loanService;
         this.assetService = assetService;
-        this.userRepository = userRepository;
     }
-
 
     @GetMapping
     public String get(Model model, @AuthenticationPrincipal UserDetails user) {
-        List<Loan> allLoans = loanRepository.findAllByUser_Username(user.getUsername());
+        List<Loan> allLoans = loanService.findAllByUser_Username(user.getUsername());
         List<Asset> allAssets = assetService.findAllByUser_Username(user.getUsername());
 
-        BigDecimal loansSum = BigDecimal.ZERO;
-        if (loanRepository.sumAllLoansByUser(user.getUsername()) != null) {
-            loansSum = loansSum.add(loanRepository.sumAllLoansByUser(user.getUsername()));
-        }
+        BigDecimal loansSum = loanService.sumAllLoansByUser(user.getUsername());
 
-        BigDecimal assetsSum = BigDecimal.ZERO;
-        if (assetService.sumAllAssetByUser(user.getUsername()) != null) {
-            assetsSum = assetsSum.add(assetService.sumAllAssetByUser(user.getUsername()));
-        }
+        BigDecimal assetsSum = assetService.sumAllAssetByUser(user.getUsername());
 
         int nextLoanId = allLoans.size() + 1;
         int nextAssetId = allAssets.size() + 1;
@@ -67,23 +59,13 @@ public class Step1Controller {
         if (result.hasErrors()) {
             return "step1/step1";
         }
-        Asset newAsset = new Asset();
-        newAsset.setId(asset.getId());
-        newAsset.setDescription(asset.getDescription());
-        newAsset.setValue(asset.getValue());
-        newAsset.setUser(userRepository.findByUsername(userDetails.getUsername()));
-
-        assetService.saveAsset(newAsset);
+        assetService.saveAsset(asset,userDetails.getUsername());
         return "redirect:";
     }
 
 
     @GetMapping("/edit-asset/{id}")
     public String editAsset(@PathVariable Long id, Model model) throws Exception {
-
-//        Optional<Asset> assetRepositoryById = assetService.findById(id);
-//        Asset asset = assetRepositoryById.orElseThrow(Exception::new);
-
         model.addAttribute("asset", assetService.findById(id));
         return "step1/edit-asset";
     }
@@ -93,15 +75,7 @@ public class Step1Controller {
         if (result.hasErrors()) {
             return "step1/edit-asset";
         }
-
-        Asset assetInDB = assetService.findById(id);
-
-        assetInDB.setId(asset.getId());
-        assetInDB.setDescription(asset.getDescription());
-        assetInDB.setValue(asset.getValue());
-
-        assetService.saveAsset(assetInDB);
-
+        assetService.updateAsset(asset, id);
         return "redirect:/step1";
     }
 
@@ -119,25 +93,13 @@ public class Step1Controller {
         if (result.hasErrors()) {
             return "step1/step1";
         }
-
-        Loan newLoan = new Loan();
-        newLoan.setId(loan.getId());
-        newLoan.setDescription(loan.getDescription());
-        newLoan.setValue(loan.getValue());
-        newLoan.setUser(userRepository.findByUsername(userDetails.getUsername()));
-
-
-        loanRepository.save(newLoan);
+        loanService.saveLoan(loan, userDetails.getUsername());
         return "redirect:";
     }
 
     @GetMapping("/edit-loan/{id}")
     public String editLoan(@PathVariable Long id, Model model) throws Exception {
-
-        Optional<Loan> byId = loanRepository.findById(id);
-        Loan loan = byId.orElseThrow(Exception::new);
-
-        model.addAttribute("loan", loan);
+        model.addAttribute("loan", loanService.findById(id));
         return "step1/edit-loan";
     }
 
@@ -146,25 +108,14 @@ public class Step1Controller {
         if (result.hasErrors()) {
             return "step1/edit-loan";
         }
-
-        Optional<Loan> byId = loanRepository.findById(id);
-        Loan loanInDb = byId.orElseThrow(Exception::new);
-
-        loanInDb.setDescription(loan.getDescription());
-        loanInDb.setValue(loan.getValue());
-        loanInDb.setId(loan.getId());
-
-        loanRepository.save(loanInDb);
-
+        loanService.updateLoan(loan, id);
         return "redirect:/step1";
     }
 
 
     @GetMapping("/delete-loan/{id}")
     public String deleteLoan(@PathVariable Long id) {
-        loanRepository.deleteById(id);
+        loanService.deleteLoanById(id);
         return "redirect:/step1";
     }
-
-
 }

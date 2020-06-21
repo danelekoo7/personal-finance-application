@@ -1,4 +1,4 @@
-package pl.jedrus.finance.service;
+package pl.jedrus.finance.service.user;
 
 import pl.jedrus.finance.domain.User;
 

@@ -12,9 +12,9 @@ public interface AssetService {
 
     Asset findById(Long id);
 
-    void saveAsset(Asset asset);
+    void saveAsset(Asset asset, String username);
 
-    void updateAsset(Asset asset);
+    void updateAsset(Asset asset, Long id);
 
     void deleteAssetById(Long id);
 }

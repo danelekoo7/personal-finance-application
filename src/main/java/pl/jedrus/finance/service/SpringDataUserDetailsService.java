@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import pl.jedrus.finance.domain.User;
+import pl.jedrus.finance.service.user.UserService;
 
 import java.util.HashSet;
 import java.util.Set;

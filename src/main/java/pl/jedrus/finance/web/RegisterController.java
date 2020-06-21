@@ -6,7 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.jedrus.finance.domain.User;
-import pl.jedrus.finance.service.UserService;
+import pl.jedrus.finance.service.user.UserService;
 
 import javax.validation.Valid;
 

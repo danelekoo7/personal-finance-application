@@ -11,8 +11,8 @@ import pl.jedrus.finance.domain.ExpenseRegister;
 import pl.jedrus.finance.domain.Income;
 import pl.jedrus.finance.service.ExpenseRegisterService;
 import pl.jedrus.finance.service.ExpenseService;
-import pl.jedrus.finance.service.IncomeService;
-import pl.jedrus.finance.service.UserService;
+import pl.jedrus.finance.service.income.IncomeService;
+import pl.jedrus.finance.service.user.UserService;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
@@ -35,65 +35,65 @@ public class Step2Controller {
         this.expenseRegisterService = expenseRegisterService;
     }
 
-    //    Incomes
-    @GetMapping("/income")
-    public String getIncome(Model model, @AuthenticationPrincipal UserDetails user) {
-        List<Income> allIncomes = incomeService.findAllByUser_Username(user.getUsername());
-//        BigDecimal incomesSum = incomeService.sumAllIncomesByUser(user.getUsername());
-
-        model.addAttribute("incomes", allIncomes);
-//        model.addAttribute("incomesSum", incomesSum);
-        model.addAttribute("nextIncomeId", allIncomes.size() + 1);
-        return "step2/income";
-    }
-
-
-    @PostMapping("/add-income")
-    public String saveIncome(@Valid Income income, BindingResult result, @AuthenticationPrincipal UserDetails userDetails) {
-        if (result.hasErrors()) {
-            return "step2/income";
-        }
-
-        Income newIncome = new Income();
-        newIncome.setId(income.getId());
-        newIncome.setSource(income.getSource());
-        newIncome.setValue(income.getValue());
-        newIncome.setComment(income.getComment());
-        newIncome.setUser(userService.findByUserName(userDetails.getUsername()));
-        incomeService.saveIncome(newIncome);
-        return "redirect:/step2/income";
-    }
-
-
-    @GetMapping("/edit-income/{id}")
-    public String editIncome(@PathVariable Long id, Model model) {
-
-        Income income = incomeService.findAllById(id);
-
-        model.addAttribute("income", income);
-        return "edit-income";
-    }
-
-    @PostMapping("/edit-income/{id}")
-    public String updateIncome(@Valid Income income, BindingResult result, @PathVariable Long id) {
-        if (result.hasErrors()) {
-            return "edit-income";
-        }
-
-        Income incomeInDB = incomeService.findAllById(id);
-        incomeInDB.setSource(income.getSource());
-        incomeInDB.setValue(income.getValue());
-        incomeInDB.setComment(income.getComment());
-        incomeService.updateIncome(incomeInDB);
-        return "redirect:/step2/income";
-    }
-
-
-    @GetMapping("/delete-income/{id}")
-    public String deleteIncome(@PathVariable Long id) {
-        incomeService.deleteIncomeById(id);
-        return "redirect:/step2/income";
-    }
+//    //    Incomes
+//    @GetMapping("/income")
+//    public String getIncome(Model model, @AuthenticationPrincipal UserDetails user) {
+//        List<Income> allIncomes = incomeService.findAllByUser_Username(user.getUsername());
+////        BigDecimal incomesSum = incomeService.sumAllIncomesByUser(user.getUsername());
+//
+//        model.addAttribute("incomes", allIncomes);
+////        model.addAttribute("incomesSum", incomesSum);
+//        model.addAttribute("nextIncomeId", allIncomes.size() + 1);
+//        return "step2/income";
+//    }
+//
+//
+//    @PostMapping("/add-income")
+//    public String saveIncome(@Valid Income income, BindingResult result, @AuthenticationPrincipal UserDetails userDetails) {
+//        if (result.hasErrors()) {
+//            return "step2/income";
+//        }
+//
+//        Income newIncome = new Income();
+//        newIncome.setId(income.getId());
+//        newIncome.setSource(income.getSource());
+//        newIncome.setValue(income.getValue());
+//        newIncome.setComment(income.getComment());
+//        newIncome.setUser(userService.findByUserName(userDetails.getUsername()));
+//        incomeService.saveIncome(newIncome);
+//        return "redirect:/step2/income";
+//    }
+//
+//
+//    @GetMapping("/edit-income/{id}")
+//    public String editIncome(@PathVariable Long id, Model model) {
+//
+//        Income income = incomeService.findAllById(id);
+//
+//        model.addAttribute("income", income);
+//        return "edit-income";
+//    }
+//
+//    @PostMapping("/edit-income/{id}")
+//    public String updateIncome(@Valid Income income, BindingResult result, @PathVariable Long id) {
+//        if (result.hasErrors()) {
+//            return "edit-income";
+//        }
+//
+//        Income incomeInDB = incomeService.findAllById(id);
+//        incomeInDB.setSource(income.getSource());
+//        incomeInDB.setValue(income.getValue());
+//        incomeInDB.setComment(income.getComment());
+//        incomeService.updateIncome(incomeInDB);
+//        return "redirect:/step2/income";
+//    }
+//
+//
+//    @GetMapping("/delete-income/{id}")
+//    public String deleteIncome(@PathVariable Long id) {
+//        incomeService.deleteIncomeById(id);
+//        return "redirect:/step2/income";
+//    }
 
     //    Expenses
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pl.jedrus.finance.domain.User;
 import pl.jedrus.finance.repository.UserRepository;
-import pl.jedrus.finance.service.UserService;
+import pl.jedrus.finance.service.user.UserService;
 
 @Controller
 public class UserController {
