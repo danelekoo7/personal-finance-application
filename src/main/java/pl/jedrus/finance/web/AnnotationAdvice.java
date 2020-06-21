@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 
-@ControllerAdvice(assignableTypes = {HomeController.class, Step1Controller.class, Step2Controller.class, Step2IncomeController.class})
+@ControllerAdvice(assignableTypes = {HomeController.class, Step1Controller.class, Step2IncomeController.class, Step2ExpenseController.class})
 public class AnnotationAdvice {
 
     private final LoanService loanService;
@@ -55,13 +55,6 @@ public class AnnotationAdvice {
         return income;
     }
 
-    @ModelAttribute("expense")
-    public Expense expense() {
-        Expense expense = new Expense();
-        expense.setRealValue(BigDecimal.ZERO);
-        expense.setPlannedValue(BigDecimal.ZERO);
-        return expense;
-    }
 
     @ModelAttribute("expenseRegister")
     public ExpenseRegister expenseRegister() {

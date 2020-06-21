@@ -1,4 +1,4 @@
-package pl.jedrus.finance.service;
+package pl.jedrus.finance.service.expense;
 
 import org.springframework.stereotype.Repository;
 import pl.jedrus.finance.domain.Expense;
@@ -12,7 +12,6 @@ public interface ExpenseService {
 
     List<Expense> findAllByUser_UsernameAndExpenseGroup(String username, int expenseGroup);
 
-
     BigDecimal sumAllPlannedExpensesByUser(String username);
 
     BigDecimal sumAllPlannedExpensesByUserAndGroup(String username, int expenseGroup);
@@ -21,12 +20,13 @@ public interface ExpenseService {
 
     BigDecimal sumAllRealExpensesByUserAndGroup(String username, int expenseGroup);
 
-    Expense findAllById(Long id);
+    BigDecimal incomeSubExpenseGroup(String username, int expenseGroup);
 
-    void saveExpense(Expense expense);
+    Expense findById(Long id);
 
-    void updateExpense(Expense expense);
+    void saveExpense(Expense expense, String username);
+
+    void updateExpense(Expense expense, Long id);
 
     void deleteExpenseById(Long id);
-
 }
