@@ -47,12 +47,12 @@
                             <tr>
                                 <td th:text="${nextAssetId}"> next asset id</td>
                                 <td>
-                                    <input class="form-control" type="text" th:field="*{description}">
+                                    <input class="form-control" type="text" th:field="*{description}" required>
                                     <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
                                 </td>
 
                                 <td>
-                                    <input class="form-control" type="number" step="0.01" th:field="*{value}">
+                                    <input class="form-control" type="number" step="0.01" min="0" th:field="*{value}">
                                     <span th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></span>
                                 </td>
                                 <td>
@@ -106,12 +106,12 @@
                             <tr>
                                 <td th:text="${nextLoanId}"> next Loan Id</td>
                                 <td>
-                                    <input class="form-control" type="text" th:field="*{description}" id="description">
+                                    <input class="form-control" type="text" th:field="*{description}" id="description" required>
                                     <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
                                 </td>
 
                                 <td>
-                                    <input class="form-control" type="number" step="0.01" th:field="*{value}"
+                                    <input class="form-control" type="number" step="0.01" min="0" th:field="*{value}"
                                            id="value">
                                     <span th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></span>
                                 </td>

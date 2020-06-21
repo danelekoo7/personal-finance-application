@@ -5,23 +5,24 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import pl.jedrus.finance.domain.*;
-import pl.jedrus.finance.repository.AssetRepository;
 import pl.jedrus.finance.repository.LoanRepository;
+import pl.jedrus.finance.service.asset.AssetService;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 
-@ControllerAdvice(assignableTypes = {HomeController.class, Step1Controller.class, Step2Controller.class})
+@ControllerAdvice(assignableTypes = {HomeController.class, Step1Controller.class, Step2Controller.class, Step2IncomeController.class})
 public class AnnotationAdvice {
 
     private final LoanRepository loanRepository;
-    private final AssetRepository assetRepository;
+    private final AssetService assetRepository;
 
-    public AnnotationAdvice(LoanRepository loanRepository, AssetRepository assetRepository) {
+    public AnnotationAdvice(LoanRepository loanRepository, AssetService assetRepository) {
         this.loanRepository = loanRepository;
         this.assetRepository = assetRepository;
     }
+
 
     @ModelAttribute("totalValue")
     public BigDecimal getTotalValue(@AuthenticationPrincipal UserDetails user) {
@@ -31,11 +32,7 @@ public class AnnotationAdvice {
             sumAllLoans = sumAllLoans.add(loanRepository.sumAllLoansByUser(user.getUsername()));
         }
 
-        BigDecimal sumAllAssets = BigDecimal.ZERO;
-
-        if (assetRepository.sumAllAssetByUser(user.getUsername()) != null) {
-            sumAllAssets = sumAllAssets.add(assetRepository.sumAllAssetByUser(user.getUsername()));
-        }
+        BigDecimal sumAllAssets = assetRepository.sumAllAssetByUser(user.getUsername());
         return total.add(sumAllAssets).subtract(sumAllLoans);
     }
 

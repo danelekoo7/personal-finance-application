@@ -49,10 +49,10 @@
 
                             <td>
                                 <div class="d-inline-flex">
-                                    <a th:href="@{/step2/edit-income/{id}(id=${income.getId()})}"
+                                    <a th:href="@{/step2/income/edit/{id}(id=${income.getId()})}"
                                        th:text="#{app.edit}"
                                        class=" mr-1 btn btn-dark">edit</a>
-                                    <a th:href="@{/step2/delete-income/{id}(id=${income.getId()})}"
+                                    <a th:href="@{/step2/income/delete/{id}(id=${income.getId()})}"
                                        class="btn btn-dark deleteButton"
                                        th:text="#{app.delete}">Delete</a>
                                 </div>
@@ -65,7 +65,7 @@
                         </tbody>
                     </table>
 
-                    <form th:action="@{/step2/add-income}" th:object="${income}" method="post" accept-charset="UTF-8">
+                    <form th:action="@{/step2/income/add}" th:object="${income}" method="post" accept-charset="UTF-8">
                         <table class="table table-bordered" width="100%" cellspacing="0">
                             <thead th:class="thead-dark">
                             <tr>
