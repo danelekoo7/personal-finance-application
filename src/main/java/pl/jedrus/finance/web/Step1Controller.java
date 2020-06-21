@@ -75,7 +75,7 @@ public class Step1Controller {
         if (result.hasErrors()) {
             return "step1/edit-asset";
         }
-        assetService.updateAsset(asset, id);
+        assetService.updateAsset(asset);
         return "redirect:/step1";
     }
 
@@ -108,7 +108,7 @@ public class Step1Controller {
         if (result.hasErrors()) {
             return "step1/edit-loan";
         }
-        loanService.updateLoan(loan, id);
+        loanService.updateLoan(loan);
         return "redirect:/step1";
     }
 

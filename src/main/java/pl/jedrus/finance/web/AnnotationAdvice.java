@@ -4,15 +4,17 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import pl.jedrus.finance.domain.*;
+import pl.jedrus.finance.domain.Asset;
+import pl.jedrus.finance.domain.Income;
+import pl.jedrus.finance.domain.Loan;
 import pl.jedrus.finance.service.asset.AssetService;
 import pl.jedrus.finance.service.loan.LoanService;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 
-@ControllerAdvice(assignableTypes = {HomeController.class, Step1Controller.class, Step2IncomeController.class, Step2ExpenseController.class})
+@ControllerAdvice(assignableTypes = {HomeController.class, Step1Controller.class, Step2IncomeController.class, Step2ExpenseController.class,
+Step2ExpenseRegisterController.class})
 public class AnnotationAdvice {
 
     private final LoanService loanService;
@@ -53,15 +55,6 @@ public class AnnotationAdvice {
         Income income = new Income();
         income.setValue(BigDecimal.ZERO);
         return income;
-    }
-
-
-    @ModelAttribute("expenseRegister")
-    public ExpenseRegister expenseRegister() {
-        ExpenseRegister expenseRegister = new ExpenseRegister();
-        expenseRegister.setCreated(LocalDate.now());
-        expenseRegister.setValue(BigDecimal.ZERO);
-        return expenseRegister;
     }
 
 

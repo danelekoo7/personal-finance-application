@@ -12,12 +12,12 @@
         <main>
             <div class="d-flex justify-content-between">
                 <div>
-                    <a th:href="@{/step2/expense-group/4}"
+                    <a th:href="@{/step2/expense/group/4}"
                        th:text="#{app.expense.group4}"
                        class=" btn btn-secondary">previous</a>
                 </div>
                 <div>
-                    <a th:href="@{/step2/expense-register}"
+                    <a th:href="@{/step2/expense/register}"
                        th:text="#{app.expense.register}"
                        class=" btn btn-secondary">current</a>
                 </div>
@@ -46,12 +46,12 @@
                             <th th:text="#{app.option}">option</th>
                         </tr>
                         </thead>
-                        <form th:action="@{/step2/expense-register}" th:object="${expenseRegister}" method="post"
+                        <form th:action="@{/step2/expense/register}" th:object="${expenseRegister}" method="post"
                               accept-charset="UTF-8">
 
                             <tbody>
                             <tr>
-                                <td th:text="${nextExpenseGroup3}"> next expense id</td>
+                                <td th:text="${expenseRegisterList.size() + 1}"> next expense id</td>
                                 <td>
                                     <input class="form-control" type="text" th:field="*{description}" required>
                                     <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
@@ -86,6 +86,7 @@
                                                     th:utext="${expense.getExpenseType()}"/>
                                         </optgroup>
                                     </select>
+                                    <span th:if="${#fields.hasErrors('expense')}" th:errors="*{expense}"></span>
                                 </td>
 
                                 <td>
@@ -131,10 +132,10 @@
                             <td th:text="${expense.getComment()}"></td>
                             <td>
                                 <div class="d-inline-flex">
-                                    <a th:href="@{/step2/edit-expense/{id}(id=${expense.getId()})}"
+                                    <a th:href="@{/step2/expense/register/edit/{id}(id=${expense.getId()})}"
                                        th:text="#{app.edit}"
                                        class="mr-1 btn btn-dark">edit</a>
-                                    <a th:href="@{/step2/delete-expense/{id}(id=${expense.getId()})}"
+                                    <a th:href="@{/step2/expense/register/delete/{id}(id=${expense.getId()})}"
                                        class="btn btn-dark deleteButton"
                                        th:text="#{app.delete}">Delete</a>
                                 </div>

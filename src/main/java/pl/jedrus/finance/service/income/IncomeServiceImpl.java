@@ -48,8 +48,8 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
-    public void updateIncome(Income income, Long id) {
-        Income incomeInDB = findById(id);
+    public void updateIncome(Income income) {
+        Income incomeInDB = findById(income.getId());
         incomeInDB.setValue(income.getValue());
         incomeInDB.setComment(income.getComment());
         incomeInDB.setSource(income.getSource());

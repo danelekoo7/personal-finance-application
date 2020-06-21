@@ -45,8 +45,8 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public void updateLoan(Loan loan, Long id) {
-        Loan loanInDb = findById(id);
+    public void updateLoan(Loan loan) {
+        Loan loanInDb = findById(loan.getId());
         loanInDb.setValue(loan.getValue());
         loanInDb.setDescription(loan.getDescription());
         loanRepository.save(loanInDb);

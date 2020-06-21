@@ -14,7 +14,7 @@ public interface LoanService {
 
     void saveLoan(Loan loan, String username);
 
-    void updateLoan(Loan asset, Long id);
+    void updateLoan(Loan asset);
 
     void deleteLoanById(Long id);
 }

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{app.personal.finance}">Dashboard</title>
+    <!--/*/ <th:block th:include="general :: headerfiles"></th:block> /*/-->
+</head>
+<body class="sb-nav-fixed">
+<header th:insert="general :: header"></header>
+<div id="layoutSidenav">
+    <div th:replace="general :: menu"></div>
+    <div id="layoutSidenav_content">
+        <main>
+            <p></p>
+            <h3 class="text-center" th:text="#{app.edit.expnese.register}"> edit expense register  </h3>
+            <br>
+            <div class="row justify-content-center col-auto">
+                <form th:action="@{/step2/expense/register/edit/{id}(id=${expenseRegister.getId()})}" th:object="${expenseRegister}" method="post">
+
+                    <label for="description" th:text="#{app.expense.register.description}" >Expense description</label>
+                    <input class="form-control" type="text" th:field="*{description}" id="description" required>
+                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                    <br>
+                    <label for="value" th:text="#{app.expense.register.value}">Expense value</label>
+                    <input class="form-control" type="number" step="0.01" min="0" th:field="*{value}" id="value">
+                    <span th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></span>
+                    <br>
+                    <label for="expense" th:text="#{app.expense.register.category}">Expense category</label>
+                    <br>
+                    <select id="expense" th:field="*{expense}" style="max-width: 500px">
+                        <optgroup label="grupa1">
+                            <option th:each="expense : ${expenseGroup1} "
+                                    th:value="${expense.getId()}"
+                                    th:utext="${expense.getExpenseType()}"/>
+                        </optgroup>
+                        <optgroup label="grupa2">
+                            <option th:each="expense : ${expenseGroup2}"
+                                    th:value="${expense.getId()}"
+                                    th:utext="${expense.getExpenseType()}"/>
+                        </optgroup>
+                        <optgroup label="grupa3">
+                            <option th:each="expense : ${expenseGroup3}"
+                                    th:value="${expense.getId()}"
+                                    th:utext="${expense.getExpenseType()}"/>
+                        </optgroup>
+                        <optgroup label="grupa4">
+                            <option th:each="expense : ${expenseGroup4}"
+                                    th:value="${expense.getId()}"
+                                    th:utext="${expense.getExpenseType()}"/>
+                        </optgroup>
+                    </select>
+                    <span th:if="${#fields.hasErrors('expense')}" th:errors="*{expense}"></span>
+                    <br>
+                    <br>
+                    <label for="created" th:text="#{app.expense.register.created}">Expense created</label>
+                    <input class="form-control" type="date" th:field="*{created}" id="created">
+                    <span th:if="${#fields.hasErrors('created')}" th:errors="*{created}"></span>
+                   <br>
+                    <label for="comment" th:text="#{app.comment}">comment</label>
+                    <input class="form-control" type="text" th:field="*{comment}" id="comment">
+                    <span th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></span>
+                    <br>
+                    <br>
+                    <input class="form-control btn-block btn-primary" type="submit">  
+                </form>
+            </div>
+        </main>
+    </div>
+</div>
+<div th:replace="general :: scripts"></div>
+
+
+</body>
+</html>

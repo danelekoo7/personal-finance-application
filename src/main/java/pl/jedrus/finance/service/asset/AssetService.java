@@ -14,7 +14,7 @@ public interface AssetService {
 
     void saveAsset(Asset asset, String username);
 
-    void updateAsset(Asset asset, Long id);
+    void updateAsset(Asset asset);
 
     void deleteAssetById(Long id);
 }

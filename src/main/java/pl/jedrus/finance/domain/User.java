@@ -113,8 +113,6 @@ public class User {
                 ", email='" + email + '\'' +
                 ", enabled=" + enabled +
                 ", roles=" + roles +
-                ", loans=" + loans +
-                ", assets=" + assets +
                 '}';
     }
 }

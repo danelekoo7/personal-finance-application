@@ -1,12 +1,10 @@
 package pl.jedrus.finance.service.expense;
 
-import org.springframework.stereotype.Repository;
 import pl.jedrus.finance.domain.Expense;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Repository
 public interface ExpenseService {
     List<Expense> findAllByUser_Username(String username);
 
@@ -26,7 +24,7 @@ public interface ExpenseService {
 
     void saveExpense(Expense expense, String username);
 
-    void updateExpense(Expense expense, Long id);
+    void updateExpense(Expense expense);
 
     void deleteExpenseById(Long id);
 }

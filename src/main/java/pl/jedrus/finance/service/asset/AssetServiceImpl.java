@@ -46,8 +46,8 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public void updateAsset(Asset asset, Long id) {
-        Asset assetInDb = findById(id);
+    public void updateAsset(Asset asset) {
+        Asset assetInDb = findById(asset.getId());
         assetInDb.setValue(asset.getValue());
         assetInDb.setDescription(asset.getDescription());
         assetRepository.save(assetInDb);

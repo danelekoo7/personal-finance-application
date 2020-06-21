@@ -16,7 +16,7 @@ public interface IncomeService {
 
     void saveIncome(Income income, String username);
 
-    void updateIncome(Income income, Long id);
+    void updateIncome(Income income);
 
     void deleteIncomeById(Long id);
 }

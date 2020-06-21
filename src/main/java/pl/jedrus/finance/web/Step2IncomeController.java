@@ -59,7 +59,7 @@ public class Step2IncomeController {
         if (result.hasErrors()) {
             return "step2/edit-income";
         }
-        incomeService.updateIncome(income, id);
+        incomeService.updateIncome(income);
         return "redirect:/step2/income";
     }
 

@@ -96,8 +96,8 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public void updateExpense(Expense expense, Long id) {
-        Expense expenseInDB = findById(id);
+    public void updateExpense(Expense expense) {
+        Expense expenseInDB = findById(expense.getId());
         expenseInDB.setRealValue(expense.getRealValue());
         expenseInDB.setPlannedValue(expense.getPlannedValue());
         expenseInDB.setExpenseGroup(expense.getExpenseGroup());

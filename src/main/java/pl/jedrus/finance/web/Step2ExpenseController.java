@@ -34,7 +34,7 @@ public class Step2ExpenseController {
         List<Income> allIncomes = incomeService.findAllByUser_Username(user.getUsername());
         List<Expense> expenseGroupNr = expenseService.findAllByUser_UsernameAndExpenseGroup(user.getUsername(), expenseGroup);
 
-        model.addAttribute("incomes", incomeService.findAllByUser_Username(user.getUsername()));
+        model.addAttribute("incomes", allIncomes);
         model.addAttribute("incomesSum", incomeService.sumAllIncomesByUser(user.getUsername()));
         model.addAttribute("nextIncomeId", allIncomes.size() + 1);
 
@@ -75,7 +75,7 @@ public class Step2ExpenseController {
         if (result.hasErrors()) {
             return "step2/edit-expense";
         }
-        expenseService.updateExpense(expense, id);
+        expenseService.updateExpense(expense);
         return "redirect:/step2/expense/group/" + expense.getExpenseGroup();
     }
 
