@@ -45,7 +45,7 @@
                             </tr>
 
                             <tr>
-                                <td th:text="${nextAssetId}"> next asset id</td>
+                                <td th:text="${assets.size()+1}"> next asset id</td>
                                 <td>
                                     <input class="form-control" type="text" th:field="*{description}" required>
                                     <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
@@ -104,7 +104,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td th:text="${nextLoanId}"> next Loan Id</td>
+                                <td th:text="${assets.size()+1}"> next Loan Id</td>
                                 <td>
                                     <input class="form-control" type="text" th:field="*{description}" id="description" required>
                                     <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>

@@ -46,7 +46,7 @@
                         </thead>
                         <tbody>
                         <tr th:each="expense,iter:${expensesGroup}">
-                            <td th:text="${iter.count}"></td>
+                            <td th:text="${iter.count + nextExpenseGroup - expensesGroup.size() -1}"></td>
                             <td th:text="${expense.getExpenseType()}"></td>
                             <td th:text="${expense.getPlannedValue()} + ' ' +#{app.currency}"></td>
                             <td th:text="${expense.getRealValue()} + ' ' +#{app.currency}"></td>

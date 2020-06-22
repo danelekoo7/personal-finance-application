@@ -20,6 +20,9 @@ public interface ExpenseService {
 
     BigDecimal incomeSubExpenseGroup(String username, int expenseGroup);
 
+
+    int nextExpenseIdByGroup(String username, int expenseGroup);
+
     Expense findById(Long id);
 
     void saveExpense(Expense expense, String username);

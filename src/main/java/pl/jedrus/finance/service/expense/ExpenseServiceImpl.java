@@ -78,10 +78,19 @@ public class ExpenseServiceImpl implements ExpenseService {
 
         BigDecimal valueToSubtract = BigDecimal.ZERO;
 
-        for (int i = 1; i <= expenseGroup ; i++) {
-            valueToSubtract= valueToSubtract.add(sumAllPlannedExpensesByUserAndGroup(username,i));
+        for (int i = 1; i <= expenseGroup; i++) {
+            valueToSubtract = valueToSubtract.add(sumAllPlannedExpensesByUserAndGroup(username, i));
         }
         return sumIncomes.subtract(valueToSubtract);
+    }
+
+    @Override
+    public int nextExpenseIdByGroup(String username, int expenseGroup) {
+        int result = 0;
+        for (int i = 1; i <= expenseGroup; i++) {
+            result += findAllByUser_UsernameAndExpenseGroup(username, i).size();
+        }
+        return result + 1;
     }
 
     @Override

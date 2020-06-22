@@ -7,13 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.jedrus.finance.domain.Expense;
-import pl.jedrus.finance.domain.Income;
 import pl.jedrus.finance.service.expense.ExpenseService;
 import pl.jedrus.finance.service.income.IncomeService;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
-import java.util.List;
 
 @Controller
 @RequestMapping("/step2/expense")
@@ -31,17 +29,11 @@ public class Step2ExpenseController {
     @GetMapping("group/{expenseGroup}")
     public String getExpense(@PathVariable int expenseGroup, Model model, @AuthenticationPrincipal UserDetails user) {
 
-        List<Income> allIncomes = incomeService.findAllByUser_Username(user.getUsername());
-        List<Expense> expenseGroupNr = expenseService.findAllByUser_UsernameAndExpenseGroup(user.getUsername(), expenseGroup);
-
-        model.addAttribute("incomes", allIncomes);
         model.addAttribute("incomesSum", incomeService.sumAllIncomesByUser(user.getUsername()));
-        model.addAttribute("nextIncomeId", allIncomes.size() + 1);
-
-        model.addAttribute("expensesGroup", expenseGroupNr);
+        model.addAttribute("expensesGroup", expenseService.findAllByUser_UsernameAndExpenseGroup(user.getUsername(), expenseGroup));
         model.addAttribute("plannedExpenseGroup", expenseService.sumAllPlannedExpensesByUserAndGroup(user.getUsername(), expenseGroup));
         model.addAttribute("realExpenseGroup", expenseService.sumAllRealExpensesByUserAndGroup(user.getUsername(), expenseGroup));
-        model.addAttribute("nextExpenseGroup", expenseGroupNr.size() + 1);
+        model.addAttribute("nextExpenseGroup", expenseService.nextExpenseIdByGroup(user.getUsername(),expenseGroup));
         model.addAttribute("incomeSubExpenseGroup", expenseService.incomeSubExpenseGroup(user.getUsername(), expenseGroup));
         model.addAttribute("incomeSubExpenseGroupBefore", expenseService.incomeSubExpenseGroup(user.getUsername(), expenseGroup-1));
 
