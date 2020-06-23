@@ -7,6 +7,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 public class Expense {
@@ -30,6 +31,8 @@ public class Expense {
     private int expenseGroup;
 
     private String comment;
+
+    private LocalDate monthIndicator;
 
     @ManyToOne
     private User user;
@@ -82,6 +85,14 @@ public class Expense {
         this.comment = comment;
     }
 
+    public LocalDate getMonthIndicator() {
+        return monthIndicator;
+    }
+
+    public void setMonthIndicator(LocalDate monthIndicator) {
+        this.monthIndicator = monthIndicator;
+    }
+
     public User getUser() {
         return user;
     }
@@ -99,6 +110,7 @@ public class Expense {
                 ", realValue=" + realValue +
                 ", expenseGroup=" + expenseGroup +
                 ", comment='" + comment + '\'' +
+                ", monthIndicator=" + monthIndicator +
                 ", user=" + user +
                 '}';
     }
