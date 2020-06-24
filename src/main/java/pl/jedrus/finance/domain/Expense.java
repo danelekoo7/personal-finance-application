@@ -32,7 +32,7 @@ public class Expense {
 
     private String comment;
 
-    private LocalDate monthIndicator;
+    private LocalDate currentDateIndicator;
 
     @ManyToOne
     private User user;
@@ -85,12 +85,12 @@ public class Expense {
         this.comment = comment;
     }
 
-    public LocalDate getMonthIndicator() {
-        return monthIndicator;
+    public LocalDate getCurrentDateIndicator() {
+        return currentDateIndicator;
     }
 
-    public void setMonthIndicator(LocalDate monthIndicator) {
-        this.monthIndicator = monthIndicator;
+    public void setCurrentDateIndicator(LocalDate currentDateIndicator) {
+        this.currentDateIndicator = currentDateIndicator;
     }
 
     public User getUser() {
@@ -110,7 +110,7 @@ public class Expense {
                 ", realValue=" + realValue +
                 ", expenseGroup=" + expenseGroup +
                 ", comment='" + comment + '\'' +
-                ", monthIndicator=" + monthIndicator +
+                ", currentDateIndicator=" + currentDateIndicator +
                 ", user=" + user +
                 '}';
     }

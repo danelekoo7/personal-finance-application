@@ -66,7 +66,6 @@ public class Step2IncomeController {
         return "redirect:/step2/income";
     }
 
-
     @ModelAttribute("income")
     public Income income() {
         Income income = new Income();

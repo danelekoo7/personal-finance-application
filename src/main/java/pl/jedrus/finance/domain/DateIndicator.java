@@ -1,31 +1,21 @@
 package pl.jedrus.finance.domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-public class Income {
+public class DateIndicator {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
-    private String source;
-
-    @NotNull
-    @DecimalMin("0.0")
-    private BigDecimal value;
-
-    private String comment;
-
     private LocalDate currentDateIndicator;
 
-    @ManyToOne
+    @OneToOne
+    @JoinColumn(name = "user_id", unique = true)
     private User user;
 
 
@@ -35,30 +25,6 @@ public class Income {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public BigDecimal getValue() {
-        return value;
-    }
-
-    public void setValue(BigDecimal value) {
-        this.value = value;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
     }
 
     public LocalDate getCurrentDateIndicator() {
@@ -79,11 +45,8 @@ public class Income {
 
     @Override
     public String toString() {
-        return "Income{" +
+        return "DateIndicator{" +
                 "id=" + id +
-                ", source='" + source + '\'' +
-                ", value=" + value +
-                ", comment='" + comment + '\'' +
                 ", currentDateIndicator=" + currentDateIndicator +
                 ", user=" + user +
                 '}';
