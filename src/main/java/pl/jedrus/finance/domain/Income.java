@@ -5,6 +5,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 public class Income {
@@ -21,6 +22,8 @@ public class Income {
     private BigDecimal value;
 
     private String comment;
+
+    private LocalDate currentDateIndicator;
 
     @ManyToOne
     private User user;
@@ -58,6 +61,14 @@ public class Income {
         this.comment = comment;
     }
 
+    public LocalDate getCurrentDateIndicator() {
+        return currentDateIndicator;
+    }
+
+    public void setCurrentDateIndicator(LocalDate currentDateIndicator) {
+        this.currentDateIndicator = currentDateIndicator;
+    }
+
     public User getUser() {
         return user;
     }
@@ -73,6 +84,7 @@ public class Income {
                 ", source='" + source + '\'' +
                 ", value=" + value +
                 ", comment='" + comment + '\'' +
+                ", currentDateIndicator=" + currentDateIndicator +
                 ", user=" + user +
                 '}';
     }

@@ -1,8 +1,11 @@
 package pl.jedrus.finance.service.income;
 
 import org.springframework.stereotype.Service;
+import pl.jedrus.finance.domain.DateIndicator;
 import pl.jedrus.finance.domain.Income;
+import pl.jedrus.finance.domain.User;
 import pl.jedrus.finance.repository.IncomeRepository;
+import pl.jedrus.finance.service.dateIndicator.DateIndicatorService;
 import pl.jedrus.finance.service.user.UserService;
 
 import java.math.BigDecimal;
@@ -14,16 +17,25 @@ public class IncomeServiceImpl implements IncomeService {
 
     private final IncomeRepository repository;
     private final UserService userService;
+    private final DateIndicatorService dateIndicatorService;
 
-    public IncomeServiceImpl(IncomeRepository repository, UserService userService) {
+    public IncomeServiceImpl(IncomeRepository repository, UserService userService, DateIndicatorService dateIndicatorService) {
         this.repository = repository;
         this.userService = userService;
+        this.dateIndicatorService = dateIndicatorService;
     }
 
     @Override
     public List<Income> findAllByUser_Username(String username) {
-        return repository.findAllByUser_Username(username);
+        User user = userService.findByUserName(username);
+        DateIndicator dateIndicator = dateIndicatorService.findByUser_Username(username);
+
+        int monthId = dateIndicator.getCurrentDateIndicator().getMonthValue();
+        int yearId = dateIndicator.getCurrentDateIndicator().getYear();
+
+        return repository.findAllByUser(user.getId(), monthId, yearId);
     }
+
 
     @Override
     public BigDecimal sumAllIncomesByUser(String username) {
@@ -44,6 +56,7 @@ public class IncomeServiceImpl implements IncomeService {
     @Override
     public void saveIncome(Income income, String username) {
         income.setUser(userService.findByUserName(username));
+        income.setCurrentDateIndicator(dateIndicatorService.findByUser_Username(username).getCurrentDateIndicator());
         repository.save(income);
     }
 

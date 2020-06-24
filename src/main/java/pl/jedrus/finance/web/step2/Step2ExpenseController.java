@@ -1,4 +1,4 @@
-package pl.jedrus.finance.web;
+package pl.jedrus.finance.web.step2;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;

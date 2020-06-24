@@ -1,4 +1,4 @@
-package pl.jedrus.finance.web;
+package pl.jedrus.finance.web.step2;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +11,6 @@ import pl.jedrus.finance.service.income.IncomeService;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
-import java.util.List;
 
 @Controller
 @RequestMapping("/step2/income")
@@ -24,12 +23,8 @@ public class Step2IncomeController {
 
     @GetMapping()
     public String getIncome(Model model, @AuthenticationPrincipal UserDetails user) {
-        List<Income> allIncomes = incomeService.findAllByUser_Username(user.getUsername());
-        BigDecimal incomesSum = incomeService.sumAllIncomesByUser(user.getUsername());
-
-        model.addAttribute("incomes", allIncomes);
-        model.addAttribute("incomesSum", incomesSum);
-        model.addAttribute("nextIncomeId", allIncomes.size() + 1);
+        model.addAttribute("incomes", incomeService.findAllByUser_Username(user.getUsername()));
+        model.addAttribute("incomesSum", incomeService.sumAllIncomesByUser(user.getUsername()));
         return "step2/income";
     }
 
@@ -65,7 +60,6 @@ public class Step2IncomeController {
         incomeService.deleteIncomeById(id);
         return "redirect:/step2/income";
     }
-
 
     @ModelAttribute("income")
     public Income income() {
