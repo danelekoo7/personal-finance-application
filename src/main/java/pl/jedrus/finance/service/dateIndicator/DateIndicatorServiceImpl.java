@@ -24,23 +24,38 @@ public class DateIndicatorServiceImpl implements DateIndicatorService {
     }
 
     @Override
-    public void saveDateIndicator(DateIndicator dateIndicator, String username) {
+    public void saveDateIndicator(String yearMonth, String username) {
+        DateIndicator dateIndicator = new DateIndicator();
+        dateIndicator.setCurrentDateIndicator(getDateIndicator(yearMonth));
         dateIndicator.setUser(userService.findByUserName(username));
-        if (dateIndicator.getCurrentDateIndicator() == null) {
-            dateIndicator.setCurrentDateIndicator(LocalDate.now());
-        }
         dateIndicatorRepository.save(dateIndicator);
     }
 
+
     @Override
-    public void updateDateIndicator(DateIndicator dateIndicator) {
-        DateIndicator dateIndicatorInDB = findByUser_Username(dateIndicator.getUser().getUsername());
-        dateIndicatorInDB.setCurrentDateIndicator(dateIndicator.getCurrentDateIndicator());
+    public void updateDateIndicator(String yearMonth, String username) {
+        DateIndicator dateIndicatorInDB = findByUser_Username(username);
+        dateIndicatorInDB.setCurrentDateIndicator(getDateIndicator(yearMonth));
         dateIndicatorRepository.save(dateIndicatorInDB);
     }
 
     @Override
     public void deleteDateIndicatorById(Long id) {
         dateIndicatorRepository.deleteById(id);
+    }
+
+
+
+    private LocalDate getDateIndicator(String yearMonth) {
+        String[] yearMonthValue = yearMonth.split("-");
+        int year = -1;
+        int month = -1;
+        try {
+            year = Integer.parseInt(yearMonthValue[0]);
+            month = Integer.parseInt(yearMonthValue[1]);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return  LocalDate.of(year, month, 1);
     }
 }

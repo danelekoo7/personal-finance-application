@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import pl.jedrus.finance.service.asset.AssetService;
 import pl.jedrus.finance.service.loan.LoanService;
+import pl.jedrus.finance.web.step2.Step2ExpenseController;
+import pl.jedrus.finance.web.step2.Step2ExpenseRegisterController;
+import pl.jedrus.finance.web.step2.Step2IncomeController;
 
 import java.math.BigDecimal;
 
@@ -30,8 +33,6 @@ public class AnnotationAdvice {
         BigDecimal sumAllAssets = assetService.sumAllAssetByUser(user.getUsername());
         return total.add(sumAllAssets).subtract(sumAllLoans);
     }
-
-
 
     @ModelAttribute("user")
     public String user(@AuthenticationPrincipal UserDetails userDetails) {

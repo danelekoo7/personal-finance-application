@@ -1,7 +1,6 @@
 package pl.jedrus.finance.domain;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Entity
@@ -11,7 +10,6 @@ public class DateIndicator {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     private LocalDate currentDateIndicator;
 
     @OneToOne
