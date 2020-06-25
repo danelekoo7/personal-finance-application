@@ -10,7 +10,6 @@ import java.time.LocalDate;
 public class DateIndicatorServiceImpl implements DateIndicatorService {
 
     private final DateIndicatorRepository dateIndicatorRepository;
-//    private final UserService userService;
 
 
     public DateIndicatorServiceImpl(DateIndicatorRepository dateIndicatorRepository) {
@@ -20,6 +19,15 @@ public class DateIndicatorServiceImpl implements DateIndicatorService {
     @Override
     public DateIndicator findByUser_Username(String username) {
         return dateIndicatorRepository.findByUser_Username(username).orElseThrow();
+    }
+
+    @Override
+    public String findCurrentYearMonthByUser(String username) {
+        String dateInString = findByUser_Username(username).getCurrentDateIndicator().toString();
+        String[] split = dateInString.split("-");
+        String year = split[0];
+        String month = split[1];
+        return year+"-"+month;
     }
 
     @Override

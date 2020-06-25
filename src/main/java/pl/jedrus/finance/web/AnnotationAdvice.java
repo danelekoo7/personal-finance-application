@@ -5,7 +5,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import pl.jedrus.finance.service.asset.AssetService;
+import pl.jedrus.finance.service.dateIndicator.DateIndicatorService;
 import pl.jedrus.finance.service.loan.LoanService;
+import pl.jedrus.finance.web.step2.DateIndicatorController;
 import pl.jedrus.finance.web.step2.Step2ExpenseController;
 import pl.jedrus.finance.web.step2.Step2ExpenseRegisterController;
 import pl.jedrus.finance.web.step2.Step2IncomeController;
@@ -14,15 +16,17 @@ import java.math.BigDecimal;
 
 
 @ControllerAdvice(assignableTypes = {HomeController.class, Step1Controller.class, Step2IncomeController.class, Step2ExpenseController.class,
-Step2ExpenseRegisterController.class})
+        Step2ExpenseRegisterController.class, DateIndicatorController.class})
 public class AnnotationAdvice {
 
     private final LoanService loanService;
     private final AssetService assetService;
+    private final DateIndicatorService dateIndicatorService;
 
-    public AnnotationAdvice(LoanService loanService, AssetService assetService) {
+    public AnnotationAdvice(LoanService loanService, AssetService assetService, DateIndicatorService dateIndicatorService) {
         this.loanService = loanService;
         this.assetService = assetService;
+        this.dateIndicatorService = dateIndicatorService;
     }
 
 
@@ -32,6 +36,11 @@ public class AnnotationAdvice {
         BigDecimal sumAllLoans = loanService.sumAllLoansByUser(user.getUsername());
         BigDecimal sumAllAssets = assetService.sumAllAssetByUser(user.getUsername());
         return total.add(sumAllAssets).subtract(sumAllLoans);
+    }
+
+    @ModelAttribute("date")
+    public String date(@AuthenticationPrincipal UserDetails userDetails) {
+        return dateIndicatorService.findCurrentYearMonthByUser(userDetails.getUsername());
     }
 
     @ModelAttribute("user")

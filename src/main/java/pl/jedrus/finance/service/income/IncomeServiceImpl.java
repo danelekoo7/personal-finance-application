@@ -9,6 +9,7 @@ import pl.jedrus.finance.service.dateIndicator.DateIndicatorService;
 import pl.jedrus.finance.service.user.UserService;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +52,19 @@ public class IncomeServiceImpl implements IncomeService {
     public Income findById(Long id) {
         Optional<Income> incomeById = repository.findById(id);
         return incomeById.orElseThrow();
+    }
+
+    @Override
+    public List<String> findAllDates(String username) {
+        List<String> allDates = repository.findAllDates(userService.findByUserName(username).getId());
+        List<String> resultDates = new ArrayList<>();
+        for (String date : allDates) {
+            String[] singleDate = date.split("-");
+            String year = singleDate[0];
+            String month = singleDate[1];
+            resultDates.add(year+"-"+month);
+        }
+        return resultDates;
     }
 
     @Override

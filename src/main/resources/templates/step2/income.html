@@ -10,7 +10,6 @@
     <div th:replace="general :: menu"></div>
     <div id="layoutSidenav_content">
         <main>
-            <a th:href="@{/step2/date}">budżet </a>
             <div class="d-flex justify-content-between">
                 <div>
                     <a th:href="@{/step2/expense/register}"
@@ -19,7 +18,7 @@
                 </div>
                 <div>
                     <a th:href="@{/step2/income}"
-                       th:text="#{app.income}"
+                       th:text="#{app.income} +' ' +  ${date}"
                        class=" btn btn-secondary">current</a>
                 </div>
                 <div>

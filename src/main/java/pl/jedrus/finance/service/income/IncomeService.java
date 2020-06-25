@@ -13,6 +13,8 @@ public interface IncomeService {
 
     Income findById(Long id);
 
+    List<String> findAllDates(String username);
+
 
     void saveIncome(Income income, String username);
 

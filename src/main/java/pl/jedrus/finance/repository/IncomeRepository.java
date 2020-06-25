@@ -12,8 +12,12 @@ import java.util.Optional;
 @Repository
 public interface IncomeRepository extends JpaRepository<Income, Long> {
 
-    @Query( value= "Select *  FROM income WHERE user_id =:userId AND MONTH(current_date_indicator) =:monthId AND YEAR(current_date_indicator) =:yearId", nativeQuery = true)
-    List<Income> findAllByUser(@Param("userId") Long userId,@Param("monthId") int monthId,@Param("yearId") int yearId);
+    @Query(value = "Select *  FROM income WHERE user_id =:userId AND MONTH(current_date_indicator) =:monthId AND YEAR(current_date_indicator) =:yearId", nativeQuery = true)
+    List<Income> findAllByUser(@Param("userId") Long userId, @Param("monthId") int monthId, @Param("yearId") int yearId);
+
+    @Query(value = "SELECT DISTINCT current_date_indicator FROM income WHERE user_id =:userId  ORDER BY current_date_indicator DESC", nativeQuery = true)
+    List<String> findAllDates(@Param("userId") Long userId);
+
 
     Optional<Income> findById(Long id);
 }
