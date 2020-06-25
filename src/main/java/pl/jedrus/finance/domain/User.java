@@ -39,6 +39,10 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Asset> assets;
 
+    @OneToOne
+    @JoinColumn(name = "date_indicator_id", unique = true)
+    private DateIndicator dateIndicator;
+
 
     public Long getId() {
         return id;
@@ -104,6 +108,14 @@ public class User {
         this.assets = assets;
     }
 
+    public DateIndicator getDateIndicator() {
+        return dateIndicator;
+    }
+
+    public void setDateIndicator(DateIndicator dateIndicator) {
+        this.dateIndicator = dateIndicator;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -113,6 +125,9 @@ public class User {
                 ", email='" + email + '\'' +
                 ", enabled=" + enabled +
                 ", roles=" + roles +
+                ", loans=" + loans +
+                ", assets=" + assets +
+                ", dateIndicator=" + dateIndicator +
                 '}';
     }
 }

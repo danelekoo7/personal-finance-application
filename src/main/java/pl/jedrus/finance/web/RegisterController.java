@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.jedrus.finance.domain.User;
+import pl.jedrus.finance.service.initData.InitDataService;
 import pl.jedrus.finance.service.user.UserService;
 
 import javax.validation.Valid;
@@ -14,9 +15,11 @@ import javax.validation.Valid;
 public class RegisterController {
 
     private final UserService userService;
+    private final InitDataService initDataService;
 
-    public RegisterController(UserService userService) {
+    public RegisterController(UserService userService, InitDataService initDataService) {
         this.userService = userService;
+        this.initDataService = initDataService;
     }
 
     @GetMapping("/registration")
@@ -37,6 +40,7 @@ public class RegisterController {
             return "register";
         } else {
             userService.saveUser(user);
+            initDataService.initData(user);
         }
         return "redirect:/login";
     }

@@ -12,11 +12,6 @@ public class DateIndicator {
 
     private LocalDate currentDateIndicator;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", unique = true)
-    private User user;
-
-
     public Long getId() {
         return id;
     }
@@ -33,20 +28,11 @@ public class DateIndicator {
         this.currentDateIndicator = currentDateIndicator;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @Override
     public String toString() {
         return "DateIndicator{" +
                 "id=" + id +
                 ", currentDateIndicator=" + currentDateIndicator +
-                ", user=" + user +
                 '}';
     }
 }

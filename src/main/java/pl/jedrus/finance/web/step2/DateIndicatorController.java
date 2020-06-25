@@ -23,13 +23,13 @@ public class DateIndicatorController {
     @GetMapping()
     public String getDate() {
 
-        return "step2/create-date-indicator";
+        return "step2/edit-date-indicator";
     }
 
 
-    @PostMapping("/add")
+    @PostMapping("/update")
     public String addDate(@RequestParam(value = "yearMonth") String yearMonth, @AuthenticationPrincipal UserDetails userDetails) {
-        dateIndicatorService.saveDateIndicator(yearMonth, userDetails.getUsername());
+        dateIndicatorService.updateDateIndicator(yearMonth, userDetails.getUsername());
         return "redirect:/step2/income";
     }
 

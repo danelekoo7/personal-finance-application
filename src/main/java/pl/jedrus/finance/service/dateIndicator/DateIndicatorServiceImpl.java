@@ -3,7 +3,6 @@ package pl.jedrus.finance.service.dateIndicator;
 import org.springframework.stereotype.Service;
 import pl.jedrus.finance.domain.DateIndicator;
 import pl.jedrus.finance.repository.DateIndicatorRepository;
-import pl.jedrus.finance.service.user.UserService;
 
 import java.time.LocalDate;
 
@@ -11,11 +10,11 @@ import java.time.LocalDate;
 public class DateIndicatorServiceImpl implements DateIndicatorService {
 
     private final DateIndicatorRepository dateIndicatorRepository;
-    private final UserService userService;
+//    private final UserService userService;
 
-    public DateIndicatorServiceImpl(DateIndicatorRepository dateIndicatorRepository, UserService userService) {
+
+    public DateIndicatorServiceImpl(DateIndicatorRepository dateIndicatorRepository) {
         this.dateIndicatorRepository = dateIndicatorRepository;
-        this.userService = userService;
     }
 
     @Override
@@ -24,11 +23,11 @@ public class DateIndicatorServiceImpl implements DateIndicatorService {
     }
 
     @Override
-    public void saveDateIndicator(String yearMonth, String username) {
+    public DateIndicator saveDateIndicator(String username) {
         DateIndicator dateIndicator = new DateIndicator();
-        dateIndicator.setCurrentDateIndicator(getDateIndicator(yearMonth));
-        dateIndicator.setUser(userService.findByUserName(username));
+        dateIndicator.setCurrentDateIndicator(LocalDate.of(LocalDate.now().getYear(),LocalDate.now().getMonthValue(),1));
         dateIndicatorRepository.save(dateIndicator);
+        return dateIndicator;
     }
 
 
