@@ -3,7 +3,6 @@ package pl.jedrus.finance.service.income;
 import org.springframework.stereotype.Service;
 import pl.jedrus.finance.domain.DateIndicator;
 import pl.jedrus.finance.domain.Income;
-import pl.jedrus.finance.domain.User;
 import pl.jedrus.finance.repository.IncomeRepository;
 import pl.jedrus.finance.service.dateIndicator.DateIndicatorService;
 import pl.jedrus.finance.service.user.UserService;
@@ -28,13 +27,12 @@ public class IncomeServiceImpl implements IncomeService {
 
     @Override
     public List<Income> findAllByUser_Username(String username) {
-        User user = userService.findByUserName(username);
         DateIndicator dateIndicator = dateIndicatorService.findByUser_Username(username);
 
         int monthId = dateIndicator.getCurrentDateIndicator().getMonthValue();
         int yearId = dateIndicator.getCurrentDateIndicator().getYear();
 
-        return repository.findAllByUser(user.getId(), monthId, yearId);
+        return repository.findAllByUser(username, monthId, yearId);
     }
 
 
@@ -56,7 +54,7 @@ public class IncomeServiceImpl implements IncomeService {
 
     @Override
     public List<String> findAllDates(String username) {
-        List<String> allDates = repository.findAllDates(userService.findByUserName(username).getId());
+        List<String> allDates = repository.findAllDates(username);
         List<String> resultDates = new ArrayList<>();
         for (String date : allDates) {
             String[] singleDate = date.split("-");

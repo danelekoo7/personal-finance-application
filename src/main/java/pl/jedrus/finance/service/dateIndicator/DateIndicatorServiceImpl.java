@@ -1,24 +1,44 @@
 package pl.jedrus.finance.service.dateIndicator;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import pl.jedrus.finance.domain.DateIndicator;
 import pl.jedrus.finance.repository.DateIndicatorRepository;
+import pl.jedrus.finance.service.income.IncomeService;
 
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class DateIndicatorServiceImpl implements DateIndicatorService {
 
     private final DateIndicatorRepository dateIndicatorRepository;
+    private  final IncomeService incomeService;
 
-
-    public DateIndicatorServiceImpl(DateIndicatorRepository dateIndicatorRepository) {
+    public DateIndicatorServiceImpl(DateIndicatorRepository dateIndicatorRepository, @Lazy IncomeService incomeService) {
         this.dateIndicatorRepository = dateIndicatorRepository;
+        this.incomeService = incomeService;
     }
+
+
 
     @Override
     public DateIndicator findByUser_Username(String username) {
         return dateIndicatorRepository.findByUser_Username(username).orElseThrow();
+    }
+
+    @Override
+    public Set<String> findAllDates(String username) {
+
+        Set<String> result = new LinkedHashSet<>();
+
+        List<String> allDatesByIncome = incomeService.findAllDates(username);
+
+        result.addAll(allDatesByIncome);
+
+        return result;
     }
 
     @Override

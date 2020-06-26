@@ -9,24 +9,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.jedrus.finance.service.dateIndicator.DateIndicatorService;
-import pl.jedrus.finance.service.income.IncomeService;
 
 @Controller
 @RequestMapping("/step2/date")
 public class DateIndicatorController {
 
     private final DateIndicatorService dateIndicatorService;
-    private final IncomeService incomeService;
 
-    public DateIndicatorController(DateIndicatorService dateIndicatorService, IncomeService incomeService) {
+    public DateIndicatorController(DateIndicatorService dateIndicatorService) {
         this.dateIndicatorService = dateIndicatorService;
-        this.incomeService = incomeService;
     }
 
 
     @GetMapping()
     public String getDate(Model model, @AuthenticationPrincipal UserDetails user) {
-        model.addAttribute("dates", incomeService.findAllDates(user.getUsername()));
+        model.addAttribute("dates", dateIndicatorService.findAllDates(user.getUsername()));
+
         return "step2/budget-manage";
     }
 
