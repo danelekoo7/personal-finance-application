@@ -20,6 +20,7 @@ public interface ExpenseService {
 
     BigDecimal incomeSubExpenseGroup(String username, int expenseGroup);
 
+    List<String> findAllDates(String username);
 
     int nextExpenseIdByGroup(String username, int expenseGroup);
 
