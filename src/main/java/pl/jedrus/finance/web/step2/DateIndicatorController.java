@@ -30,8 +30,14 @@ public class DateIndicatorController {
 
 
     @PostMapping("/update")
-    public String addDate(@RequestParam(value = "yearMonth") String yearMonth, @AuthenticationPrincipal UserDetails userDetails) {
+    public String updateDate(@RequestParam(value = "yearMonth") String yearMonth, @AuthenticationPrincipal UserDetails userDetails) {
         dateIndicatorService.updateDateIndicator(yearMonth, userDetails.getUsername());
+        return "redirect:/step2/income";
+    }
+
+    @PostMapping("/add")
+    public String addDate(@RequestParam(value = "yearMonth") String yearMonth, @AuthenticationPrincipal UserDetails userDetails) {
+        dateIndicatorService.addDateIndicator(yearMonth, userDetails.getUsername());
         return "redirect:/step2/income";
     }
 

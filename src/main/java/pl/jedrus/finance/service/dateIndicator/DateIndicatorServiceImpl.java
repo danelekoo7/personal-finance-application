@@ -3,11 +3,13 @@ package pl.jedrus.finance.service.dateIndicator;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import pl.jedrus.finance.domain.DateIndicator;
+import pl.jedrus.finance.domain.Expense;
 import pl.jedrus.finance.domain.Income;
 import pl.jedrus.finance.repository.DateIndicatorRepository;
 import pl.jedrus.finance.service.expense.ExpenseService;
 import pl.jedrus.finance.service.income.IncomeService;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,22 +69,44 @@ public class DateIndicatorServiceImpl implements DateIndicatorService {
 
     @Override
     public void updateDateIndicator(String yearMonth, String username) {
-        List<Income> incomes = incomeService.findAllByUser_Username(username);
         DateIndicator dateIndicatorInDB = findByUser_Username(username);
-        dateIndicatorInDB.setCurrentDateIndicator(getDateIndicator(yearMonth));
+        LocalDate newDate = getDateIndicator(yearMonth);
+        dateIndicatorInDB.setCurrentDateIndicator(newDate);
+        dateIndicatorRepository.save(dateIndicatorInDB);
+    }
 
+    @Override
+    public void addDateIndicator(String yearMonth, String username) {
+        List<Income> incomes = incomeService.findAllByUser_Username(username);
+        List<Expense> expenses = expenseService.findAllByUser_Username(username);
+
+        DateIndicator dateIndicatorInDB = findByUser_Username(username);
+        LocalDate newDate = getDateIndicator(yearMonth);
+        dateIndicatorInDB.setCurrentDateIndicator(newDate);
         dateIndicatorRepository.save(dateIndicatorInDB);
 
-        for (Income income : incomes){
-            Income newIncome = new Income();
-            newIncome.setValue(income.getValue());
-            newIncome.setSource(income.getSource());
-            newIncome.setComment(income.getComment());
-            newIncome.setCurrentDateIndicator(getDateIndicator(yearMonth));
-            incomeService.saveIncome(newIncome,username);
+        Set<String> allDates = findAllDates(username);
+        if (!allDates.contains(yearMonth)) {
+            for (Income income : incomes) {
+                Income newIncome = new Income();
+                newIncome.setValue(income.getValue());
+                newIncome.setSource(income.getSource());
+                newIncome.setComment(income.getComment());
+                newIncome.setCurrentDateIndicator(newDate);
+                incomeService.saveIncome(newIncome, username);
+            }
+
+            for (Expense expense : expenses) {
+                Expense newExpense = new Expense();
+                newExpense.setCurrentDateIndicator(newDate);
+                newExpense.setPlannedValue(expense.getPlannedValue());
+                newExpense.setExpenseGroup(expense.getExpenseGroup());
+                newExpense.setExpenseType(expense.getExpenseType());
+                newExpense.setComment(expense.getComment());
+                newExpense.setRealValue(BigDecimal.ZERO);
+                expenseService.saveExpense(newExpense, username);
+            }
         }
-
-
     }
 
     @Override
