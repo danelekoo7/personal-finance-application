@@ -90,7 +90,7 @@
                                 </td>
 
                                 <td>
-                                    <input class="form-control" type="date" th:field="*{created}">
+                                    <input class="form-control" type="datetime-local" th:field="*{created}">
                                     <span th:if="${#fields.hasErrors('created')}" th:errors="*{created}"></span>
                                 </td>
 
@@ -172,7 +172,7 @@
                         </div>
                     </div>
                 </div>
-
+            </div>
         </main>
     </div>
 </div>

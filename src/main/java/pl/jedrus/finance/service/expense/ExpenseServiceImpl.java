@@ -118,6 +118,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     @Override
     public void saveExpense(Expense expense, String username) {
         expense.setUser(userService.findByUserName(username));
+        expense.setCurrentDateIndicator(dateIndicatorService.findByUser_Username(username).getCurrentDateIndicator());
         expenseRepository.save(expense);
     }
 

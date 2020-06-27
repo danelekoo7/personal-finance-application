@@ -59,7 +59,9 @@ public class IncomeServiceImpl implements IncomeService {
     @Override
     public void saveIncome(Income income, String username) {
         income.setUser(userService.findByUserName(username));
-        income.setCurrentDateIndicator(dateIndicatorService.findByUser_Username(username).getCurrentDateIndicator());
+        if (income.getCurrentDateIndicator() == null) {
+            income.setCurrentDateIndicator(dateIndicatorService.findByUser_Username(username).getCurrentDateIndicator());
+        }
         repository.save(income);
     }
 

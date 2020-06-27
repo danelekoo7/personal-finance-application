@@ -3,15 +3,16 @@ package pl.jedrus.finance.service.dateIndicator;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import pl.jedrus.finance.domain.DateIndicator;
+import pl.jedrus.finance.domain.Income;
 import pl.jedrus.finance.repository.DateIndicatorRepository;
 import pl.jedrus.finance.service.expense.ExpenseService;
 import pl.jedrus.finance.service.income.IncomeService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 public class DateIndicatorServiceImpl implements DateIndicatorService {
@@ -35,7 +36,7 @@ public class DateIndicatorServiceImpl implements DateIndicatorService {
     @Override
     public Set<String> findAllDates(String username) {
 
-        Set<String> result = new LinkedHashSet<>();
+        TreeSet<String> result = new TreeSet<>();
 
         List<String> allDatesByIncome = convertDates(incomeService.findAllDates(username));
         List<String> allDatesByExpense = convertDates(expenseService.findAllDates(username));
@@ -43,8 +44,7 @@ public class DateIndicatorServiceImpl implements DateIndicatorService {
         result.addAll(allDatesByIncome);
         result.addAll(allDatesByExpense);
 
-
-        return result;
+        return result.descendingSet();
     }
 
     @Override
@@ -67,9 +67,22 @@ public class DateIndicatorServiceImpl implements DateIndicatorService {
 
     @Override
     public void updateDateIndicator(String yearMonth, String username) {
+        List<Income> incomes = incomeService.findAllByUser_Username(username);
         DateIndicator dateIndicatorInDB = findByUser_Username(username);
         dateIndicatorInDB.setCurrentDateIndicator(getDateIndicator(yearMonth));
+
         dateIndicatorRepository.save(dateIndicatorInDB);
+
+        for (Income income : incomes){
+            Income newIncome = new Income();
+            newIncome.setValue(income.getValue());
+            newIncome.setSource(income.getSource());
+            newIncome.setComment(income.getComment());
+            newIncome.setCurrentDateIndicator(getDateIndicator(yearMonth));
+            incomeService.saveIncome(newIncome,username);
+        }
+
+
     }
 
     @Override
