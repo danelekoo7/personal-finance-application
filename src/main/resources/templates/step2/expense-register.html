@@ -37,11 +37,9 @@
                             </th>
                         </tr>
                         <tr>
-                            <th>id</th>
                             <th th:text="#{app.expense.register.description}">Expense description</th>
                             <th th:text="#{app.expense.register.value}">Expense value</th>
                             <th th:text="#{app.expense.register.category}">Expense category</th>
-                            <th th:text="#{app.expense.register.created}">Expense created</th>
                             <th th:text="#{app.comment}">Comment</th>
                             <th th:text="#{app.option}">option</th>
                         </tr>
@@ -51,7 +49,6 @@
 
                             <tbody>
                             <tr>
-                                <td th:text="${expenseRegisterList.size() + 1}"> next expense id</td>
                                 <td>
                                     <input class="form-control" type="text" th:field="*{description}" required>
                                     <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
@@ -87,11 +84,6 @@
                                         </optgroup>
                                     </select>
                                     <span th:if="${#fields.hasErrors('expense')}" th:errors="*{expense}"></span>
-                                </td>
-
-                                <td>
-                                    <input class="form-control" type="datetime-local" th:field="*{created}">
-                                    <span th:if="${#fields.hasErrors('created')}" th:errors="*{created}"></span>
                                 </td>
 
                                 <td>

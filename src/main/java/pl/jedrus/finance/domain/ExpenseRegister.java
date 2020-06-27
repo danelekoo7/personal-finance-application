@@ -25,12 +25,15 @@ public class ExpenseRegister {
 
     @ManyToOne
     @JoinColumn(name = "expense_id")
+    @NotNull
     private Expense expense;
 
     private String comment;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate created;
+
+    private LocalDate currentDateIndicator;
 
     @ManyToOne
     private User user;
@@ -84,6 +87,14 @@ public class ExpenseRegister {
         this.created = created;
     }
 
+    public LocalDate getCurrentDateIndicator() {
+        return currentDateIndicator;
+    }
+
+    public void setCurrentDateIndicator(LocalDate currentDateIndicator) {
+        this.currentDateIndicator = currentDateIndicator;
+    }
+
     public User getUser() {
         return user;
     }
@@ -102,6 +113,7 @@ public class ExpenseRegister {
                 ", expense=" + expense +
                 ", comment='" + comment + '\'' +
                 ", created=" + created +
+                ", currentDateIndicator=" + currentDateIndicator +
                 ", user=" + user +
                 '}';
     }

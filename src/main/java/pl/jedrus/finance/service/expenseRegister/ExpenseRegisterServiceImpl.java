@@ -1,9 +1,11 @@
 package pl.jedrus.finance.service.expenseRegister;
 
 import org.springframework.stereotype.Service;
+import pl.jedrus.finance.domain.DateIndicator;
 import pl.jedrus.finance.domain.Expense;
 import pl.jedrus.finance.domain.ExpenseRegister;
 import pl.jedrus.finance.repository.ExpenseRegisterRepository;
+import pl.jedrus.finance.service.dateIndicator.DateIndicatorService;
 import pl.jedrus.finance.service.expense.ExpenseService;
 import pl.jedrus.finance.service.user.UserService;
 
@@ -16,17 +18,24 @@ public class ExpenseRegisterServiceImpl implements ExpenseRegisterService {
     private final ExpenseRegisterRepository expenseRegisterRepository;
     private final UserService userService;
     private final ExpenseService expenseService;
+    private final DateIndicatorService dateIndicatorService;
 
-    public ExpenseRegisterServiceImpl(ExpenseRegisterRepository expenseRegisterRepository, UserService userService, ExpenseService expenseService) {
+    public ExpenseRegisterServiceImpl(ExpenseRegisterRepository expenseRegisterRepository, UserService userService, ExpenseService expenseService, DateIndicatorService dateIndicatorService) {
         this.expenseRegisterRepository = expenseRegisterRepository;
         this.userService = userService;
         this.expenseService = expenseService;
+        this.dateIndicatorService = dateIndicatorService;
     }
 
 
     @Override
     public List<ExpenseRegister> findAllByUser_Username(String username) {
-        return expenseRegisterRepository.findAllByUser_Username(username);
+        DateIndicator dateIndicator = dateIndicatorService.findByUser_Username(username);
+
+        int monthId = dateIndicator.getCurrentDateIndicator().getMonthValue();
+        int yearId = dateIndicator.getCurrentDateIndicator().getYear();
+
+        return expenseRegisterRepository.findAllByUser_Username(username, monthId, yearId);
     }
 
     @Override
@@ -47,6 +56,7 @@ public class ExpenseRegisterServiceImpl implements ExpenseRegisterService {
     @Override
     public void saveExpenseRegister(ExpenseRegister expenseRegister, String username) {
         expenseRegister.setUser(userService.findByUserName(username));
+        expenseRegister.setCurrentDateIndicator(dateIndicatorService.findByUser_Username(username).getCurrentDateIndicator());
         Expense expense = expenseService.findById(expenseRegister.getExpense().getId());
         expense.setRealValue(expense.getRealValue().add(expenseRegister.getValue()));
         expenseService.updateExpense(expense);
