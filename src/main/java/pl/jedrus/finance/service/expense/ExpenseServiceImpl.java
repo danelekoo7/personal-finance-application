@@ -41,7 +41,8 @@ public class ExpenseServiceImpl implements ExpenseService {
         int monthId = dateIndicator.getCurrentDateIndicator().getMonthValue();
         int yearId = dateIndicator.getCurrentDateIndicator().getYear();
 
-        return expenseRepository.findAllByUser_UsernameAndExpenseGroup(username, monthId, yearId, expenseGroup);
+//        return expenseRepository.findAllByUser_UsernameAndExpenseGroup(username, monthId, yearId, expenseGroup);
+        return expenseRepository.findAllByUser_UsernameAndExpenseGroup(username, dateIndicator.toString(), expenseGroup);
     }
 
     @Override
@@ -137,4 +138,14 @@ public class ExpenseServiceImpl implements ExpenseService {
     public void deleteExpenseById(Long id) {
         expenseRepository.deleteById(id);
     }
+
+    @Override
+    public void deleteExpenseByDateAndUsername(String yearMonth, String username) {
+
+//      expenseRepository.findAllByUser(username,)
+//        for (Expense expense : expenseList) {
+//            deleteExpenseById(expense.getId());
+//        }
+    }
+
 }

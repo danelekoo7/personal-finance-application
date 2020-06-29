@@ -21,4 +21,6 @@ public interface IncomeService {
     void updateIncome(Income income);
 
     void deleteIncomeById(Long id);
+
+    void deleteIncomeByDateAndUsername(String yearMonth, String username);
 }

@@ -15,12 +15,12 @@ import java.math.BigDecimal;
 
 @Controller
 @RequestMapping("/step2/expense")
-public class Step2ExpenseController {
+public class ExpenseController {
 
     private final IncomeService incomeService;
     private final ExpenseService expenseService;
 
-    public Step2ExpenseController(IncomeService incomeService, ExpenseService expenseService) {
+    public ExpenseController(IncomeService incomeService, ExpenseService expenseService) {
         this.incomeService = incomeService;
         this.expenseService = expenseService;
     }

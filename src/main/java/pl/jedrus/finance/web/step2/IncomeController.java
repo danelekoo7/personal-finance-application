@@ -14,10 +14,10 @@ import java.math.BigDecimal;
 
 @Controller
 @RequestMapping("/step2/income")
-public class Step2IncomeController {
+public class IncomeController {
     private final IncomeService incomeService;
 
-    public Step2IncomeController(IncomeService incomeService) {
+    public IncomeController(IncomeService incomeService) {
         this.incomeService = incomeService;
     }
 

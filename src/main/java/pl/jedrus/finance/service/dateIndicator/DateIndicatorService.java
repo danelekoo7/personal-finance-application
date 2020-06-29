@@ -18,5 +18,5 @@ public interface DateIndicatorService {
 
     void addDateIndicator(String yearMonth, String username);
 
-    void deleteDateIndicatorById(Long id);
+    void deleteDateIndicatorById(String yearMonth, String username);
 }

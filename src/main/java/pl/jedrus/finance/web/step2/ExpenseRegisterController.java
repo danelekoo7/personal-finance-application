@@ -19,13 +19,13 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/step2/expense/register")
-public class Step2ExpenseRegisterController {
+public class ExpenseRegisterController {
 
     private final ExpenseRegisterService expenseRegisterService;
     private final ExpenseService expenseService;
     private final IncomeService incomeService;
 
-    public Step2ExpenseRegisterController(ExpenseRegisterService expenseRegisterService, ExpenseService expenseService, IncomeService incomeService) {
+    public ExpenseRegisterController(ExpenseRegisterService expenseRegisterService, ExpenseService expenseService, IncomeService incomeService) {
         this.expenseRegisterService = expenseRegisterService;
         this.expenseService = expenseService;
         this.incomeService = incomeService;

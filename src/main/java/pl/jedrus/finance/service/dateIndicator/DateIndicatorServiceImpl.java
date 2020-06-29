@@ -110,8 +110,13 @@ public class DateIndicatorServiceImpl implements DateIndicatorService {
     }
 
     @Override
-    public void deleteDateIndicatorById(Long id) {
-        dateIndicatorRepository.deleteById(id);
+    public void deleteDateIndicatorById(String yearMonth, String username) {
+
+        expenseService.deleteExpenseByDateAndUsername(yearMonth, username);
+
+        incomeService.deleteIncomeByDateAndUsername(yearMonth, username);
+
+
     }
 
 

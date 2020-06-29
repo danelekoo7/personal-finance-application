@@ -4,10 +4,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.jedrus.finance.service.dateIndicator.DateIndicatorService;
 
 @Controller
@@ -28,17 +25,30 @@ public class DateIndicatorController {
         return "step2/budget-manage";
     }
 
+    @PostMapping("/add")
+    public String addDate(@RequestParam(value = "yearMonth") String yearMonth, @AuthenticationPrincipal UserDetails userDetails) {
+        dateIndicatorService.addDateIndicator(yearMonth, userDetails.getUsername());
+        return "redirect:/step2/date";
+    }
+
 
     @PostMapping("/update")
     public String updateDate(@RequestParam(value = "yearMonth") String yearMonth, @AuthenticationPrincipal UserDetails userDetails) {
         dateIndicatorService.updateDateIndicator(yearMonth, userDetails.getUsername());
-        return "redirect:/step2/income";
+        return "redirect:/step2/date";
     }
 
-    @PostMapping("/add")
-    public String addDate(@RequestParam(value = "yearMonth") String yearMonth, @AuthenticationPrincipal UserDetails userDetails) {
-        dateIndicatorService.addDateIndicator(yearMonth, userDetails.getUsername());
-        return "redirect:/step2/income";
+    @GetMapping("/activate/{yearMonth}")
+    public String activate(@PathVariable String yearMonth, @AuthenticationPrincipal UserDetails userDetails) {
+        dateIndicatorService.updateDateIndicator(yearMonth, userDetails.getUsername());
+        return "redirect:/step2/date";
     }
+
+    @GetMapping("/delete/{yearMonth}")
+    public String delete(@PathVariable String yearMonth, @AuthenticationPrincipal UserDetails userDetails) {
+        dateIndicatorService.deleteDateIndicatorById(yearMonth, userDetails.getUsername());
+        return "redirect:/step2/date";
+    }
+
 
 }

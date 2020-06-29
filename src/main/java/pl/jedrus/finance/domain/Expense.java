@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 public class Expense {
@@ -36,6 +37,9 @@ public class Expense {
 
     @ManyToOne
     private User user;
+
+    @OneToMany(mappedBy ="expense", cascade = CascadeType.ALL)
+    Set<ExpenseRegister> expenseRegisters;
 
     public Long getId() {
         return id;

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{app.personal.finance}">Dashboard</title>
+    <!--/*/ <th:block th:include="general :: headerfiles"></th:block> /*/-->
+</head>
+<body class="sb-nav-fixed">
+<header th:insert="general :: header"></header>
+<div id="layoutSidenav">
+    <div th:replace="general :: menu"></div>
+    <div id="layoutSidenav_content">
+        <main>
+            <p></p>
+            <h3 class="text-center" th:text="#{app.select.budget} + ' ' + ${date}"> select active month</h3>
+            <br>
+            <div class="row justify-content-center col-auto">
+                <form th:action="@{/step2/date/update}" method="post">
+
+                    <select th:name="yearMonth">
+                        <option
+                                th:each="date : ${dates} "
+                                th:utext="${date}"/>
+                    </select>
+
+
+                    <input class="form-control btn-block btn-primary" type="submit">  
+                </form>
+            </div>
+            <br>
+            <br>
+            <br>
+            <h3 class="text-center" th:text="#{app.add.month.for.budget}"> add budget for new month</h3>
+            <br>
+            <div class="row justify-content-center col-auto">
+                <form th:action="@{/step2/date/add}" method="post">
+
+                    <input class="form-control" type="month" th:name="yearMonth" id="currentDateIndicator" required>
+                    <br>
+
+                    <input class="form-control btn-block btn-primary" type="submit">  
+                </form>
+            </div>
+
+
+        </main>
+    </div>
+</div>
+<div th:replace="general :: scripts"></div>
+
+
+</body>
+</html>

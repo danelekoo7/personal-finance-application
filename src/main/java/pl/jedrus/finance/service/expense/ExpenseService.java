@@ -31,4 +31,6 @@ public interface ExpenseService {
     void updateExpense(Expense expense);
 
     void deleteExpenseById(Long id);
+
+    void deleteExpenseByDateAndUsername(String yearMonth, String username);
 }

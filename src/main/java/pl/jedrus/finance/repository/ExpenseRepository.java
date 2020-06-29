@@ -19,8 +19,11 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
     @Query(value = "SELECT * FROM expense JOIN user u on expense.user_id = u.id WHERE u.username =:username AND MONTH(current_date_indicator) =:monthId AND YEAR(current_date_indicator) =:yearId", nativeQuery = true)
     List<Expense> findAllByUser(@Param("username") String username, @Param("monthId") int monthId, @Param("yearId") int yearId);
 
-    @Query(value = "SELECT * FROM expense JOIN user u on expense.user_id = u.id WHERE u.username =:username AND MONTH(current_date_indicator) =:monthId AND YEAR(current_date_indicator) =:yearId AND expense_group =:groupId ", nativeQuery = true)
-    List<Expense> findAllByUser_UsernameAndExpenseGroup(@Param("username") String username, @Param("monthId") int monthId, @Param("yearId") int yearId, @Param("groupId") int groupId);
+//    @Query(value = "SELECT * FROM expense JOIN user u on expense.user_id = u.id WHERE u.username =:username AND MONTH(current_date_indicator) =:monthId AND YEAR(current_date_indicator) =:yearId AND expense_group =:groupId ", nativeQuery = true)
+//    List<Expense> findAllByUser_UsernameAndExpenseGroup(@Param("username") String username, @Param("monthId") int monthId, @Param("yearId") int yearId, @Param("groupId") int groupId);
+
+  @Query(value = "SELECT * FROM expense JOIN user u on expense.user_id = u.id WHERE u.username =:username AND current_date_indicator LIKE :yearMonth+'%' AND expense_group =:groupId ", nativeQuery = true)
+    List<Expense> findAllByUser_UsernameAndExpenseGroup(@Param("username") String username, @Param("yearMonth") String yearMonth, @Param("groupId") int groupId);
 
 
 

@@ -79,4 +79,12 @@ public class IncomeServiceImpl implements IncomeService {
         repository.deleteById(id);
     }
 
+    @Override
+    public void deleteIncomeByDateAndUsername(String yearMonth, String username) {
+        List<Income> incomeList = findAllByUser_Username(username);
+        for (Income income : incomeList) {
+            deleteIncomeById(income.getId());
+        }
+    }
+
 }
