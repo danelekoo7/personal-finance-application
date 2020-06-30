@@ -113,6 +113,14 @@ public class DateIndicatorServiceImpl implements DateIndicatorService {
 
         incomeService.deleteIncomeByDateAndUsername(yearMonth, username);
 
-    }
 
+        DateIndicator dateIndicatorInDB = findByUser_Username(username);
+
+        if (DateConverter.dateFromStringYearMonthToLocalDate(yearMonth).equals(dateIndicatorInDB.getCurrentDateIndicator())) {
+            TreeSet<String> allDates = (TreeSet<String>) findAllDates(username);
+            LocalDate newDate = DateConverter.dateFromStringYearMonthToLocalDate(allDates.first());
+            dateIndicatorInDB.setCurrentDateIndicator(newDate);
+            dateIndicatorRepository.save(dateIndicatorInDB);
+        }
+    }
 }
