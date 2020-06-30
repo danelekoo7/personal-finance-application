@@ -6,12 +6,12 @@ import pl.jedrus.finance.domain.DateIndicator;
 import pl.jedrus.finance.domain.Expense;
 import pl.jedrus.finance.domain.Income;
 import pl.jedrus.finance.repository.DateIndicatorRepository;
+import pl.jedrus.finance.service.DateConverter;
 import pl.jedrus.finance.service.expense.ExpenseService;
 import pl.jedrus.finance.service.income.IncomeService;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -40,8 +40,8 @@ public class DateIndicatorServiceImpl implements DateIndicatorService {
 
         TreeSet<String> result = new TreeSet<>();
 
-        List<String> allDatesByIncome = convertDates(incomeService.findAllDates(username));
-        List<String> allDatesByExpense = convertDates(expenseService.findAllDates(username));
+        List<String> allDatesByIncome = DateConverter.datesListFromStringDateToStringYearMonth(incomeService.findAllDates(username));
+        List<String> allDatesByExpense = DateConverter.datesListFromStringDateToStringYearMonth(expenseService.findAllDates(username));
 
         result.addAll(allDatesByIncome);
         result.addAll(allDatesByExpense);
@@ -52,10 +52,7 @@ public class DateIndicatorServiceImpl implements DateIndicatorService {
     @Override
     public String findCurrentYearMonthByUser(String username) {
         String dateInString = findByUser_Username(username).getCurrentDateIndicator().toString();
-        String[] split = dateInString.split("-");
-        String year = split[0];
-        String month = split[1];
-        return year + "-" + month;
+        return DateConverter.dateFromStringDateToStringYearMonth(dateInString);
     }
 
     @Override
@@ -70,7 +67,7 @@ public class DateIndicatorServiceImpl implements DateIndicatorService {
     @Override
     public void updateDateIndicator(String yearMonth, String username) {
         DateIndicator dateIndicatorInDB = findByUser_Username(username);
-        LocalDate newDate = getDateIndicator(yearMonth);
+        LocalDate newDate = DateConverter.dateFromStringYearMonthToLocalDate(yearMonth);
         dateIndicatorInDB.setCurrentDateIndicator(newDate);
         dateIndicatorRepository.save(dateIndicatorInDB);
     }
@@ -81,7 +78,7 @@ public class DateIndicatorServiceImpl implements DateIndicatorService {
         List<Expense> expenses = expenseService.findAllByUser_Username(username);
 
         DateIndicator dateIndicatorInDB = findByUser_Username(username);
-        LocalDate newDate = getDateIndicator(yearMonth);
+        LocalDate newDate = DateConverter.dateFromStringYearMonthToLocalDate(yearMonth);
         dateIndicatorInDB.setCurrentDateIndicator(newDate);
         dateIndicatorRepository.save(dateIndicatorInDB);
 
@@ -116,33 +113,6 @@ public class DateIndicatorServiceImpl implements DateIndicatorService {
 
         incomeService.deleteIncomeByDateAndUsername(yearMonth, username);
 
-
-    }
-
-
-    private LocalDate getDateIndicator(String yearMonth) {
-        String[] yearMonthValue = yearMonth.split("-");
-        int year = -1;
-        int month = -1;
-        try {
-            year = Integer.parseInt(yearMonthValue[0]);
-            month = Integer.parseInt(yearMonthValue[1]);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-        return LocalDate.of(year, month, 1);
-    }
-
-
-    private List<String> convertDates(List<String> allDates) {
-        List<String> resultDates = new ArrayList<>();
-        for (String date : allDates) {
-            String[] singleDate = date.split("-");
-            String year = singleDate[0];
-            String month = singleDate[1];
-            resultDates.add(year + "-" + month);
-        }
-        return resultDates;
     }
 
 }

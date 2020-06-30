@@ -4,10 +4,12 @@ import org.springframework.stereotype.Service;
 import pl.jedrus.finance.domain.DateIndicator;
 import pl.jedrus.finance.domain.Income;
 import pl.jedrus.finance.repository.IncomeRepository;
+import pl.jedrus.finance.service.DateConverter;
 import pl.jedrus.finance.service.dateIndicator.DateIndicatorService;
 import pl.jedrus.finance.service.user.UserService;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,7 +83,8 @@ public class IncomeServiceImpl implements IncomeService {
 
     @Override
     public void deleteIncomeByDateAndUsername(String yearMonth, String username) {
-        List<Income> incomeList = findAllByUser_Username(username);
+        LocalDate date = DateConverter.dateFromStringYearMonthToLocalDate(yearMonth);
+        List<Income> incomeList = repository.findAllByUser(username, date.getMonthValue(), date.getYear());
         for (Income income : incomeList) {
             deleteIncomeById(income.getId());
         }

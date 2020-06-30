@@ -4,11 +4,13 @@ import org.springframework.stereotype.Service;
 import pl.jedrus.finance.domain.DateIndicator;
 import pl.jedrus.finance.domain.Expense;
 import pl.jedrus.finance.repository.ExpenseRepository;
+import pl.jedrus.finance.service.DateConverter;
 import pl.jedrus.finance.service.dateIndicator.DateIndicatorService;
 import pl.jedrus.finance.service.income.IncomeService;
 import pl.jedrus.finance.service.user.UserService;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -41,8 +43,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         int monthId = dateIndicator.getCurrentDateIndicator().getMonthValue();
         int yearId = dateIndicator.getCurrentDateIndicator().getYear();
 
-//        return expenseRepository.findAllByUser_UsernameAndExpenseGroup(username, monthId, yearId, expenseGroup);
-        return expenseRepository.findAllByUser_UsernameAndExpenseGroup(username, dateIndicator.toString(), expenseGroup);
+        return expenseRepository.findAllByUser_UsernameAndExpenseGroup(username, monthId, yearId, expenseGroup);
     }
 
     @Override
@@ -141,11 +142,12 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public void deleteExpenseByDateAndUsername(String yearMonth, String username) {
+        LocalDate date = DateConverter.dateFromStringYearMonthToLocalDate(yearMonth);
 
-//      expenseRepository.findAllByUser(username,)
-//        for (Expense expense : expenseList) {
-//            deleteExpenseById(expense.getId());
-//        }
+        List<Expense> expenseList = expenseRepository.findAllByUser(username, date.getMonthValue(), date.getYear());
+
+        for (Expense expense : expenseList) {
+            deleteExpenseById(expense.getId());
+        }
     }
-
 }

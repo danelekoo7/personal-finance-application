@@ -10,24 +10,8 @@
     <div th:replace="general :: menu"></div>
     <div id="layoutSidenav_content">
         <main>
-            <!--            <p></p>-->
-                        <h3 class="text-center" th:text="#{app.select.budget} + ' ' + ${date}"> select active month</h3>
-            <!--            <br>-->
-            <!--            <div class="row justify-content-center col-auto">-->
-            <!--                <form th:action="@{/step2/date/update}" method="post">-->
-
-            <!--                    <select th:name="yearMonth">-->
-            <!--                        <option-->
-            <!--                                th:each="date : ${dates} "-->
-            <!--                                th:utext="${date}"/>-->
-            <!--                    </select>-->
-
-
-            <!--                    <input class="form-control btn-block btn-primary" type="submit">  -->
-            <!--                </form>-->
-            <!--            </div>-->
-            <!--            <br>-->
-            <br>
+            <p></p>
+            <h3 class="text-center" th:text="#{app.active.budget} + ' ' + ${date}"> active budget</h3>
             <br>
             <h3 class="text-center" th:text="#{app.add.month.for.budget}"> add budget for new month</h3>
             <br>
@@ -50,8 +34,11 @@
                     <table class="table table-bordered w-auto mr-auto ml-auto" cellspacing="0">
                         <thead th:class="thead-dark">
                         <tr>
+                            <th colspan="3" rowspan="1" th:text="#{app.all.active.budgets}">all active budgets</th>
+                        </tr>
+                        <tr>
                             <th>id</th>
-                            <th>data</th>
+                            <th th:text="#{app.period}">period</th>
                             <th th:text="#{app.option}">option</th>
                         </tr>
                         </thead>
@@ -62,8 +49,8 @@
                             <td>
                                 <div class="d-inline-flex">
                                     <a th:href="@{/step2/date/activate/{date}(date=${dateInLoop})}"
-                                       th:text="#{app.edit}"
-                                       class="mr-1 btn btn-dark">edit</a>
+                                       th:text="#{app.activate}"
+                                       class="mr-1 btn btn-dark">activate</a>
 
                                     <a th:href="@{/step2/date/delete/{date}(date=${dateInLoop})}"
                                        class=" btn btn-dark deleteButton"
