@@ -35,6 +35,8 @@ public class ExpenseRegister {
 
     private LocalDate currentDateIndicator;
 
+
+
     @ManyToOne
     private User user;
 
