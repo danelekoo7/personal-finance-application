@@ -34,13 +34,13 @@
                         <tr th:each="loan:${loans}">
                             <td th:text="${loan.getDescription()}"></td>
                             <td th:text="${loan.getInstallment()} + ' ' +#{app.currency}"></td>
-                            <td th:text="${loan.getInstallment()}"></td>
+                            <td th:text="${loan.getInterest()} + ' %'"></td>
                             <td th:text="${loan.getValue()} + ' ' +#{app.currency}"></td>
                             <td>
                                 <div class="d-inline-flex">
-                                    <a th:href="@{/step1/edit-loan/{id}(id=${loan.getId()})}" th:text="#{app.edit}"
+                                    <a th:href="@{/step4/edit/{id}(id=${loan.getId()})}" th:text="#{app.edit}"
                                        class="mr-1 btn btn-dark">edit</a>
-                                    <a th:href="@{/step1/delete-loan/{id}(id=${loan.getId()})}"
+                                    <a th:href="@{/step4/deactivate/{id}(id=${loan.getId()})}"
                                        class="btn btn-dark deleteButton"
                                        th:text="#{app.deactivate}">deactivate</a>
                                 </div>

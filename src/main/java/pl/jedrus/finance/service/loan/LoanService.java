@@ -8,6 +8,8 @@ import java.util.List;
 public interface LoanService {
     List<Loan> findAllByUser_Username(String username);
 
+    List<Loan> findAllByUser_UsernameForStep4(String username);
+
     BigDecimal sumAllLoansByUser(String username);
 
     Loan findById(Long id);

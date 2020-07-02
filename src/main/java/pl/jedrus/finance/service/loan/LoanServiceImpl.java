@@ -7,11 +7,14 @@ import pl.jedrus.finance.service.user.UserService;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LoanServiceImpl implements LoanService {
+
     private final LoanRepository loanRepository;
     private final UserService userService;
+
 
     public LoanServiceImpl(LoanRepository loanRepository, UserService userService) {
         this.loanRepository = loanRepository;
@@ -21,6 +24,27 @@ public class LoanServiceImpl implements LoanService {
     @Override
     public List<Loan> findAllByUser_Username(String username) {
         return loanRepository.findAllByUser_Username(username);
+    }
+
+    @Override
+    public List<Loan> findAllByUser_UsernameForStep4(String username) {
+        List<Loan> allLoans = findAllByUser_Username(username);
+        List<Loan> collect = allLoans.stream()
+                .filter(loan -> !loan.isVisibleOnlyInStep1())
+                .sorted((o1, o2) -> {
+                    if (o1.getInterest() >= 20) {
+                        return (int) (o2.getInterest()-o1.getInterest());
+                    }
+                    return 1;
+                })
+                .sorted((o1, o2) -> {
+                    if (o1.getInterest() < 20 && o2.getInterest()<20) {
+                        return  o1.getValue().compareTo(o2.getValue()) ;
+                    }
+                    return 1;
+                })
+                .collect(Collectors.toList());
+        return collect;
     }
 
     @Override

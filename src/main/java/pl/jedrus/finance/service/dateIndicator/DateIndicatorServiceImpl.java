@@ -12,8 +12,8 @@ import pl.jedrus.finance.service.income.IncomeService;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.TreeSet;
 
 @Service
@@ -36,17 +36,15 @@ public class DateIndicatorServiceImpl implements DateIndicatorService {
     }
 
     @Override
-    public Set<String> findAllDates(String username) {
-
-        TreeSet<String> result = new TreeSet<>();
-
+    public List<String> findAllDates(String username) {
+        List<String> result = new ArrayList<>();
         List<String> allDatesByIncome = DateConverter.datesListFromStringDateToStringYearMonth(incomeService.findAllDates(username));
         List<String> allDatesByExpense = DateConverter.datesListFromStringDateToStringYearMonth(expenseService.findAllDates(username));
-
         result.addAll(allDatesByIncome);
         result.addAll(allDatesByExpense);
+        result.sort((o1, o2) -> o2.compareTo(o1));
 
-        return result.descendingSet();
+        return result;
     }
 
     @Override
@@ -82,7 +80,7 @@ public class DateIndicatorServiceImpl implements DateIndicatorService {
         dateIndicatorInDB.setCurrentDateIndicator(newDate);
         dateIndicatorRepository.save(dateIndicatorInDB);
 
-        Set<String> allDates = findAllDates(username);
+        List<String> allDates = findAllDates(username);
         if (!allDates.contains(yearMonth)) {
             for (Income income : incomes) {
                 Income newIncome = new Income();
