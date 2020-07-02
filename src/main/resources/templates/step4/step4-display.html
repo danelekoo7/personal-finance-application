@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{app.personal.finance}">Dashboard</title>
+    <th:block th:include="general :: headerfiles"></th:block>
+</head>
+<body class="sb-nav-fixed">
+<header th:insert="general :: header"></header>
+<div id="layoutSidenav">
+    <div th:replace="general :: menu"></div>
+    <div id="layoutSidenav_content">
+        <main>
+            <p></p>
+            <div class="justify-content-center col-auto ml-1">
+                <div class="table-responsive">
+
+                    <table class="table table-bordered text-center " cellspacing="0">
+                        <thead th:class="thead-dark">
+                        <tr>
+                            <th rowspan="1" colspan="5" class="text-center" th:text="#{app.list.of.loans}"> List of
+                                loans
+                            </th>
+                        </tr>
+                        <tr>
+                            <th th:text="#{app.description}">My loans</th>
+                            <th th:text="#{app.installment}"> installment</th>
+                            <th th:text="#{app.interest}"> interest</th>
+                            <th th:text="#{app.rest.value}"> rest value</th>
+                            <th th:text="#{app.option}">option</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr th:each="loan:${loans}">
+                            <td th:text="${loan.getDescription()}"></td>
+                            <td th:text="${loan.getInstallment()} + ' ' +#{app.currency}"></td>
+                            <td th:text="${loan.getInstallment()}"></td>
+                            <td th:text="${loan.getValue()} + ' ' +#{app.currency}"></td>
+                            <td>
+                                <div class="d-inline-flex">
+                                    <a th:href="@{/step1/edit-loan/{id}(id=${loan.getId()})}" th:text="#{app.edit}"
+                                       class="mr-1 btn btn-dark">edit</a>
+                                    <a th:href="@{/step1/delete-loan/{id}(id=${loan.getId()})}"
+                                       class="btn btn-dark deleteButton"
+                                       th:text="#{app.deactivate}">deactivate</a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <p th:text="#{app.confirm.deactivate}">Are you sure you want to deactivate this record?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="" class="btn btn-primary" id="delRef" th:text="#{app.yes.delete}">Yes,
+                                        Delete</a>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                            th:text="#{app.no}">
+                                        No
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<div th:replace="general :: scripts"></div>
+</body>
+</html>

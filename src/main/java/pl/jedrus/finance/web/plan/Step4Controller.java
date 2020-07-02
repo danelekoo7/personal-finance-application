@@ -21,7 +21,7 @@ public class Step4Controller {
     @GetMapping()
     public String get(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         model.addAttribute("loans",loanService.findAllByUser_Username(userDetails.getUsername()));
-        return "step4/step4";
+        return "step4/step4-display";
     }
 
 }
