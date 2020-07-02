@@ -3,6 +3,7 @@ package pl.jedrus.finance.service.initData;
 import org.springframework.stereotype.Service;
 import pl.jedrus.finance.domain.*;
 import pl.jedrus.finance.service.asset.AssetService;
+import pl.jedrus.finance.service.buffer.BufferService;
 import pl.jedrus.finance.service.expense.ExpenseService;
 import pl.jedrus.finance.service.income.IncomeService;
 import pl.jedrus.finance.service.loan.LoanService;
@@ -21,13 +22,15 @@ public class InitDataServiceImpl implements InitDataService {
     private final IncomeService incomeService;
     private final ExpenseService expenseService;
     private final UserService userService;
+    private final BufferService bufferService;
 
-    public InitDataServiceImpl(LoanService loanService, AssetService assetService, IncomeService incomeService, ExpenseService expenseService, UserService userService) {
+    public InitDataServiceImpl(LoanService loanService, AssetService assetService, IncomeService incomeService, ExpenseService expenseService, UserService userService, BufferService bufferService) {
         this.loanService = loanService;
         this.assetService = assetService;
         this.incomeService = incomeService;
         this.expenseService = expenseService;
         this.userService = userService;
+        this.bufferService = bufferService;
     }
 
     @Override
@@ -120,6 +123,8 @@ public class InitDataServiceImpl implements InitDataService {
         expenseListGroup4.add("Pomoc innym");
         expenseListGroup4.add("Dowolne zakupy");
         initExpensesGroup(expenseListGroup4, user, 4);
+
+        bufferService.saveBuffer(new Buffer(),user.getUsername());
 
     }
 

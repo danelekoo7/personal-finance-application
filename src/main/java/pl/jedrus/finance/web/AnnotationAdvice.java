@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 
 
 @ControllerAdvice(assignableTypes = {HomeController.class, Step1Controller.class, IncomeController.class, ExpenseController.class,
-        ExpenseRegisterController.class, DateIndicatorController.class})
+        ExpenseRegisterController.class, DateIndicatorController.class, Step3BufferController.class})
 public class AnnotationAdvice {
 
     private final LoanService loanService;

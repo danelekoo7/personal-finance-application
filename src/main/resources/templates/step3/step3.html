@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{app.personal.finance}">Dashboard</title>
+    <th:block th:include="general :: headerfiles"></th:block>
+</head>
+<body class="sb-nav-fixed">
+<header th:insert="general :: header"></header>
+<div id="layoutSidenav">
+    <div th:replace="general :: menu"></div>
+    <div id="layoutSidenav_content">
+        <main>
+            <p></p>
+            <div class="row justify-content-center col-auto">
+                <div class="table-responsive col-6">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
+                        <thead th:class="thead-dark">
+                        <tr>
+                            <th rowspan="1" colspan="3" class="text-center" th:text="#{app.buffer}"> Buffer
+                            </th>
+                        </tr>
+                        <tr>
+                            <th th:text="#{app.buffer.current.value}"> current value</th>
+                            <th th:text="#{app.buffer.expected.value}"> expected value</th>
+                            <th th:text="#{app.option}">option</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td th:text="${buffer.getCurrentValue()} + ' ' +#{app.currency}"></td>
+                            <td th:text="${buffer.getEstimatedValue()} + ' ' +#{app.currency}"></td>
+                            <td>
+                                <a th:href="@{/step3/edit/{id}(id=${buffer.getId()})}" th:text="#{app.edit}"
+                                   class="btn-block form-control  btn-dark text-center">edit</a>
+                            </td>
+                        </tr>
+                        <tr class="thead-dark">
+                            <th colspan="3" rowspan="1" th:text=" #{app.buffer.end.message}  + ${buffer.getEstimatedValue() - buffer.getCurrentValue()}  "></th>
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<div th:replace="general :: scripts"></div>
+</body>
+</html>
