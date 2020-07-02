@@ -1,4 +1,4 @@
-package pl.jedrus.finance.web;
+package pl.jedrus.finance.web.plan;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -45,6 +45,7 @@ public class Step3BufferController {
         bufferService.updateBuffer(buffer);
         return "redirect:/step3";
     }
+
 
 
 

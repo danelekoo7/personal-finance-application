@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import pl.jedrus.finance.service.asset.AssetService;
 import pl.jedrus.finance.service.dateIndicator.DateIndicatorService;
 import pl.jedrus.finance.service.loan.LoanService;
-import pl.jedrus.finance.web.step2.DateIndicatorController;
-import pl.jedrus.finance.web.step2.ExpenseController;
-import pl.jedrus.finance.web.step2.ExpenseRegisterController;
-import pl.jedrus.finance.web.step2.IncomeController;
+import pl.jedrus.finance.web.plan.Step1Controller;
+import pl.jedrus.finance.web.plan.Step3BufferController;
+import pl.jedrus.finance.web.plan.step2.DateIndicatorController;
+import pl.jedrus.finance.web.plan.step2.ExpenseController;
+import pl.jedrus.finance.web.plan.step2.ExpenseRegisterController;
+import pl.jedrus.finance.web.plan.step2.IncomeController;
 
 import java.math.BigDecimal;
 

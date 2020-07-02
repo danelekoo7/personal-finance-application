@@ -144,5 +144,7 @@ INSERT INTO expense
 VALUES (null, '', '2020-06-24',4, 'Dowolne zakupy', 0, 0, 1);
 
 
+INSERT INTO buffer VALUES (null,2000,2000,1);
+
 
 
