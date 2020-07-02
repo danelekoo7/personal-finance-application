@@ -28,14 +28,14 @@
                         <tbody>
                         <tr>
                             <td th:text="${buffer.getCurrentValue()} + ' ' +#{app.currency}"></td>
-                            <td th:text="${buffer.getEstimatedValue()} + ' ' +#{app.currency}"></td>
+                            <td th:text="${buffer.getExpectedValue()} + ' ' +#{app.currency}"></td>
                             <td>
                                 <a th:href="@{/step3/edit/{id}(id=${buffer.getId()})}" th:text="#{app.edit}"
                                    class="btn-block form-control  btn-dark text-center">edit</a>
                             </td>
                         </tr>
                         <tr class="thead-dark">
-                            <th colspan="3" rowspan="1" th:text=" #{app.buffer.end.message}  + ${buffer.getEstimatedValue() - buffer.getCurrentValue()}  "></th>
+                            <th colspan="3" rowspan="1" th:text=" #{app.buffer.end.message}  + ${buffer.getExpectedValue() - buffer.getCurrentValue()}  "></th>
                         </tr>
 
 

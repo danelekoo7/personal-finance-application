@@ -32,7 +32,7 @@ public class BufferImpl implements BufferService {
     @Override
     public void saveBuffer(Buffer buffer, String username) {
         buffer.setUser(userService.findByUserName(username));
-        buffer.setEstimatedValue(BigDecimal.valueOf(2000));
+        buffer.setExpectedValue(BigDecimal.valueOf(2000));
         buffer.setCurrentValue(BigDecimal.ZERO);
         bufferRepository.save(buffer);
     }
@@ -40,7 +40,7 @@ public class BufferImpl implements BufferService {
     @Override
     public void updateBuffer(Buffer buffer) {
         Buffer bufferInDB = findById(buffer.getId());
-        bufferInDB.setEstimatedValue(buffer.getEstimatedValue());
+        bufferInDB.setExpectedValue(buffer.getExpectedValue());
         bufferInDB.setCurrentValue(buffer.getCurrentValue());
         bufferRepository.save(bufferInDB);
     }

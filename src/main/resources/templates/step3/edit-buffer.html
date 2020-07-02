@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{app.personal.finance}">Dashboard</title>
+    <!--/*/ <th:block th:include="general :: headerfiles"></th:block> /*/-->
+</head>
+<body class="sb-nav-fixed">
+<header th:insert="general :: header"></header>
+<div id="layoutSidenav">
+    <div th:replace="general :: menu"></div>
+    <div id="layoutSidenav_content">
+        <main>
+            <p></p>
+            <h3 class="text-center" th:text="#{app.buffer.edit}"> edit buffer </h3>
+            <br>
+            <div class="row justify-content-center col-auto">
+                <form th:action="@{/step3/edit/{id}(id=${buffer.getId()})}" th:object="${buffer}" method="post">
+
+                    <label for="currentValue" th:text="#{app.buffer.current.value}"> current value</label>
+                    <input class="form-control" type="number" step="0.01" th:field="*{currentValue}" id="currentValue">
+                    <span th:if="${#fields.hasErrors('currentValue')}" th:errors="*{currentValue}"></span>
+                    <br>
+                    <label for="expectedValue" th:text="#{app.buffer.expected.value}">expected value</label>
+                    <input class="form-control" type="number" step="0.01" th:field="*{expectedValue}" id="expectedValue">
+                    <span th:if="${#fields.hasErrors('expectedValue')}" th:errors="*{expectedValue}"></span>
+                    <br>
+                    <br>
+                    <input class="form-control btn-block btn-primary" type="submit">  
+                </form>
+            </div>
+        </main>
+    </div>
+</div>
+<div th:replace="general :: scripts"></div>
+
+
+</body>
+</html>

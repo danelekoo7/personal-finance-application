@@ -24,7 +24,7 @@ public class Buffer {
 
     @NotNull
     @DecimalMin("0.0")
-    private BigDecimal estimatedValue;
+    private BigDecimal expectedValue;
 
     public Long getId() {
         return id;
@@ -50,12 +50,12 @@ public class Buffer {
         this.currentValue = currentValue;
     }
 
-    public BigDecimal getEstimatedValue() {
-        return estimatedValue;
+    public BigDecimal getExpectedValue() {
+        return expectedValue;
     }
 
-    public void setEstimatedValue(BigDecimal estimatedValue) {
-        this.estimatedValue = estimatedValue;
+    public void setExpectedValue(BigDecimal estimatedValue) {
+        this.expectedValue = estimatedValue;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class Buffer {
                 "id=" + id +
                 ", user=" + user +
                 ", currentValue=" + currentValue +
-                ", estimatedValue=" + estimatedValue +
+                ", estimatedValue=" + expectedValue +
                 '}';
     }
 }
