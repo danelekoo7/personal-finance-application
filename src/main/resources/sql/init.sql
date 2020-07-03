@@ -18,21 +18,21 @@ VALUES (null, 'gotówka', 500, 1);
 # insert demo loans
 
 INSERT INTO loan
-VALUES (null, 'kredyt hipoteczny', 235000, 1);
+VALUES (null, 'kredyt hipoteczny', 235000, 1, 1700, 5 , true);
 INSERT INTO loan
-VALUES (null, 'kredyt samochodowy', 25000, 1);
+VALUES (null, 'kredyt samochodowy', 25000, 1, 900, 14, false);
 INSERT INTO loan
-VALUES (null, 'karta kredytowa 1', 2000, 1);
+VALUES (null, 'karta kredytowa 1', 2000, 1, 100, 12, false);
 INSERT INTO loan
-VALUES (null, 'karta kredytowa 2', 8000, 1);
+VALUES (null, 'karta kredytowa 2', 3000, 1,150,15,false);
 INSERT INTO loan
-VALUES (null, 'pożyczka świąteczna', 3000, 1);
+VALUES (null, 'pożyczka świąteczna', 1500, 1, 100,16,false );
 INSERT INTO loan
-VALUES (null, '„chwilówka”', 2000, 1);
+VALUES (null, '„chwilówka”', 1200, 1,200,50,false);
 INSERT INTO loan
-VALUES (null, 'limit w rachunku bankowym', 7000, 1);
+VALUES (null, 'limit w rachunku bankowym', 5500, 1,150,10,false);
 INSERT INTO loan
-VALUES (null, 'pożyczka od brata', 3000, 1);
+VALUES (null, 'pożyczka od brata', 500, 1,100,0,false);
 
 
 # insert demo income
@@ -145,6 +145,8 @@ VALUES (null, '', '2020-06-24',4, 'Dowolne zakupy', 0, 0, 1);
 
 
 INSERT INTO buffer VALUES (null,2000,2000,1);
+
+
 
 
 
