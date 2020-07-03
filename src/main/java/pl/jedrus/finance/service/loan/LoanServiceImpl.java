@@ -73,6 +73,8 @@ public class LoanServiceImpl implements LoanService {
         Loan loanInDb = findById(loan.getId());
         loanInDb.setValue(loan.getValue());
         loanInDb.setDescription(loan.getDescription());
+        loanInDb.setInstallment(loan.getInstallment());
+        loanInDb.setInterest(loan.getInterest());
         loanRepository.save(loanInDb);
     }
 
