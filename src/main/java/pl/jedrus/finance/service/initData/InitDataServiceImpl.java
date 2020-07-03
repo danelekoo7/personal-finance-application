@@ -7,6 +7,7 @@ import pl.jedrus.finance.service.buffer.BufferService;
 import pl.jedrus.finance.service.expense.ExpenseService;
 import pl.jedrus.finance.service.income.IncomeService;
 import pl.jedrus.finance.service.loan.LoanService;
+import pl.jedrus.finance.service.securityFund.SecurityFundService;
 import pl.jedrus.finance.service.user.UserService;
 
 import java.math.BigDecimal;
@@ -23,14 +24,16 @@ public class InitDataServiceImpl implements InitDataService {
     private final ExpenseService expenseService;
     private final UserService userService;
     private final BufferService bufferService;
+    private final SecurityFundService securityFundService;
 
-    public InitDataServiceImpl(LoanService loanService, AssetService assetService, IncomeService incomeService, ExpenseService expenseService, UserService userService, BufferService bufferService) {
+    public InitDataServiceImpl(LoanService loanService, AssetService assetService, IncomeService incomeService, ExpenseService expenseService, UserService userService, BufferService bufferService, SecurityFundService securityFundService) {
         this.loanService = loanService;
         this.assetService = assetService;
         this.incomeService = incomeService;
         this.expenseService = expenseService;
         this.userService = userService;
         this.bufferService = bufferService;
+        this.securityFundService = securityFundService;
     }
 
     @Override
@@ -50,11 +53,17 @@ public class InitDataServiceImpl implements InitDataService {
         Loan loan1 = new Loan();
         loan1.setValue(BigDecimal.ZERO);
         loan1.setDescription("pasywo 1");
+        loan1.setVisibleOnlyInStep1(false);
+        loan1.setInstallment(BigDecimal.valueOf(100));
+        loan1.setInterest(11);
         loanService.saveLoan(loan1, userInDB.getUsername());
 
         Loan loan2 = new Loan();
         loan2.setValue(BigDecimal.ZERO);
         loan2.setDescription("pasywo 2");
+        loan2.setVisibleOnlyInStep1(false);
+        loan2.setInstallment(BigDecimal.valueOf(125));
+        loan2.setInterest(22);
         loanService.saveLoan(loan2, userInDB.getUsername());
 
         List<String> incomes = new ArrayList<>();
@@ -124,8 +133,15 @@ public class InitDataServiceImpl implements InitDataService {
         expenseListGroup4.add("Dowolne zakupy");
         initExpensesGroup(expenseListGroup4, user, 4);
 
-        bufferService.saveBuffer(new Buffer(),user.getUsername());
+        Buffer buffer = new Buffer();
+        buffer.setCurrentValue(BigDecimal.ZERO);
+        buffer.setExpectedValue(BigDecimal.valueOf(2000));
+        bufferService.saveBuffer(buffer, user.getUsername());
 
+        SecurityFund securityFund = new SecurityFund();
+        securityFund.setCurrentValue(BigDecimal.ZERO);
+        securityFund.setExpectedValue(BigDecimal.ZERO);
+        securityFundService.saveSecurityFund(securityFund, user.getUsername());
     }
 
 
