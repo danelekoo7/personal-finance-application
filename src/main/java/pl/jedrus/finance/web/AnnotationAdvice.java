@@ -10,16 +10,17 @@ import pl.jedrus.finance.service.loan.LoanService;
 import pl.jedrus.finance.web.plan.Step1Controller;
 import pl.jedrus.finance.web.plan.Step3BufferController;
 import pl.jedrus.finance.web.plan.Step4Controller;
+import pl.jedrus.finance.web.plan.Step5Controller;
 import pl.jedrus.finance.web.plan.step2.DateIndicatorController;
 import pl.jedrus.finance.web.plan.step2.ExpenseController;
 import pl.jedrus.finance.web.plan.step2.ExpenseRegisterController;
 import pl.jedrus.finance.web.plan.step2.IncomeController;
-
 import java.math.BigDecimal;
 
 
 @ControllerAdvice(assignableTypes = {HomeController.class, Step1Controller.class, IncomeController.class, ExpenseController.class,
-        ExpenseRegisterController.class, DateIndicatorController.class, Step3BufferController.class, Step4Controller.class})
+        ExpenseRegisterController.class, DateIndicatorController.class, Step3BufferController.class, Step4Controller.class,
+        Step5Controller.class})
 public class AnnotationAdvice {
 
     private final LoanService loanService;
