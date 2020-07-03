@@ -104,7 +104,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td th:text="${assets.size()+1}"> next Loan Id</td>
+                                <td th:text="${loans.size()+1}"> next Loan Id</td>
                                 <td>
                                     <input class="form-control" type="text" th:field="*{description}" id="description" required>
                                     <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>

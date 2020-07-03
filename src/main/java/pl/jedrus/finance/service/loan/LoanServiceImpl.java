@@ -33,13 +33,13 @@ public class LoanServiceImpl implements LoanService {
                 .filter(loan -> !loan.isVisibleOnlyInStep1())
                 .sorted((o1, o2) -> {
                     if (o1.getInterest() >= 20) {
-                        return (int) (o2.getInterest()-o1.getInterest());
+                        return (int) (o2.getInterest() - o1.getInterest());
                     }
                     return 1;
                 })
                 .sorted((o1, o2) -> {
-                    if (o1.getInterest() < 20 && o2.getInterest()<20) {
-                        return  o1.getValue().compareTo(o2.getValue()) ;
+                    if (o1.getInterest() < 20 && o2.getInterest() < 20) {
+                        return o1.getValue().compareTo(o2.getValue());
                     }
                     return 1;
                 })
@@ -75,6 +75,7 @@ public class LoanServiceImpl implements LoanService {
         loanInDb.setDescription(loan.getDescription());
         loanInDb.setInstallment(loan.getInstallment());
         loanInDb.setInterest(loan.getInterest());
+        loanInDb.setVisibleOnlyInStep1(loan.isVisibleOnlyInStep1());
         loanRepository.save(loanInDb);
     }
 

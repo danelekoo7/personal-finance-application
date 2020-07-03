@@ -2,12 +2,12 @@ package pl.jedrus.finance.service.dateIndicator;
 
 import pl.jedrus.finance.domain.DateIndicator;
 
-import java.util.List;
+import java.util.Set;
 
 public interface DateIndicatorService {
     DateIndicator findByUser_Username(String username);
 
-    List<String> findAllDates(String username);
+    Set<String> findAllDates(String username);
 
     String findCurrentYearMonthByUser(String username);
 

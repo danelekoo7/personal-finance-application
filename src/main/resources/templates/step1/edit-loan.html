@@ -24,6 +24,10 @@
                     <input class="form-control"  type="number" step="0.01" min="0" th:field="*{value}" id="value">
                     <span th:if="${#fields.hasErrors('value')}" th:errors="*{value}"></span>
                     <br>
+                    <label for="visibleOnlyInStep1" th:text="#{app.visible.only.step1}">visibleOnlyInStep1</label>
+                    <input class="form-control"  type="checkbox" th:field="*{visibleOnlyInStep1}" id="visibleOnlyInStep1">
+                    <span th:if="${#fields.hasErrors('visibleOnlyInStep1')}" th:errors="*{visibleOnlyInStep1}"></span>
+                    <br>
                     <br>
                     <input class="form-control btn-block btn-primary" type="submit">  
                 </form>

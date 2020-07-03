@@ -16,7 +16,7 @@
                     <table class="table table-bordered" cellspacing="0">
                         <thead th:class="thead-dark">
                         <tr>
-                            <th rowspan="1" colspan="3" class="text-center" th:text="#{app.buffer}"> Buffer
+                            <th rowspan="1" colspan="3" class="text-center" th:text="#{app.security.fund}"> security fund
                             </th>
                         </tr>
                         <tr>
@@ -27,16 +27,16 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td th:text="${buffer.getCurrentValue()} + ' ' +#{app.currency}"></td>
-                            <td th:text="${buffer.getExpectedValue()} + ' ' +#{app.currency}"></td>
+                            <td th:text="${securityFund.getCurrentValue()} + ' ' +#{app.currency}"></td>
+                            <td th:text="${securityFund.getExpectedValue()} + ' ' +#{app.currency}"></td>
                             <td>
-                                <a th:href="@{/step3/edit/{id}(id=${buffer.getId()})}" th:text="#{app.edit}"
+                                <a th:href="@{/step5/edit/{id}(id=${securityFund.getId()})}" th:text="#{app.edit}"
                                    class="btn-block form-control btn-dark text-center">edit</a>
                             </td>
                         </tr>
                         <tr class="thead-dark">
                             <th colspan="3" rowspan="1"
-                                th:text=" #{app.end.message}  + ${buffer.getExpectedValue() - buffer.getCurrentValue()}  "></th>
+                                th:text=" #{app.end.message}  + ${securityFund.getExpectedValue() - securityFund.getCurrentValue()}  "></th>
                         </tr>
 
 

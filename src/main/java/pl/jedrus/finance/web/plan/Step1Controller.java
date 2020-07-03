@@ -51,13 +51,13 @@ public class Step1Controller {
         if (result.hasErrors()) {
             return "step1/step1";
         }
-        assetService.saveAsset(asset,userDetails.getUsername());
+        assetService.saveAsset(asset, userDetails.getUsername());
         return "redirect:";
     }
 
 
     @GetMapping("/edit-asset/{id}")
-    public String editAsset(@PathVariable Long id, Model model){
+    public String editAsset(@PathVariable Long id, Model model) {
         model.addAttribute("asset", assetService.findById(id));
         return "step1/edit-asset";
     }
@@ -96,7 +96,7 @@ public class Step1Controller {
     }
 
     @PostMapping("/edit-loan/{id}")
-    public String updateLoan(@Valid Loan loan, BindingResult result, @PathVariable Long id){
+    public String updateLoan(@Valid Loan loan, BindingResult result, @PathVariable Long id) {
         if (result.hasErrors()) {
             return "step1/edit-loan";
         }
@@ -116,6 +116,8 @@ public class Step1Controller {
     public Loan loan() {
         Loan loan = new Loan();
         loan.setValue(BigDecimal.ZERO);
+        loan.setInterest(0);
+        loan.setInstallment(BigDecimal.ZERO);
         return loan;
     }
 
