@@ -17,11 +17,12 @@
                     <table class="table table-bordered text-center " cellspacing="0">
                         <thead th:class="thead-dark">
                         <tr>
-                            <th rowspan="1" colspan="5" class="text-center" th:text="#{app.list.of.loans}"> List of
+                            <th rowspan="1" colspan="6" class="text-center" th:text="#{app.list.of.loans}"> List of
                                 loans
                             </th>
                         </tr>
                         <tr>
+                            <th>id</th>
                             <th th:text="#{app.description}">My loans</th>
                             <th th:text="#{app.installment}"> installment</th>
                             <th th:text="#{app.interest}"> interest</th>
@@ -31,7 +32,8 @@
                         </thead>
                         <tbody>
 
-                        <tr th:each="loan:${loans}">
+                        <tr th:each="loan,iter:${loans}">
+                            <td th:text="${iter.count}"></td>
                             <td th:text="${loan.getDescription()}"></td>
                             <td th:text="${loan.getInstallment()} + ' ' +#{app.currency}"></td>
                             <td th:text="${loan.getInterest()} + ' %'"></td>
@@ -46,6 +48,15 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr class="thead-dark">
+                            <th colspan="2" rowspan="1"
+                                th:text="#{app.total}"></th>
+                            <th th:text="${#aggregates.sum(loans.![getInstallment()])} + ' ' +#{app.currency}"></th>
+                            <th></th>
+                            <th th:text="${#aggregates.sum(loans.![getValue()])} + ' ' +#{app.currency}"></th>
+                            <th></th>
+                        </tr>
+
                         </tbody>
                     </table>
 
@@ -53,7 +64,8 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <p th:text="#{app.confirm.deactivate}">Are you sure you want to deactivate this record?</p>
+                                    <p th:text="#{app.confirm.deactivate}">Are you sure you want to deactivate this
+                                        record?</p>
                                 </div>
                                 <div class="modal-footer">
                                     <a href="" class="btn btn-primary" id="delRef" th:text="#{app.yes.delete}">Yes,
