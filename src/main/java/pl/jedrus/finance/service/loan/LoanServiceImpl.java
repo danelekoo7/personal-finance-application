@@ -80,4 +80,11 @@ public class LoanServiceImpl implements LoanService {
     public void deleteLoanById(Long id) {
         loanRepository.deleteById(id);
     }
+
+    @Override
+    public void deactivateLoanInStep4(Long id) {
+        Loan loan = findById(id);
+        loan.setVisibleOnlyInStep1(true);
+        loanRepository.save(loan);
+    }
 }

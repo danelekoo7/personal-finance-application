@@ -13,12 +13,6 @@ import pl.jedrus.finance.service.SpringDataUserDetailsService;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-//    temp disabled security
-//    @Override
-//    protected void configure(HttpSecurity httpSecurity) throws Exception {
-//        httpSecurity.authorizeRequests().antMatchers("/").permitAll();
-//    }
-
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -34,9 +28,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/webjars/**", "/create-user", "/temp").permitAll()
+                .antMatchers("/webjars/**", "/create-user").permitAll()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/step1/**", "/step2/**", "/").hasAnyRole("USER")
+                .antMatchers("/step1/**", "/step2/**","/step3/**","/step4/**","/step5/**" , "/").hasAnyRole("USER")
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()

@@ -19,4 +19,6 @@ public interface LoanService {
     void updateLoan(Loan asset);
 
     void deleteLoanById(Long id);
+
+    void deactivateLoanInStep4(Long id);
 }
