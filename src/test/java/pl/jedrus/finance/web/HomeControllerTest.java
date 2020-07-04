@@ -42,21 +42,21 @@ public class HomeControllerTest {
 
 
     @Test
-    @WithMockUser(username="a",roles="USER")
+    @WithMockUser(username="DEMO",roles="USER")
     public void should_ReturnStatusOk_WhenAuthenticatedUserRequest() throws Exception {
         mvc.perform(get("/"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @WithMockUser(username="a",roles="ADMIN")
+    @WithMockUser(username="DEMO",roles="ADMIN")
     public void should_ReturnForbiddenStatus_WhenUserWithWrongRolesRequest() throws Exception {
         mvc.perform(get("/"))
                 .andExpect(status().isForbidden());
     }
 
     @Test
-    @WithMockUser(username="a",roles="USER")
+    @WithMockUser(username="DEMO",roles="USER")
     public void should_ReturnHomeView_WhenAuthenticatedUserRequest() throws Exception {
         mvc.perform(get("/"))
                 .andExpect(status().isOk())

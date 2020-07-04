@@ -45,8 +45,4 @@ public class Step5Controller {
         securityFundService.updateSecurityFund(securityFund);
         return "redirect:/step5";
     }
-
-
-
-
 }

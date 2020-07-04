@@ -35,7 +35,11 @@ public class ExpenseRegisterServiceImpl implements ExpenseRegisterService {
         int monthId = dateIndicator.getCurrentDateIndicator().getMonthValue();
         int yearId = dateIndicator.getCurrentDateIndicator().getYear();
 
-        return expenseRegisterRepository.findAllByUser_Username(username, monthId, yearId);
+        List<ExpenseRegister> allExpenses = expenseRegisterRepository.findAllByUser_Username(username, monthId, yearId);
+
+        allExpenses.sort((o1, o2) -> o2.getCreated().compareTo(o1.getCreated()));
+
+        return allExpenses;
     }
 
     @Override
