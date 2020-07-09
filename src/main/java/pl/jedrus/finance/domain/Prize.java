@@ -26,6 +26,8 @@ public class Prize {
     @DecimalMin("0.0")
     private BigDecimal expectedValue;
 
+    private String description;
+
     public Long getId() {
         return id;
     }
@@ -58,13 +60,23 @@ public class Prize {
         this.expectedValue = estimatedValue;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
-    public String toString() {
-        return "Buffer2000{" +
+    public String
+    toString() {
+        return "Prize{" +
                 "id=" + id +
                 ", user=" + user +
                 ", currentValue=" + currentValue +
-                ", estimatedValue=" + expectedValue +
+                ", expectedValue=" + expectedValue +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

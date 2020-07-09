@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{app.personal.finance}">Dashboard</title>
+    <th:block th:include="general :: headerfiles"></th:block>
+</head>
+<body class="sb-nav-fixed">
+<header th:insert="general :: header"></header>
+<div id="layoutSidenav">
+    <div th:replace="general :: menu"></div>
+    <div id="layoutSidenav_content">
+        <main>
+            <p></p>
+            <div class="row justify-content-center col-auto">
+                <div class="table-responsive  w-auto mr-auto ml-auto">
+                    <table class="table table-bordered" cellspacing="0">
+                        <thead th:class="thead-dark">
+                        <tr>
+                            <th rowspan="1" colspan="4" class="text-center" th:text="#{app.prize}"> prize
+                            </th>
+                        </tr>
+                        <tr>
+                            <th th:text="#{app.description}"> description</th>
+                            <th th:text="#{app.current.value}"> current value</th>
+                            <th th:text="#{app.expected.value}"> expected value</th>
+                            <th th:text="#{app.option}">option</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td th:text="${prize.getDescription()}"></td>
+                            <td th:text="${prize.getCurrentValue()} + ' ' +#{app.currency}"></td>
+                            <td th:text="${prize.getExpectedValue()} + ' ' +#{app.currency}"></td>
+                            <td>
+                                <a th:href="@{/step6/edit/{id}(id=${prize.getId()})}" th:text="#{app.edit}"
+                                   class="btn-block form-control btn-dark text-center">edit</a>
+                            </td>
+                        </tr>
+                        <tr class="thead-dark">
+                            <th colspan="4" rowspan="1"
+                                th:text=" #{app.end.message}  + ${prize.getExpectedValue() - prize.getCurrentValue()}  "></th>
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<div th:replace="general :: scripts"></div>
+</body>
+</html>

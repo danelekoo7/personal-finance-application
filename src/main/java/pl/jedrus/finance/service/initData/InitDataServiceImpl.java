@@ -7,6 +7,7 @@ import pl.jedrus.finance.service.buffer.BufferService;
 import pl.jedrus.finance.service.expense.ExpenseService;
 import pl.jedrus.finance.service.income.IncomeService;
 import pl.jedrus.finance.service.loan.LoanService;
+import pl.jedrus.finance.service.prize.PrizeService;
 import pl.jedrus.finance.service.securityFund.SecurityFundService;
 import pl.jedrus.finance.service.user.UserService;
 
@@ -25,8 +26,9 @@ public class InitDataServiceImpl implements InitDataService {
     private final UserService userService;
     private final BufferService bufferService;
     private final SecurityFundService securityFundService;
+    private final PrizeService prizeService;
 
-    public InitDataServiceImpl(LoanService loanService, AssetService assetService, IncomeService incomeService, ExpenseService expenseService, UserService userService, BufferService bufferService, SecurityFundService securityFundService) {
+    public InitDataServiceImpl(LoanService loanService, AssetService assetService, IncomeService incomeService, ExpenseService expenseService, UserService userService, BufferService bufferService, SecurityFundService securityFundService, PrizeService prizeService) {
         this.loanService = loanService;
         this.assetService = assetService;
         this.incomeService = incomeService;
@@ -34,6 +36,7 @@ public class InitDataServiceImpl implements InitDataService {
         this.userService = userService;
         this.bufferService = bufferService;
         this.securityFundService = securityFundService;
+        this.prizeService = prizeService;
     }
 
     @Override
@@ -142,6 +145,12 @@ public class InitDataServiceImpl implements InitDataService {
         securityFund.setCurrentValue(BigDecimal.ZERO);
         securityFund.setExpectedValue(BigDecimal.ZERO);
         securityFundService.saveSecurityFund(securityFund, user.getUsername());
+
+        Prize prize = new Prize();
+        prize.setCurrentValue(BigDecimal.ZERO);
+        prize.setExpectedValue(BigDecimal.ZERO);
+        prizeService.savePrize(prize,user.getUsername());
+
     }
 
 

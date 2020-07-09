@@ -42,6 +42,7 @@ public class PrizeImpl implements PrizeService {
         Prize prizeInDB = findById(prize.getId());
         prizeInDB.setExpectedValue(prize.getExpectedValue());
         prizeInDB.setCurrentValue(prize.getCurrentValue());
+        prizeInDB.setDescription(prize.getDescription());
         prizeRepository.save(prizeInDB);
     }
 
