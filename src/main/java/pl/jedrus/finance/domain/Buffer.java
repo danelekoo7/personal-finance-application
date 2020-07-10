@@ -60,11 +60,11 @@ public class Buffer {
 
     @Override
     public String toString() {
-        return "Buffer2000{" +
+        return "Buffer{" +
                 "id=" + id +
                 ", user=" + user +
                 ", currentValue=" + currentValue +
-                ", estimatedValue=" + expectedValue +
+                ", expectedValue=" + expectedValue +
                 '}';
     }
 }

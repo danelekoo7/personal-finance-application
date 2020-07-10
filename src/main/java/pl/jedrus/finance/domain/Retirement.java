@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity
-public class SecurityFund {
+public class Retirement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +25,8 @@ public class SecurityFund {
     @NotNull
     @DecimalMin("0.0")
     private BigDecimal expectedValue;
+
+    private String description;
 
     public Long getId() {
         return id;
@@ -58,13 +60,22 @@ public class SecurityFund {
         this.expectedValue = estimatedValue;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
-        return "SecurityFund{" +
+        return "Retirement{" +
                 "id=" + id +
                 ", user=" + user +
                 ", currentValue=" + currentValue +
                 ", expectedValue=" + expectedValue +
+                ", description='" + description + '\'' +
                 '}';
     }
 }
