@@ -17,12 +17,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/step1")
-public class Step1Controller {
+public class Step1AssetLoanController {
 
     private final LoanService loanService;
     private final AssetService assetService;
 
-    public Step1Controller(LoanService loanService, AssetService assetService) {
+    public Step1AssetLoanController(LoanService loanService, AssetService assetService) {
         this.loanService = loanService;
         this.assetService = assetService;
     }

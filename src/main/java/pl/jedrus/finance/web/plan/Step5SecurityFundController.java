@@ -16,10 +16,10 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/step5")
-public class Step5Controller {
+public class Step5SecurityFundController {
     private final SecurityFundService securityFundService;
 
-    public Step5Controller(SecurityFundService securityFundService) {
+    public Step5SecurityFundController(SecurityFundService securityFundService) {
         this.securityFundService = securityFundService;
     }
 

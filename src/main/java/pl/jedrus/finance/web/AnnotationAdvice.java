@@ -15,9 +15,9 @@ import pl.jedrus.finance.web.plan.step2.IncomeController;
 import java.math.BigDecimal;
 
 
-@ControllerAdvice(assignableTypes = {HomeController.class, Step1Controller.class, IncomeController.class, ExpenseController.class,
-        ExpenseRegisterController.class, DateIndicatorController.class, Step3BufferController.class, Step4Controller.class,
-        Step5Controller.class, Step6PrizeController.class})
+@ControllerAdvice(assignableTypes = {HomeController.class, Step1AssetLoanController.class, IncomeController.class, ExpenseController.class,
+        ExpenseRegisterController.class, DateIndicatorController.class, Step3BufferController.class, Step4LoanController.class,
+        Step5SecurityFundController.class, Step6PrizeController.class})
 public class AnnotationAdvice {
 
     private final LoanService loanService;

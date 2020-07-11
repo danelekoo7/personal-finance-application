@@ -16,11 +16,11 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/step4")
-public class Step4Controller {
+public class Step4LoanController {
 
    private final LoanService loanService;
 
-    public Step4Controller(LoanService loanService) {
+    public Step4LoanController(LoanService loanService) {
         this.loanService = loanService;
     }
 
